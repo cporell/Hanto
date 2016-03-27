@@ -8,11 +8,11 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.studentCGP;
+package hanto.studentCPBP;
 
 import hanto.common.*;
-import hanto.studentCGP.alpha.AlphaHantoGame;
-import hanto.studentCGP.beta.BetaHantoGame;
+import hanto.studentCPBP.alpha.AlphaHantoGame;
+import hanto.studentCPBP.beta.BetaHantoGame;
 
 /**
  * This is a singleton class that provides a factory to create an instance of any version

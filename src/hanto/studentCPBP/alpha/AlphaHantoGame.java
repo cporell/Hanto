@@ -10,10 +10,10 @@
  * Copyright ©2015 Gary F. Pollice
  *******************************************************************************/
 
-package hanto.studentCGP.alpha;
+package hanto.studentCPBP.alpha;
 
 import hanto.common.*;
-import hanto.studentCGP.common.*;
+import hanto.studentCPBP.common.*;
 
 import static hanto.common.MoveResult.*;
 import static hanto.common.HantoPieceType.*;

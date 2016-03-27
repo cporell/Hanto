@@ -8,14 +8,14 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.studentCGP.beta;
+package hanto.studentCPBP.beta;
 
 import static hanto.common.HantoPieceType.*;
 import static hanto.common.MoveResult.*;
 import static hanto.common.HantoPlayerColor.*;
 import static org.junit.Assert.*;
 import hanto.common.*;
-import hanto.studentCGP.HantoGameFactory;
+import hanto.studentCPBP.HantoGameFactory;
 
 import org.junit.*;
 
