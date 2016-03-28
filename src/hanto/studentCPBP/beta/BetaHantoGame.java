@@ -13,6 +13,7 @@
 package hanto.studentCPBP.beta;
 
 import hanto.common.*;
+import hanto.studentCPBP.common.HantoPieceImpl;
 
 /**
  * <<Fill this in>>
@@ -28,8 +29,7 @@ public class BetaHantoGame implements HantoGame
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return MoveResult.OK;
 	}
 
 	/*
@@ -38,8 +38,7 @@ public class BetaHantoGame implements HantoGame
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new HantoPieceImpl(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY);
 	}
 
 	/*

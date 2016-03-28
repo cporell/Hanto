@@ -23,6 +23,7 @@ import org.junit.*;
  * Test cases for Beta Hanto.
  * @version Sep 14, 2014
  * @author Connor Porell (cgporell)
+ * @author Benny Peake (bpeake)
  */
 public class BetaHantoMasterTest
 {
@@ -82,6 +83,17 @@ public class BetaHantoMasterTest
 		assertEquals(OK, mr);
 		final HantoPiece p = game.getPieceAt(makeCoordinate(0, 0));
 		assertEquals(BLUE, p.getColor());
+		assertEquals(BUTTERFLY, p.getType());
+	}
+	
+	@Test	// 2
+	public void redPlacesButterflyNext() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		final MoveResult secondMove = game.makeMove(BUTTERFLY, null, makeCoordinate(0, 1));
+		assertEquals(OK, secondMove);
+		final HantoPiece p = game.getPieceAt(makeCoordinate(0, 1));
+		assertEquals(RED, p.getColor());
 		assertEquals(BUTTERFLY, p.getType());
 	}
 	
