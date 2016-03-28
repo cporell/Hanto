@@ -97,6 +97,20 @@ public class BetaHantoMasterTest
 		assertEquals(BUTTERFLY, p.getType());
 	}
 	
+	@Test(expected = HantoException.class)	// 3
+	public void cantPlacePieceOnOtherPiece() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+	}
+	
+	@Test(expected = HantoException.class)	// 4
+	public void pieceMustBeAdjacentToAnotherPiece() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 2));
+	}
+	
 	// Helper methods
 	private HantoCoordinate makeCoordinate(int x, int y)
 	{

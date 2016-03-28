@@ -12,7 +12,10 @@
 
 package hanto.studentCPBP.beta;
 
+import java.util.Hashtable;
+
 import hanto.common.*;
+import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.HantoPieceImpl;
 
 /**
@@ -22,6 +25,12 @@ import hanto.studentCPBP.common.HantoPieceImpl;
 public class BetaHantoGame implements HantoGame
 {
 
+	private int moveNum = 0;
+	private HantoPlayerColor currentTurn = HantoPlayerColor.BLUE;
+	private HantoPieceImpl blueButterFly, redButterFly;
+	
+	private Hashtable<HantoCoordinateImpl, HantoPieceImpl> map = new Hashtable<>();
+	
 	/*
 	 * @see hanto.common.HantoGame#makeMove(hanto.common.HantoPieceType, hanto.common.HantoCoordinate, hanto.common.HantoCoordinate)
 	 */
@@ -29,6 +38,15 @@ public class BetaHantoGame implements HantoGame
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException
 	{
+		HantoCoordinateImpl implTo = new HantoCoordinateImpl(to);
+		
+		placePieceOnBoard(createButterflyForPlayer(), implTo);
+		
+		currentTurn = currentTurn == HantoPlayerColor.BLUE ? 
+				HantoPlayerColor.RED : HantoPlayerColor.BLUE;
+		
+		moveNum++;
+		
 		return MoveResult.OK;
 	}
 
@@ -38,7 +56,8 @@ public class BetaHantoGame implements HantoGame
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where)
 	{
-		return new HantoPieceImpl(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY);
+		HantoCoordinateImpl implWhere = new HantoCoordinateImpl(where);
+		return map.get(implWhere);
 	}
 
 	/*
@@ -50,5 +69,92 @@ public class BetaHantoGame implements HantoGame
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private HantoPieceImpl createButterflyForPlayer() throws HantoException 
+	{
+		HantoPieceImpl createdPiece;
+		
+		switch(currentTurn)
+		{
+		case BLUE:
+			blueButterFly = new HantoPieceImpl(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY);
+			createdPiece = blueButterFly;
+			break;
+		case RED:
+			redButterFly = new HantoPieceImpl(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY);
+			createdPiece = redButterFly;
+			break;
+		default:
+			throw new HantoException("Unexpected color");
+		}
+		
+		return createdPiece;
+	}
 
+	private void placePieceOnBoard(HantoPieceImpl piece, HantoCoordinateImpl where) throws HantoException
+	{
+		if(map.get(where) == null)
+		{
+			Hashtable<HantoCoordinateImpl, HantoPieceImpl> adjacency = getAdjacentPieces(where);
+			if (adjacency.size() == 0 && moveNum > 0)	
+			{
+				throw new HantoException("Cannot place piece - no adjacent pieces.");
+			}
+			else
+			{
+				map.put(where, piece);	
+			}
+		}
+		else
+		{
+			throw new HantoException("Cannot place piece on another piece");
+		}
+	}
+	
+	private Hashtable<HantoCoordinateImpl, HantoPieceImpl> getAdjacentPieces(HantoCoordinateImpl where)
+	{
+
+		Hashtable<HantoCoordinateImpl, HantoPieceImpl> table = new Hashtable<>();
+		
+		HantoCoordinateImpl northEast = new HantoCoordinateImpl(where.getX() + 1, where.getY());
+		HantoCoordinateImpl southEast = new HantoCoordinateImpl(where.getX() + 1, where.getY() - 1);
+		HantoCoordinateImpl south = new HantoCoordinateImpl(where.getX(), where.getY() - 1);
+		HantoCoordinateImpl southWest = new HantoCoordinateImpl(where.getX() - 1, where.getY());
+		HantoCoordinateImpl northWest = new HantoCoordinateImpl(where.getX() - 1, where.getY() + 1);
+		HantoCoordinateImpl north = new HantoCoordinateImpl(where.getX(), where.getY() + 1);
+		
+		HantoPieceImpl northPiece = table.get(north);
+		HantoPieceImpl northEastPiece = table.get(northEast);
+		HantoPieceImpl northWestPiece = table.get(northWest);
+		HantoPieceImpl southPiece = table.get(south);
+		HantoPieceImpl southEastPiece = table.get(southEast);
+		HantoPieceImpl southWestPiece = table.get(southWest);
+		
+		if(northPiece != null)
+		{
+			table.put(north, map.get(north));
+		}
+		if(northEastPiece != null) 
+		{
+			table.put(northEast, map.get(northEast));
+		}
+		if(northWestPiece != null) 
+		{
+			table.put(northWest, map.get(northWest));
+		}
+		if(southPiece != null) 
+		{
+			table.put(south, map.get(south));
+		}
+		if(southEastPiece != null) 
+		{
+			table.put(southEast, map.get(southEast));
+		}
+		if(southWestPiece != null) 
+		{
+			table.put(southWest, map.get(southWest));
+		}
+		
+		return table;
+	}
 }
