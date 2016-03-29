@@ -25,10 +25,13 @@ import hanto.studentCPBP.common.HantoPieceImpl;
 public class BetaHantoGame implements HantoGame
 {
 
+	private boolean blueButterflyPlaced = false;
+	private boolean redButterflyPlaced = false;
+	
 	private int moveNum = 0;
 	private HantoPlayerColor currentTurn = HantoPlayerColor.BLUE;
 	private HantoPieceImpl blueButterFly, redButterFly;
-	
+
 	private Hashtable<HantoCoordinateImpl, HantoPieceImpl> map = new Hashtable<>();
 	
 	/*
@@ -38,6 +41,23 @@ public class BetaHantoGame implements HantoGame
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException
 	{
+		try
+		{
+			validateMove(pieceType);
+		}
+		catch (HantoException e)
+		{
+			switch(currentTurn)
+			{
+			case BLUE:
+				return MoveResult.RED_WINS;
+			case RED:
+				return MoveResult.BLUE_WINS;
+			default:
+				break;
+			
+			}
+		}
 		HantoCoordinateImpl implTo = new HantoCoordinateImpl(to);
 		
 		placePieceOnBoard(buildHantoPiece(pieceType), implTo);
@@ -45,8 +65,8 @@ public class BetaHantoGame implements HantoGame
 		currentTurn = currentTurn == HantoPlayerColor.BLUE ? 
 				HantoPlayerColor.RED : HantoPlayerColor.BLUE;
 		
-		moveNum++;
-		
+		moveNum++;		
+
 		return MoveResult.OK;
 	}
 
@@ -71,17 +91,60 @@ public class BetaHantoGame implements HantoGame
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Validates a move given a piece type (and the current player)
+	 * @param type The type of Hanto piece
+	 * @return Whether the move is valid or not
+	 */
+	private void validateMove(HantoPieceType type) throws HantoException
+	{
+		MoveResult mr = MoveResult.OK;
+		
+		switch(currentTurn)
+		{
+		case BLUE:
+			if(blueButterflyPlaced)
+			{
+				throw new HantoException("Illegal move: Blue attempted to place a second Butterfly.");
+			}
+			else
+			{
+				blueButterflyPlaced = true;
+			}
+			break;
+		case RED:
+			if(redButterflyPlaced)
+			{
+				throw new HantoException("Illegal move: Red attempted to place a second Butterfly.");
+			}
+			else
+			{
+				redButterflyPlaced = true;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/**
+	 * Builds a Hanto based given a type (and the current player)
+	 * @param type The type of Hanto piece to build
+	 * @return A Hanto piece with based on the type and the current player
 	 * @throws HantoException
 	 */
 	private HantoPieceImpl buildHantoPiece(HantoPieceType type) throws HantoException
 	{
 		HantoPieceImpl piece = new HantoPieceImpl(currentTurn, type);
+		
 		return piece;
 	}
 	
-	//@Deprecated
+	/**
+	 * Builds a Butterfly Hanto piece for the player
+	 * @return A Butterfly piece based on the current player
+	 * @throws HantoException if the current player is for some reason NOT red or blue.
+	 */
+	@Deprecated
 	private HantoPieceImpl createButterflyForPlayer() throws HantoException 
 	{
 		HantoPieceImpl createdPiece;

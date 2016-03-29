@@ -74,6 +74,7 @@ public class BetaHantoMasterTest
 	{
 		// By default, blue moves first.
 		game = factory.makeHantoGame(HantoGameID.BETA_HANTO, BLUE);
+		
 	}
 	
 	@Test	// 1
@@ -118,15 +119,25 @@ public class BetaHantoMasterTest
 		assertEquals(MoveResult.OK, mr);
 	}
 	
-	@Test(expected = HantoException.class) // 6
-	public void testCannotPlaceTwoButterfliesPerPlayer() throws HantoException
+	@Test // 6
+	public void testBLUECannotPlaceTwoButterfliesPerPlayer() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0,1)); // R1
 		final MoveResult mr = game.makeMove(BUTTERFLY, null, makeCoordinate(1,0)); // B2
+		assertEquals(MoveResult.RED_WINS, mr);
 	}
 	
-	//@Test // 7 
+	@Test // 7
+	public void testREDCannotPlaceTwoButterflies() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1,0)); // R1
+		game.makeMove(SPARROW, null, makeCoordinate(0, 1)); // B2
+		final MoveResult mr = game.makeMove(BUTTERFLY, null, makeCoordinate(1,1)); // R2
+	}
+	
+	//@Test // 8 
 	public void testMustPlaceButterflyOnSixthMoveIfNotPlacedAlready() throws HantoException
 	{
 		game.makeMove(SPARROW, null, makeCoordinate(0,0)); // B1
