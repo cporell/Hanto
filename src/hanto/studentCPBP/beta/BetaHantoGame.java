@@ -63,6 +63,7 @@ public class BetaHantoGame implements HantoGame
 				break;
 
 			}
+			
 		}
 
 
