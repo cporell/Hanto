@@ -40,7 +40,7 @@ public class BetaHantoGame implements HantoGame
 	{
 		HantoCoordinateImpl implTo = new HantoCoordinateImpl(to);
 		
-		placePieceOnBoard(createButterflyForPlayer(), implTo);
+		placePieceOnBoard(buildHantoPiece(pieceType), implTo);
 		
 		currentTurn = currentTurn == HantoPlayerColor.BLUE ? 
 				HantoPlayerColor.RED : HantoPlayerColor.BLUE;
@@ -70,6 +70,18 @@ public class BetaHantoGame implements HantoGame
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @throws HantoException
+	 */
+	private HantoPieceImpl buildHantoPiece(HantoPieceType type) throws HantoException
+	{
+		HantoPieceImpl piece = new HantoPieceImpl(currentTurn, type);
+		return piece;
+	}
+	
+	//@Deprecated
 	private HantoPieceImpl createButterflyForPlayer() throws HantoException 
 	{
 		HantoPieceImpl createdPiece;
@@ -123,12 +135,12 @@ public class BetaHantoGame implements HantoGame
 		HantoCoordinateImpl northWest = new HantoCoordinateImpl(where.getX() - 1, where.getY() + 1);
 		HantoCoordinateImpl north = new HantoCoordinateImpl(where.getX(), where.getY() + 1);
 		
-		HantoPieceImpl northPiece = table.get(north);
-		HantoPieceImpl northEastPiece = table.get(northEast);
-		HantoPieceImpl northWestPiece = table.get(northWest);
-		HantoPieceImpl southPiece = table.get(south);
-		HantoPieceImpl southEastPiece = table.get(southEast);
-		HantoPieceImpl southWestPiece = table.get(southWest);
+		HantoPieceImpl northPiece = map.get(north);
+		HantoPieceImpl northEastPiece = map.get(northEast);
+		HantoPieceImpl northWestPiece = map.get(northWest);
+		HantoPieceImpl southPiece = map.get(south);
+		HantoPieceImpl southEastPiece = map.get(southEast);
+		HantoPieceImpl southWestPiece = map.get(southWest);
 		
 		if(northPiece != null)
 		{

@@ -1,0 +1,9 @@
+- Each player has 1 butterfly, 5 sparrows
+X Each piece can be placed, cannot move
+- Butterfly must be placed by 4th turn, if not, only legal move is butterfly
+- Game can last no more than 6 turns
+- Game can end if butterfly is surrounded before 6th turn
+X Pieces must be placed adjacent to at least one other piece, regardless of owner
+- Game ends in draw if no winner after 6 moves
+- Any illegal move: player loses, HantoException with appropriate message thrown
+- No moves made after Game Over. Else, HantoException thrown

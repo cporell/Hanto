@@ -111,6 +111,34 @@ public class BetaHantoMasterTest
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 2));
 	}
 	
+	@Test //5
+	public void bluePlacesSparrowOnFirstTurn() throws HantoException
+	{
+		final MoveResult mr = game.makeMove(SPARROW, null, makeCoordinate(0,0));
+		assertEquals(MoveResult.OK, mr);
+	}
+	
+	@Test(expected = HantoException.class) // 6
+	public void testCannotPlaceTwoButterfliesPerPlayer() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,1)); // R1
+		final MoveResult mr = game.makeMove(BUTTERFLY, null, makeCoordinate(1,0)); // B2
+	}
+	
+	//@Test // 7 
+	public void testMustPlaceButterflyOnSixthMoveIfNotPlacedAlready() throws HantoException
+	{
+		game.makeMove(SPARROW, null, makeCoordinate(0,0)); // B1
+		game.makeMove(SPARROW, null, makeCoordinate(0,0)); // R1
+		game.makeMove(SPARROW, null, makeCoordinate(0,0)); // B2
+		game.makeMove(SPARROW, null, makeCoordinate(0,0)); // R2
+		game.makeMove(SPARROW, null, makeCoordinate(0,0)); // B3
+		game.makeMove(SPARROW, null, makeCoordinate(0,0)); // R3
+		game.makeMove(SPARROW, null, makeCoordinate(0,0)); // B4
+		game.makeMove(SPARROW, null, makeCoordinate(0,0)); // R4
+	}
+	
 	// Helper methods
 	private HantoCoordinate makeCoordinate(int x, int y)
 	{
