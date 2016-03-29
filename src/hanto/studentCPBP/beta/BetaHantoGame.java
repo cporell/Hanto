@@ -13,6 +13,7 @@
 package hanto.studentCPBP.beta;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import hanto.common.*;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
@@ -24,16 +25,17 @@ import hanto.studentCPBP.common.HantoPieceImpl;
  */
 public class BetaHantoGame implements HantoGame
 {
+	private boolean isMoveValid = false;
 
 	private boolean blueButterflyPlaced = false;
 	private boolean redButterflyPlaced = false;
-	
+
 	private int moveNum = 0;
 	private HantoPlayerColor currentTurn = HantoPlayerColor.BLUE;
 	private HantoPieceImpl blueButterFly, redButterFly;
 
-	private Hashtable<HantoCoordinateImpl, HantoPieceImpl> map = new Hashtable<>();
-	
+	private Map<HantoCoordinateImpl, HantoPieceImpl> map = new Hashtable<>();
+
 	/*
 	 * @see hanto.common.HantoGame#makeMove(hanto.common.HantoPieceType, hanto.common.HantoCoordinate, hanto.common.HantoCoordinate)
 	 */
@@ -41,6 +43,8 @@ public class BetaHantoGame implements HantoGame
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException
 	{
+		MoveResult mr = MoveResult.OK;
+
 		try
 		{
 			validateMove(pieceType);
@@ -50,24 +54,48 @@ public class BetaHantoGame implements HantoGame
 			switch(currentTurn)
 			{
 			case BLUE:
-				return MoveResult.RED_WINS;
+				mr =  MoveResult.RED_WINS;
+				break;
 			case RED:
-				return MoveResult.BLUE_WINS;
+				mr =  MoveResult.BLUE_WINS;
+				break;
 			default:
 				break;
-			
+
 			}
 		}
-		HantoCoordinateImpl implTo = new HantoCoordinateImpl(to);
-		
-		placePieceOnBoard(buildHantoPiece(pieceType), implTo);
-		
+
+
+
+		if(isMoveValid)
+		{
+			HantoCoordinateImpl implTo = new HantoCoordinateImpl(to);
+
+			placePieceOnBoard(buildHantoPiece(pieceType), implTo);
+		}
+
+		boolean hasPlayerWon = testForWin();
+
+		if(moveNum >= 11)
+		{
+			mr = MoveResult.DRAW;
+		}
+
 		currentTurn = currentTurn == HantoPlayerColor.BLUE ? 
 				HantoPlayerColor.RED : HantoPlayerColor.BLUE;
-		
+
 		moveNum++;		
 
-		return MoveResult.OK;
+		return mr;
+	}
+
+	/**
+	 * 
+	 * @return Whether there is a win or not
+	 */
+	private boolean testForWin() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/*
@@ -89,7 +117,7 @@ public class BetaHantoGame implements HantoGame
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	/**
 	 * Validates a move given a piece type (and the current player)
 	 * @param type The type of Hanto piece
@@ -97,35 +125,60 @@ public class BetaHantoGame implements HantoGame
 	 */
 	private void validateMove(HantoPieceType type) throws HantoException
 	{
-		MoveResult mr = MoveResult.OK;
-		
+		isMoveValid = true;
+
 		switch(currentTurn)
 		{
 		case BLUE:
-			if(blueButterflyPlaced)
+			if((moveNum >= 6) && (!blueButterflyPlaced) && (type != HantoPieceType.BUTTERFLY))
 			{
-				throw new HantoException("Illegal move: Blue attempted to place a second Butterfly.");
+				isMoveValid = false;
+				throw new HantoException("Illegal move: Blue has no Butterfly and must place it at this point.");
 			}
 			else
 			{
-				blueButterflyPlaced = true;
+				if(type == HantoPieceType.BUTTERFLY)
+				{
+					if(blueButterflyPlaced)
+					{
+						isMoveValid = false;
+						throw new HantoException("Illegal move: Blue attempted to place a second Butterfly.");
+					}
+					else
+					{
+						blueButterflyPlaced = true;
+					}	
+				}
 			}
+
 			break;
 		case RED:
-			if(redButterflyPlaced)
+			if((moveNum >= 7) && (!redButterflyPlaced) && (type != HantoPieceType.BUTTERFLY))
 			{
-				throw new HantoException("Illegal move: Red attempted to place a second Butterfly.");
+				isMoveValid = false;
+				throw new HantoException("Illegal move: Red has no Butterfly and must place it at this point.");
 			}
 			else
 			{
-				redButterflyPlaced = true;
+				if(type == HantoPieceType.BUTTERFLY)
+				{
+					if(redButterflyPlaced)
+					{
+						isMoveValid = false;
+						throw new HantoException("Illegal move: Red attempted to place a second Butterfly.");
+					}
+					else
+					{
+						redButterflyPlaced = true;
+					}	
+				}
 			}
 			break;
 		default:
 			break;
 		}
 	}
-	
+
 	/**
 	 * Builds a Hanto based given a type (and the current player)
 	 * @param type The type of Hanto piece to build
@@ -135,20 +188,21 @@ public class BetaHantoGame implements HantoGame
 	private HantoPieceImpl buildHantoPiece(HantoPieceType type) throws HantoException
 	{
 		HantoPieceImpl piece = new HantoPieceImpl(currentTurn, type);
-		
+
 		return piece;
 	}
-	
+
 	/**
 	 * Builds a Butterfly Hanto piece for the player
 	 * @return A Butterfly piece based on the current player
 	 * @throws HantoException if the current player is for some reason NOT red or blue.
 	 */
+	/*
 	@Deprecated
 	private HantoPieceImpl createButterflyForPlayer() throws HantoException 
 	{
 		HantoPieceImpl createdPiece;
-		
+
 		switch(currentTurn)
 		{
 		case BLUE:
@@ -162,15 +216,16 @@ public class BetaHantoGame implements HantoGame
 		default:
 			throw new HantoException("Unexpected color");
 		}
-		
+
 		return createdPiece;
 	}
+	 */
 
 	private void placePieceOnBoard(HantoPieceImpl piece, HantoCoordinateImpl where) throws HantoException
 	{
 		if(map.get(where) == null)
 		{
-			Hashtable<HantoCoordinateImpl, HantoPieceImpl> adjacency = getAdjacentPieces(where);
+			Map<HantoCoordinateImpl, HantoPieceImpl> adjacency = getAdjacentPieces(where);
 			if (adjacency.size() == 0 && moveNum > 0)	
 			{
 				throw new HantoException("Cannot place piece - no adjacent pieces.");
@@ -185,26 +240,26 @@ public class BetaHantoGame implements HantoGame
 			throw new HantoException("Cannot place piece on another piece");
 		}
 	}
-	
-	private Hashtable<HantoCoordinateImpl, HantoPieceImpl> getAdjacentPieces(HantoCoordinateImpl where)
+
+	private Map<HantoCoordinateImpl, HantoPieceImpl> getAdjacentPieces(HantoCoordinateImpl where)
 	{
 
-		Hashtable<HantoCoordinateImpl, HantoPieceImpl> table = new Hashtable<>();
-		
+		Map<HantoCoordinateImpl, HantoPieceImpl> table = new Hashtable<>();
+
 		HantoCoordinateImpl northEast = new HantoCoordinateImpl(where.getX() + 1, where.getY());
 		HantoCoordinateImpl southEast = new HantoCoordinateImpl(where.getX() + 1, where.getY() - 1);
 		HantoCoordinateImpl south = new HantoCoordinateImpl(where.getX(), where.getY() - 1);
 		HantoCoordinateImpl southWest = new HantoCoordinateImpl(where.getX() - 1, where.getY());
 		HantoCoordinateImpl northWest = new HantoCoordinateImpl(where.getX() - 1, where.getY() + 1);
 		HantoCoordinateImpl north = new HantoCoordinateImpl(where.getX(), where.getY() + 1);
-		
+
 		HantoPieceImpl northPiece = map.get(north);
 		HantoPieceImpl northEastPiece = map.get(northEast);
 		HantoPieceImpl northWestPiece = map.get(northWest);
 		HantoPieceImpl southPiece = map.get(south);
 		HantoPieceImpl southEastPiece = map.get(southEast);
 		HantoPieceImpl southWestPiece = map.get(southWest);
-		
+
 		if(northPiece != null)
 		{
 			table.put(north, map.get(north));
@@ -229,7 +284,7 @@ public class BetaHantoGame implements HantoGame
 		{
 			table.put(southWest, map.get(southWest));
 		}
-		
+
 		return table;
 	}
 }
