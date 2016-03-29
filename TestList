@@ -3,11 +3,11 @@ X Each piece can be placed, cannot move
 X Piece cannot be placed on another piece
 X Butterfly must be placed by 4th turn, if not, only legal move is butterfly
 X Players can only place 1 Butterfly
-- Game can last no more than 6 turns
+X Game can last no more than 6 turns
 - Game can end if butterfly is surrounded before 6th turn
 - Test Blue wins
 - Test Red wins
 X Pieces must be placed adjacent to at least one other piece, regardless of owner
-- Game ends in draw if no winner after 6 moves
+X Game ends in draw if no winner after 6 moves
 X Any illegal move: player loses, HantoException with appropriate message thrown
 - No moves made after Game Over. Else, HantoException thrown
