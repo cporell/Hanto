@@ -18,7 +18,6 @@ import static hanto.common.MoveResult.*;
 import static org.junit.Assert.*;
 import org.junit.*;
 import hanto.common.*;
-import hanto.studentCPBP.alpha.AlphaHantoGame;
 
 /**
  * Test cases for Alpha Hanto

@@ -35,6 +35,11 @@ public class BetaHantoMasterTest
 	{
 		private final int x, y;
 		
+		/**
+		 * Builds a Hanto coord for testing
+		 * @param x X-coord
+		 * @param y Y-coord
+		 */
 		public TestHantoCoordinate(int x, int y)
 		{
 			this.x = x;
@@ -63,12 +68,18 @@ public class BetaHantoMasterTest
 	private static HantoGameFactory factory;
 	private HantoGame game;
 	
+	/**
+	 * Initialize a HantoGameFactory
+	 */
 	@BeforeClass
 	public static void initializeClass()
 	{
 		factory = HantoGameFactory.getInstance();
 	}
 	
+	/**
+	 * 
+	 */
 	@Before
 	public void setup()
 	{
@@ -223,6 +234,10 @@ public class BetaHantoMasterTest
 		assertEquals(MoveResult.DRAW, mr);
 	}
 	
+	/**
+	 * Test that making a move after the game ends throws a HantoException
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class) //11
 	public void testGameDoesNotAllowMovesAfterEnd() throws HantoException
 	{
@@ -241,6 +256,10 @@ public class BetaHantoMasterTest
 		game.makeMove(SPARROW, null, makeCoordinate(12,0)); // B7
 	}
 	
+	/**
+	 * Test that we can only place Butterflies/Sparrows in Beta Hanto
+	 * @throws HantoException
+	 */
 	@Test //12
 	public void testCannotPlaceInvalidPiece() throws HantoException
 	{
@@ -248,6 +267,10 @@ public class BetaHantoMasterTest
 		assertEquals(MoveResult.RED_WINS, result);
 	}
 	
+	/**
+	 * Test that the Red player wins if the Blue Butterfly is surrounded
+	 * @throws HantoException
+	 */
 	@Test //13
 	public void testGameEndsIfBlueButterflySurrounded() throws HantoException
 	{
@@ -261,6 +284,11 @@ public class BetaHantoMasterTest
 		
 		assertEquals(MoveResult.RED_WINS, result);
 	}
+	
+	/**
+	 * Test that Blue wins if the Red Butterfly is surrounded
+	 * @throws HantoException
+	 */
 	@Test //14
 	public void testGameEndsIfRedButterflySurrounded() throws HantoException
 	{
@@ -275,6 +303,10 @@ public class BetaHantoMasterTest
 		assertEquals(MoveResult.BLUE_WINS, result);
 	}
 	
+	/**
+	 * Test that the first piece can only be placed at 0,0
+	 * @throws HantoException
+	 */
 	@Test //15
 	public void testMustStartAtOrigin() throws HantoException
 	{
@@ -282,6 +314,10 @@ public class BetaHantoMasterTest
 		assertEquals(MoveResult.RED_WINS, result);
 	}
 	
+	/**
+	 * Test that the game ends with a Draw if both butterflies are surrounded at once
+	 * @throws HantoException
+	 */
 	@Test //16
 	public void testGameEndsOnDraw() throws HantoException
 	{

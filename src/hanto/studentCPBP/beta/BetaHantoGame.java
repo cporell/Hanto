@@ -21,7 +21,9 @@ import hanto.studentCPBP.common.HantoPieceImpl;
 import hanto.studentCPBP.common.MoveException;
 
 /**
- * <<Fill this in>>
+ * Beta version of Hanto
+ * @author Connor Porell cgporell
+ * @author Benny Peake bpeake
  * @version Mar 16, 2016
  */
 public class BetaHantoGame implements HantoGame
@@ -38,6 +40,10 @@ public class BetaHantoGame implements HantoGame
 
 	private Map<HantoCoordinateImpl, HantoPieceImpl> map = new Hashtable<>();
 
+	/**
+	 * Builds a BetaHantoGame with the specified player making the first move.
+	 * @param movesFirst The player that will move first.
+	 */
 	public BetaHantoGame(HantoPlayerColor movesFirst) 
 	{
 		currentTurn = movesFirst;
@@ -108,7 +114,9 @@ public class BetaHantoGame implements HantoGame
 	private boolean testForBlueSurrounded()
 	{
 		if(!blueButterflyPlaced)
+		{
 			return false;
+		}
 		
 		Map<HantoCoordinateImpl, HantoPieceImpl> adjacent = getAdjacentPieces(blueButterflyLocation);
 		return adjacent.size() >= 6;
@@ -117,7 +125,9 @@ public class BetaHantoGame implements HantoGame
 	private boolean testForRedSurrounded()
 	{
 		if(!redButterflyPlaced)
-			return false;
+		{
+			return false;			
+		}
 		
 		Map<HantoCoordinateImpl, HantoPieceImpl> adjacent = getAdjacentPieces(redButterflyLocation);
 		return adjacent.size() >= 6;
