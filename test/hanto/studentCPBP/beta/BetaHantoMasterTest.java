@@ -180,7 +180,6 @@ public class BetaHantoMasterTest
 		game.makeMove(SPARROW, null, makeCoordinate(0,-1)); // B3
 		game.makeMove(SPARROW, null, makeCoordinate(1,1)); // R3
 		final MoveResult mr = game.makeMove(SPARROW, null, makeCoordinate(-1,-1)); // B4
-		game.makeMove(SPARROW, null, makeCoordinate(1,2)); // R4
 		assertEquals(MoveResult.RED_WINS, mr);
 	}
 	
@@ -222,6 +221,82 @@ public class BetaHantoMasterTest
 		game.makeMove(SPARROW, null, makeCoordinate(10,0)); // B6		
 		final MoveResult mr = game.makeMove(SPARROW, null, makeCoordinate(11,0)); // R6
 		assertEquals(MoveResult.DRAW, mr);
+	}
+	
+	@Test(expected = HantoException.class) //11
+	public void testGameDoesNotAllowMovesAfterEnd() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1,0)); // R1
+		game.makeMove(SPARROW, null, makeCoordinate(2,0)); // B2
+		game.makeMove(SPARROW, null, makeCoordinate(3,0)); // R2
+		game.makeMove(SPARROW, null, makeCoordinate(4,0)); // B3
+		game.makeMove(SPARROW, null, makeCoordinate(5,0)); // R3
+		game.makeMove(SPARROW, null, makeCoordinate(6,0)); // B4
+		game.makeMove(SPARROW, null, makeCoordinate(7,0)); // R4
+		game.makeMove(SPARROW, null, makeCoordinate(8,0)); // B5		
+		game.makeMove(SPARROW, null, makeCoordinate(9,0)); // R5
+		game.makeMove(SPARROW, null, makeCoordinate(10,0)); // B6
+		game.makeMove(SPARROW, null, makeCoordinate(11,0)); // R6
+		game.makeMove(SPARROW, null, makeCoordinate(12,0)); // B7
+	}
+	
+	@Test //12
+	public void testCannotPlaceInvalidPiece() throws HantoException
+	{
+		MoveResult result = game.makeMove(HORSE, null, makeCoordinate(0,0)); // B1
+		assertEquals(MoveResult.RED_WINS, result);
+	}
+	
+	@Test //13
+	public void testGameEndsIfBlueButterflySurrounded() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,1)); // R1
+		game.makeMove(SPARROW, null, makeCoordinate(1,0)); // R2
+		game.makeMove(SPARROW, null, makeCoordinate(1,-1)); // B3
+		game.makeMove(SPARROW, null, makeCoordinate(0,-1)); // R3
+		game.makeMove(SPARROW, null, makeCoordinate(-1,0)); // B4
+		MoveResult result = game.makeMove(SPARROW, null, makeCoordinate(-1,1)); // R4
+		
+		assertEquals(MoveResult.RED_WINS, result);
+	}
+	@Test //14
+	public void testGameEndsIfRedButterflySurrounded() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1,0)); // R1
+		game.makeMove(SPARROW, null, makeCoordinate(0,1)); // R2
+		game.makeMove(SPARROW, null, makeCoordinate(1,1)); // B3
+		game.makeMove(SPARROW, null, makeCoordinate(2,0)); // R3
+		game.makeMove(SPARROW, null, makeCoordinate(2,-1)); // B4
+		MoveResult result = game.makeMove(SPARROW, null, makeCoordinate(1,-1)); // R4
+		
+		assertEquals(MoveResult.BLUE_WINS, result);
+	}
+	
+	@Test //15
+	public void testMustStartAtOrigin() throws HantoException
+	{
+		MoveResult result = game.makeMove(BUTTERFLY, null, makeCoordinate(1,0));
+		assertEquals(MoveResult.RED_WINS, result);
+	}
+	
+	@Test //16
+	public void testGameEndsOnDraw() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,-1));
+		game.makeMove(SPARROW, null, makeCoordinate(1,0));
+		game.makeMove(SPARROW, null, makeCoordinate(0,1));
+		game.makeMove(SPARROW, null, makeCoordinate(-1,1));
+		game.makeMove(SPARROW, null, makeCoordinate(-1,0));
+		game.makeMove(SPARROW, null, makeCoordinate(-1,-1));
+		game.makeMove(SPARROW, null, makeCoordinate(0,-2));
+		game.makeMove(SPARROW, null, makeCoordinate(1,-2));
+		MoveResult result = game.makeMove(SPARROW, null, makeCoordinate(1,-1));
+		
+		assertEquals(MoveResult.DRAW, result);
 	}
 	
 	// Helper methods
