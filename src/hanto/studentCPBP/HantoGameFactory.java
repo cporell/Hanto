@@ -13,6 +13,7 @@ package hanto.studentCPBP;
 import hanto.common.*;
 import hanto.studentCPBP.alpha.AlphaHantoGame;
 import hanto.studentCPBP.beta.BetaHantoGame;
+import hanto.studentCPBP.gamma.GammaHantoGame;
 
 /**
  * This is a singleton class that provides a factory to create an instance of any version
@@ -66,6 +67,9 @@ public class HantoGameFactory
 				break;
 			case BETA_HANTO:
 				game = new BetaHantoGame(movesFirst);
+				break;
+			case GAMMA_HANTO:
+				game = new GammaHantoGame(movesFirst);
 				break;
 		}
 		return game;

@@ -89,7 +89,10 @@ public class GammaHantoMasterTest
 	}
 
 	//===============GAMMA HANTO TESTS================================================
-	
+	/**
+	 * Test that the first move must be at origin.
+	 * @throws HantoException
+	 */
 	
 	//===============BETA HANTO TESTS================================================
 	/**
@@ -188,6 +191,7 @@ public class GammaHantoMasterTest
 	 * @throws HantoException
 	 */
 	@Test // 8 
+	(expected = HantoException.class)
 	public void testBlueMustPlaceButterflyOnFourthMoveIfNotPlacedAlready() throws HantoException
 	{
 		game.makeMove(SPARROW, null, makeCoordinate(0,0)); // B1
@@ -205,6 +209,7 @@ public class GammaHantoMasterTest
 	 * @throws HantoException
 	 */
 	@Test // 9 
+	(expected = HantoException.class)
 	public void testRedMustPlaceButterflyOnFourthMoveIfNotPlacedAlready() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
@@ -267,6 +272,7 @@ public class GammaHantoMasterTest
 	 * @throws HantoException
 	 */
 	@Test //12
+	(expected = HantoException.class)
 	public void testCannotPlaceInvalidPiece() throws HantoException
 	{
 		MoveResult result = game.makeMove(HORSE, null, makeCoordinate(0,0)); // B1
@@ -314,6 +320,7 @@ public class GammaHantoMasterTest
 	 * @throws HantoException
 	 */
 	@Test //15
+	(expected = HantoException.class)
 	public void testMustStartAtOrigin() throws HantoException
 	{
 		MoveResult result = game.makeMove(BUTTERFLY, null, makeCoordinate(1,0));

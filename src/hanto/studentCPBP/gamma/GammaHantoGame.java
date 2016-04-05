@@ -12,6 +12,9 @@
 
 package hanto.studentCPBP.gamma;
 
+import static hanto.common.HantoPieceType.BUTTERFLY;
+import static hanto.common.HantoPlayerColor.BLUE;
+
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -33,8 +36,10 @@ public class GammaHantoGame implements HantoGame
 	private boolean redButterflyPlaced = false;
 	private HantoCoordinateImpl redButterflyLocation;
 
+	private int turn = 0;
 	private int moveNum = 0;
-	private HantoPlayerColor currentTurn = HantoPlayerColor.BLUE;
+	private HantoPlayerColor currentTurn;
+	private final HantoPlayerColor movesFirst;
 	
 	private boolean isGameOver = false;
 
@@ -46,7 +51,7 @@ public class GammaHantoGame implements HantoGame
 	 */
 	public GammaHantoGame(HantoPlayerColor movesFirst) 
 	{
-		currentTurn = movesFirst;
+		currentTurn = this.movesFirst = movesFirst;
 	}
 
 	/*
@@ -106,7 +111,10 @@ public class GammaHantoGame implements HantoGame
 		currentTurn = currentTurn == HantoPlayerColor.BLUE ? 
 				HantoPlayerColor.RED : HantoPlayerColor.BLUE;
 
-		moveNum++;		
+		moveNum++;	
+		if (endOfTurn()) {
+			turn++;
+		}
 
 		return MoveResult.OK;
 	}
@@ -160,41 +168,57 @@ public class GammaHantoGame implements HantoGame
 	 */
 	private void validateMove(HantoPieceType type, HantoCoordinateImpl where) throws MoveException, HantoException
 	{
+		// Check for end of game.
 		if(isGameOver)
 		{
 			throw new HantoException("You cannot move when the game is over.");
 		}
-		else if(type != HantoPieceType.SPARROW && type != HantoPieceType.BUTTERFLY)
-		{
-			throw new MoveException("In beta you can only place a sparrow or a butterfly.");
+		checkForLegalPieceTypes(type);
+		checkForStartAtOrigin(where);
+		checkButterflyPlacement(type);
+		checkIfButterflyPlacedByFourthTurn();
+	}
+	
+	private void checkButterflyPlacement(HantoPieceType type) throws HantoException
+	{
+		if (type == BUTTERFLY) {
+			final boolean used = currentTurn == BLUE ? blueButterflyPlaced : redButterflyPlaced;
+			if (used) {
+				throw new HantoException("You have already played your BUTTERFLY");
+			}
+			if (currentTurn == BLUE) {
+				blueButterflyPlaced = true;
+			} else {
+				redButterflyPlaced = true;
+			}
+		}	
+	}
+	
+	// This method adapted from Prof. Pollice's solution to Beta Hanto.
+	private void checkIfButterflyPlacedByFourthTurn() throws HantoException
+	{		
+		if (turn == 3) {
+			final boolean butterflyUsed = currentTurn == BLUE ? blueButterflyPlaced
+					: redButterflyPlaced;
+			if (!butterflyUsed) {
+				throw new HantoException("You must place Butterfly by the fourth turn. You lose");
+			}
 		}
-		else if(moveNum == 0 && !where.equals(new HantoCoordinateImpl(0, 0)))
+	}
+	
+	private void checkForStartAtOrigin(HantoCoordinateImpl where) throws HantoException
+	{
+		if(moveNum == 0 && !where.equals(new HantoCoordinateImpl(0, 0)))
 		{
-			throw new MoveException("First move must be at (0, 0).");
+			throw new HantoException("First move must be at origin.");
 		}
-		
-		switch(currentTurn)
+	}
+
+	private void checkForLegalPieceTypes(HantoPieceType type) throws HantoException
+	{
+		if(type != HantoPieceType.SPARROW && type != HantoPieceType.BUTTERFLY)
 		{
-		case BLUE:
-			if((moveNum >= 6) && (!blueButterflyPlaced) && (type != HantoPieceType.BUTTERFLY))
-			{
-				throw new MoveException("Illegal move: Blue has no Butterfly and must place it at this point.");
-			}
-			else if(type == HantoPieceType.BUTTERFLY && blueButterflyPlaced)
-			{
-				throw new MoveException("Illegal move: Blue attempted to place a second Butterfly.");
-			}
-			break;
-		case RED:
-			if((moveNum >= 7) && (!redButterflyPlaced) && (type != HantoPieceType.BUTTERFLY))
-			{
-				throw new MoveException("Illegal move: Red has no Butterfly and must place it at this point.");
-			}
-			else if(type == HantoPieceType.BUTTERFLY && redButterflyPlaced)
-			{
-				throw new MoveException("Illegal move: Red attempted to place a second Butterfly.");
-			}
-			break;
+			throw new HantoException("In gamma you can only place a sparrow or a butterfly.");
 		}
 	}
 
@@ -291,5 +315,10 @@ public class GammaHantoGame implements HantoGame
 		}
 
 		return table;
+	}
+	
+	private boolean endOfTurn()
+	{
+		return currentTurn == movesFirst;
 	}
 }
