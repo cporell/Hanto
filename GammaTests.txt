@@ -1,0 +1,12 @@
+- game can play 20 turns
+- game can gives draw after 20 turns.
+- pieces placed next to pieces of the same color
+- pieces cannot be placed next to opposing pieces
+- first two pieces do not care about this rule
+- pieces can walk
+- pieces are continous after moving
+- can't move from an invalid location (through enemeis)
+- can win from moving
+- red can win from moving win
+- blue can win from moving
+- can draw from moving
