@@ -87,7 +87,11 @@ public class GammaHantoMasterTest
 		game = factory.makeHantoGame(HantoGameID.GAMMA_HANTO, BLUE);
 		
 	}
+
+	//===============GAMMA HANTO TESTS================================================
 	
+	
+	//===============BETA HANTO TESTS================================================
 	/**
 	 * Test that Blue can place their Butterfly at origin
 	 * @throws HantoException
@@ -155,6 +159,7 @@ public class GammaHantoMasterTest
 	 * @throws HantoException
 	 */
 	@Test // 6
+	(expected = HantoException.class)
 	public void testBLUECannotPlaceTwoButterfliesPerPlayer() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
@@ -168,6 +173,7 @@ public class GammaHantoMasterTest
 	 * @throws HantoException
 	 */
 	@Test // 7
+	(expected = HantoException.class)
 	public void testREDCannotPlaceTwoButterflies() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
