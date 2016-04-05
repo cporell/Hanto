@@ -21,7 +21,7 @@ import org.junit.*;
 
 /**
  * Test cases for Beta Hanto.
- * @version Sep 14, 2014
+ * @version Mar 30, 2016
  * @author Connor Porell (cgporell)
  * @author Benny Peake (bpeake)
  */
