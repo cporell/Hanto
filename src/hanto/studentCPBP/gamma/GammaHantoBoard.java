@@ -12,7 +12,8 @@ import hanto.studentCPBP.common.IHantoBoard;
 
 public class GammaHantoBoard implements IHantoBoard
 {
-	private Map<HantoCoordinate, ArrayList<HantoCommonPiece>> boardLookup = new HashMap<>();
+	private Map<HantoCoordinateImpl, ArrayList<HantoCommonPiece>> boardLookup = new HashMap<>();
+	private Map<HantoCommonPiece, HantoCoordinateImpl> pieceLookup = new HashMap<>();
 	
 	@Override
 	public void addPiece(HantoCommonPiece piece, HantoCoordinate at) 
@@ -25,6 +26,7 @@ public class GammaHantoBoard implements IHantoBoard
 		}
 		
 		current.add(piece);
+		pieceLookup.put(piece, convertToLocalCoordImpl(at));
 	}
 
 	@Override
@@ -50,11 +52,6 @@ public class GammaHantoBoard implements IHantoBoard
 		return coords;
 	}
 	
-	private HantoCoordinateImpl convertToLocalCoordImpl(HantoCoordinate coord)
-	{
-		return new HantoCoordinateImpl(coord);
-	}
-
 	@Override
 	public HantoCoordinate[] getAdjacent(HantoCoordinate at)
 	{
@@ -68,5 +65,30 @@ public class GammaHantoBoard implements IHantoBoard
 		coords[5] = new HantoCoordinateImpl(at.getX(), at.getY() + 1);
 		
 		return coords;
+	}
+ 
+	@Override
+	public void movePiece(HantoCommonPiece piece, HantoCoordinate to)
+	{
+		ArrayList<HantoCommonPiece> fromPieces = boardLookup.get(pieceLookup.get(piece));
+		fromPieces.remove(piece);
+		
+		if(fromPieces.size() == 0)
+		{
+			boardLookup.remove(pieceLookup.get(piece));
+		}
+		
+		addPiece(piece, to);
+	}
+
+	private HantoCoordinateImpl convertToLocalCoordImpl(HantoCoordinate coord)
+	{
+		return new HantoCoordinateImpl(coord);
+	}
+
+	@Override
+	public HantoCoordinate getPieceLocation(HantoCommonPiece piece) 
+	{
+		return pieceLookup.get(piece);
 	}
 }

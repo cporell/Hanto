@@ -1,8 +1,10 @@
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.gamma;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.studentCPBP.common.HantoCommonPiece;
+import hanto.studentCPBP.common.IHantoMover;
 
 public class HantoSparrowPiece extends HantoCommonPiece {
 
@@ -18,9 +20,10 @@ public class HantoSparrowPiece extends HantoCommonPiece {
 	}
 
 	@Override
-	public IHantoMover createWalkMover() {
+	public IHantoMover createWalkMover(HantoCoordinate to)
+	{
 		// TODO Auto-generated method stub
-		return null;
+		return new WalkMover(this, to);
 	}
 
 }

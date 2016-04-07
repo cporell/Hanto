@@ -20,6 +20,7 @@ public abstract class HantoCommonPiece implements HantoPiece
 		this.color = color;
 		this.type = type;
 	}
+	
 	/*
 	 * @see hanto.common.HantoPiece#getColor()
 	 */
@@ -40,5 +41,5 @@ public abstract class HantoCommonPiece implements HantoPiece
 	
 	public abstract IHantoMover createPlaceMover(HantoCoordinate at);
 	
-	public abstract IHantoMover createWalkMover();
+	public abstract IHantoMover createWalkMover(HantoCoordinate to);
 }

@@ -90,6 +90,76 @@ public class GammaHantoMasterTest
 
 	//===============GAMMA HANTO TESTS================================================
 	
+	@Test // 1 
+	public void pieceCanWalk() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(0, -1));
+		
+		assertEquals(null, game.getPieceAt(makeCoordinate(0, 0)));
+		
+		HantoPiece piece = game.getPieceAt(makeCoordinate(0, -1));
+		assertEquals(BUTTERFLY, piece.getType());
+		assertEquals(BLUE, piece.getColor());
+	}
+	
+	@Test(expected = HantoException.class) //2
+	public void cannotMovePieceThatDoesntExist() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(1, 0), makeCoordinate(2, -1));
+	}
+	
+	@Test(expected = HantoException.class) //3
+	public void cannotMovePieceOfWrongType() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(SPARROW, makeCoordinate(0, 0), makeCoordinate(0, -1));
+	}
+	
+	@Test(expected = HantoException.class) //4
+	public void piecesCannotMoveToTheSameSpot() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(0, 0));
+	}
+	
+	@Test(expected = HantoException.class) //5
+	public void piecesCannotMoveMoreThanOneSpace() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(SPARROW, null, makeCoordinate(2, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(2, 0));
+	}
+	
+	@Test(expected = HantoException.class) //6
+	public void piecesMustBeContinousWhenMoving() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(-1, 0));
+	}
+	
+	@Test(expected = HantoException.class) //6
+	public void piecesCannotMoveOnTopOfEachother() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(1, -1));
+	}
+	
+	@Test(expected = HantoException.class) //6
+	public void piecesMustBePlacedNextToSameColor() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(SPARROW, null, makeCoordinate(2, -1));
+	}
 
 	/**
 	 * Test that a game ends in a draw after 20 turns if there is no winner.

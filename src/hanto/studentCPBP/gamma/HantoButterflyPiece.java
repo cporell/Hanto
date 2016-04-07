@@ -1,8 +1,10 @@
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.gamma;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.studentCPBP.common.HantoCommonPiece;
+import hanto.studentCPBP.common.IHantoMover;
 
 public class HantoButterflyPiece extends HantoCommonPiece
 {
@@ -19,9 +21,9 @@ public class HantoButterflyPiece extends HantoCommonPiece
 	}
 
 	@Override
-	public IHantoMover createWalkMover() 
+	public IHantoMover createWalkMover(HantoCoordinate to) 
 	{
-		return null;
+		return new WalkMover(this, to);
 	}
 
 }

@@ -32,14 +32,38 @@ public class GammaHantoGame implements HantoGame
 		pieceFactory = new GammaHantoPieceFactory();
 	}
 	
-	@Override
+	@Override 
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException 
 	{
 		rules.beginTurn();
 		
-		HantoCommonPiece piece = pieceFactory.createPiece(pieceType, rules.getCurrentTurn());
-		IHantoMover mover = piece.createPlaceMover(to);
+		IHantoMover mover;
+		if(from == null)
+		{
+			HantoCommonPiece piece = pieceFactory.createPiece(pieceType, rules.getCurrentTurn());
+			mover = piece.createPlaceMover(to);
+		}
+		else
+		{
+			HantoCommonPiece[] pieces = board.getPieces(from);
+			HantoCommonPiece selectedPiece = null;
+			for(HantoCommonPiece piece : pieces)
+			{
+				if(piece.getType() == pieceType)
+				{
+					selectedPiece = piece;
+					break;
+				}
+			}
+			
+			if(selectedPiece == null)
+			{
+				throw new HantoException("The piece does not exist.");
+			}
+			
+			mover = selectedPiece.createWalkMover(to);
+		}
 		
 		boolean shouldContinue;
 		MoveResult result;

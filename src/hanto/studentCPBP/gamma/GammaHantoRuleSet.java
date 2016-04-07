@@ -196,7 +196,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 			}
 		}
 	}
-
+ 
 	private boolean checkLocationSurrounded(IHantoBoard board, HantoCoordinate blueButterflyLocation) 
 	{
 		HantoCoordinate[] adjacent = board.getAdjacent(blueButterflyLocation);

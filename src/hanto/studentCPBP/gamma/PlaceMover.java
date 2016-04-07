@@ -1,6 +1,9 @@
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.gamma;
 
 import hanto.common.HantoCoordinate;
+import hanto.studentCPBP.common.HantoCommonPiece;
+import hanto.studentCPBP.common.IHantoBoard;
+import hanto.studentCPBP.common.IHantoMover;
 
 public class PlaceMover implements IHantoMover
 {
