@@ -1,3 +1,4 @@
+// $codepro.audit.disable
 /*******************************************************************************
  * This files was developed for CS4233: Object-Oriented Analysis & Design.
  * The course was taken at Worcester Polytechnic Institute.

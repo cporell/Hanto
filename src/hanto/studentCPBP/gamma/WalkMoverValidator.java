@@ -1,7 +1,20 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Copyright ©2016 Gary F. Pollice
+ *******************************************************************************/
+
 package hanto.studentCPBP.gamma;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -12,11 +25,21 @@ import hanto.studentCPBP.common.IHantoBoard;
 import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.IHantoRuleSet;
 
+/**
+ * Move validator for the "walk" behavior.
+ * @author Benny Peake bpeake
+ * @author Connor Porell cgporell
+ */
 public class WalkMoverValidator implements IHantoMoverValidator 
 {
 	private WalkMover mover;
 	private IHantoRuleSet rules;
 	
+	/**
+	 * Creates a validator for walking pieces.
+	 * @param mover The given WalkMover
+	 * @param rules the rules for this version of Hanto
+	 */
 	public WalkMoverValidator(WalkMover mover, IHantoRuleSet rules) 
 	{
 		this.mover = mover;
@@ -40,8 +63,8 @@ public class WalkMoverValidator implements IHantoMoverValidator
 		HantoCoordinate[] adjFrom = board.getAdjacent(from);
 		HantoCoordinate[] adjTo = board.getAdjacent(to);
 		
-		HashSet<HantoCoordinate> adjFromTakenSet = new HashSet<>();
-		HashSet<HantoCoordinate> adjToTakenSet = new HashSet<>();
+		Set<HantoCoordinate> adjFromTakenSet = new HashSet<>();
+		Set<HantoCoordinate> adjToTakenSet = new HashSet<>();
 		
 		for(HantoCoordinate coord : adjFrom)
 		{
@@ -85,7 +108,7 @@ public class WalkMoverValidator implements IHantoMoverValidator
 	}
 
 	private void checkNotMovingMoreThanOneSpace(IHantoBoard board) throws HantoException {
-		HashSet<HantoCoordinate> adjacent = new HashSet<>(Arrays.asList(board.getAdjacent(board.getPieceLocation(mover.getPiece()))));
+		Set<HantoCoordinate> adjacent = new HashSet<>(Arrays.asList(board.getAdjacent(board.getPieceLocation(mover.getPiece()))));
 		if(!adjacent.contains(new HantoCoordinateImpl(mover.getTargetLocation())))
 		{
 			throw new HantoException("Cannot walk more than one space.");

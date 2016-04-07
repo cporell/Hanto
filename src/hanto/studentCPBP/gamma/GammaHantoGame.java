@@ -1,3 +1,8 @@
+/**
+ * Gamma Hanto Game
+ * @author Benny Peake bpeake
+ * @author Connor Porell cgporell
+ */
 package hanto.studentCPBP.gamma;
 
 import hanto.common.HantoCoordinate;
@@ -25,6 +30,10 @@ public class GammaHantoGame implements HantoGame
 	private IHantoRuleSet rules;
 	private IHantoPieceFactory pieceFactory;
 	
+	/**
+	 * Builds a GammaHanto game and sets the starting player appropriately.
+	 * @param startColor Starting player
+	 */
 	public GammaHantoGame(HantoPlayerColor startColor)
 	{
 		board = new GammaHantoBoard();
@@ -74,7 +83,9 @@ public class GammaHantoGame implements HantoGame
 			shouldContinue = mover.iterateMove(board);
 			result = rules.checkBoard(board);
 			if(result != MoveResult.OK)
+			{
 				break;
+			}
 		}
 		while(shouldContinue);
 		

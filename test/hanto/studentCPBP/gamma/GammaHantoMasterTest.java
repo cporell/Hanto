@@ -1,3 +1,4 @@
+// $codepro.audit.disable
 /*******************************************************************************
  * This files was developed for CS4233: Object-Oriented Analysis & Design.
  * The course was taken at Worcester Polytechnic Institute.
@@ -90,6 +91,10 @@ public class GammaHantoMasterTest
 
 	//===============GAMMA HANTO TESTS================================================
 	
+	/**
+	 * Test that we can move a piece by walking.
+	 * @throws HantoException
+	 */
 	@Test // 1 
 	public void pieceCanWalk() throws HantoException
 	{
@@ -104,6 +109,10 @@ public class GammaHantoMasterTest
 		assertEquals(BLUE, piece.getColor());
 	}
 	
+	/**
+	 * Test that we can't attempt to move a piece that doesn't exist
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class) //2
 	public void cannotMovePieceThatDoesntExist() throws HantoException
 	{
@@ -112,6 +121,11 @@ public class GammaHantoMasterTest
 		game.makeMove(BUTTERFLY, makeCoordinate(1, 0), makeCoordinate(2, -1));
 	}
 	
+	/**
+	 * Test that when we want to move a piece, we must refer to it by the appropriate
+	 * type.
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class) //3
 	public void cannotMovePieceOfWrongType() throws HantoException
 	{
@@ -120,6 +134,10 @@ public class GammaHantoMasterTest
 		game.makeMove(SPARROW, makeCoordinate(0, 0), makeCoordinate(0, -1));
 	}
 	
+	/**
+	 * Test that a piece cannot walk to the spot from which it started. (aka walk in place)
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class) //4
 	public void piecesCannotMoveToTheSameSpot() throws HantoException
 	{
@@ -128,6 +146,10 @@ public class GammaHantoMasterTest
 		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(0, 0));
 	}
 	
+	/**
+	 * Test that in Gamma, we can't walk more than one space.
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class) //5
 	public void piecesCannotMoveMoreThanOneSpace() throws HantoException
 	{
@@ -137,6 +159,10 @@ public class GammaHantoMasterTest
 		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(2, 0));
 	}
 	
+	/**
+	 * Test that all pieces are connected after a Walk.
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class) //6
 	public void piecesMustBeContinousWhenMoving() throws HantoException
 	{
@@ -145,7 +171,11 @@ public class GammaHantoMasterTest
 		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(-1, 0));
 	}
 	
-	@Test(expected = HantoException.class) //6
+	/**
+	 * Place that we cannot move onto an already occupied space
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) // 7
 	public void piecesCannotMoveOnTopOfEachother() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
@@ -153,7 +183,11 @@ public class GammaHantoMasterTest
 		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(1, -1));
 	}
 	
-	@Test(expected = HantoException.class) //6
+	/**
+	 * Test that a piece can only be placed next pieces of the same color
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) // 8
 	public void piecesMustBePlacedNextToSameColor() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
@@ -161,7 +195,10 @@ public class GammaHantoMasterTest
 		game.makeMove(SPARROW, null, makeCoordinate(2, -1));
 	}
 	
-	@Test(expected = HantoException.class) //7
+	/**
+	 * Test that we cannot place pieces next to the opponent
+	 */
+	@Test(expected = HantoException.class) // 9
 	public void piecesCannotBePlacedNextToOpponent() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
@@ -169,7 +206,11 @@ public class GammaHantoMasterTest
 		game.makeMove(SPARROW, null, makeCoordinate(1, 0));
 	}
 	
-	@Test(expected = HantoException.class) //8
+	/**
+	 * Test that we cannot move an opponent's piece
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) // 10
 	public void cannotMoveOpponentsPiece() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
@@ -177,7 +218,11 @@ public class GammaHantoMasterTest
 		game.makeMove(BUTTERFLY, makeCoordinate(1, -1), makeCoordinate(0, 1));
 	}
 	
-	@Test(expected = HantoException.class)
+	/**
+	 * Test that we cannot move without a butterfly on the board
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) // 11
 	public void cannotMoveIfNoButterfly() throws HantoException
 	{
 		game.makeMove(SPARROW, null, makeCoordinate(0, 0));
@@ -185,7 +230,11 @@ public class GammaHantoMasterTest
 		game.makeMove(SPARROW, makeCoordinate(0, 0), makeCoordinate(1, 0));
 	}
 	
-	@Test(expected = HantoException.class)
+	/**
+	 * Test cannot Walk if there is not enough space.
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) // 12
 	public void cannotMoveThroughPieces() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0)); //b1
@@ -204,7 +253,7 @@ public class GammaHantoMasterTest
 	/**
 	 * Test that a game ends in a draw after 20 turns if there is no winner.
 	 */
-	@Test // 10
+	@Test // 13
 	public void testGameEndsInDrawAfterTwentyTurnsIfNoWinner() throws HantoException
 	{
 		MoveResult mr = MoveResult.OK;
@@ -222,7 +271,11 @@ public class GammaHantoMasterTest
 		assertEquals(MoveResult.DRAW, mr);
 	}
 	
-	@Test (expected = HantoException.class)
+	/**
+	 * Test that we cannot play after someone wins
+	 * @throws HantoException
+	 */
+	@Test (expected = HantoException.class) // 14
 	public void testCannotPlayAfterWin() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
@@ -240,9 +293,9 @@ public class GammaHantoMasterTest
 	}
 	
 	/**
-	 * Test that a game ends in a draw after 20 turns if there is no winner.
+	 * Test cannot be played after the time limit is reached.
 	 */
-	@Test // 10
+	@Test // 15
 	(expected = HantoException.class)
 	public void testCannotPlayGameAfterTimeLimitReached() throws HantoException
 	{
@@ -263,29 +316,27 @@ public class GammaHantoMasterTest
 	}
 	
 	/**
-	 * Test that making a move after the game ends throws a HantoException
-	 * @throws HantoException
+	 * Test cannot place more than 5 sparrows
 	 */
-	/*
-	@Test(expected = HantoException.class) //11
-	public void testGameDoesNotAllowMovesAfterEnd() throws HantoException
+	@Test // 16
+	(expected = HantoException.class)
+	public void testCannotPlaceMoreThanFiveSparrows() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
-		game.makeMove(BUTTERFLY, null, makeCoordinate(1,0)); // R1
-		game.makeMove(SPARROW, null, makeCoordinate(2,0)); // B2
-		game.makeMove(SPARROW, null, makeCoordinate(3,0)); // R2
-		game.makeMove(SPARROW, null, makeCoordinate(4,0)); // B3
-		game.makeMove(SPARROW, null, makeCoordinate(5,0)); // R3
-		game.makeMove(SPARROW, null, makeCoordinate(6,0)); // B4
-		game.makeMove(SPARROW, null, makeCoordinate(7,0)); // R4
-		game.makeMove(SPARROW, null, makeCoordinate(8,0)); // B5		
-		game.makeMove(SPARROW, null, makeCoordinate(9,0)); // R5
-		game.makeMove(SPARROW, null, makeCoordinate(10,0)); // B6
-		game.makeMove(SPARROW, null, makeCoordinate(11,0)); // R6
-		game.makeMove(SPARROW, null, makeCoordinate(12,0)); // B7
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,1)); // R1
+		game.makeMove(SPARROW, null, makeCoordinate(0, -1)); //b2
+		game.makeMove(SPARROW, null, makeCoordinate(0, 2)); //r2
+		game.makeMove(SPARROW, null, makeCoordinate(0, -2)); //b3
+		game.makeMove(SPARROW, null, makeCoordinate(0, 3)); //r3
+		game.makeMove(SPARROW, null, makeCoordinate(0, -3)); //b4
+		game.makeMove(SPARROW, null, makeCoordinate(0, 4)); //r4
+		game.makeMove(SPARROW, null, makeCoordinate(0, -4)); //b5
+		game.makeMove(SPARROW, null, makeCoordinate(0, 5)); //r5
+		game.makeMove(SPARROW, null, makeCoordinate(0, -5)); //b6
+		game.makeMove(SPARROW, null, makeCoordinate(0, 6)); //r6
+		game.makeMove(SPARROW, null, makeCoordinate(0, -6)); //b7
+		
 	}
-	*/
-	
 	
 	//===============BETA HANTO TESTS================================================
 	/**

@@ -1,24 +1,41 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Copyright ©2016 Gary F. Pollice
+ *******************************************************************************/
+
 package hanto.studentCPBP.gamma;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import hanto.common.HantoCoordinate;
-import hanto.common.HantoPiece;
 import hanto.studentCPBP.common.HantoCommonPiece;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.IHantoBoard;
 
+/**
+ * Board for GammaHanto.
+ * @author Benny Peake bpeake
+ * @author Connor Porell cgporell
+ */
 public class GammaHantoBoard implements IHantoBoard
 {
-	private Map<HantoCoordinateImpl, ArrayList<HantoCommonPiece>> boardLookup = new HashMap<>();
+	private Map<HantoCoordinateImpl, List<HantoCommonPiece>> boardLookup = new HashMap<>();
 	private Map<HantoCommonPiece, HantoCoordinateImpl> pieceLookup = new HashMap<>();
 	
 	@Override
 	public void addPiece(HantoCommonPiece piece, HantoCoordinate at) 
 	{
-		ArrayList<HantoCommonPiece> current = boardLookup.get(convertToLocalCoordImpl(at));
+		List<HantoCommonPiece> current = boardLookup.get(convertToLocalCoordImpl(at));
 		if(current == null)
 		{
 			current = new ArrayList<>();
@@ -32,7 +49,7 @@ public class GammaHantoBoard implements IHantoBoard
 	@Override
 	public HantoCommonPiece[] getPieces(HantoCoordinate at) 
 	{
-		ArrayList<HantoCommonPiece> pieces = boardLookup.get(convertToLocalCoordImpl(at));
+		List<HantoCommonPiece> pieces = boardLookup.get(convertToLocalCoordImpl(at));
 		if(pieces == null)
 		{
 			return new HantoCommonPiece[0];
@@ -70,7 +87,7 @@ public class GammaHantoBoard implements IHantoBoard
 	@Override
 	public void movePiece(HantoCommonPiece piece, HantoCoordinate to)
 	{
-		ArrayList<HantoCommonPiece> fromPieces = boardLookup.get(pieceLookup.get(piece));
+		List<HantoCommonPiece> fromPieces = boardLookup.get(pieceLookup.get(piece));
 		fromPieces.remove(piece);
 		
 		if(fromPieces.size() == 0)

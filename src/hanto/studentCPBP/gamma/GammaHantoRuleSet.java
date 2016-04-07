@@ -1,6 +1,19 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Copyright ©2016 Gary F. Pollice
+ *******************************************************************************/
+
 package hanto.studentCPBP.gamma;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -14,12 +27,21 @@ import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.IHantoRuleSet;
 
+/**
+ * Custom rules for Gamma Hanto
+ * @author Benny Peake bpeake
+ * @author Connor Porell cgporell
+ */
 public class GammaHantoRuleSet implements IHantoRuleSet
 {
 	private HantoPlayerColor currentTurnColor;
 	private int moveCount = 0;
 	private boolean isGameOver = false;
 	
+	/**
+	 * Builds a ruleset for Gamma Hanto, based on the starting color.
+	 * @param startingColor THe starting player
+	 */
 	public GammaHantoRuleSet(HantoPlayerColor startingColor)
 	{
 		currentTurnColor = startingColor;
@@ -48,6 +70,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		checkForDoubleStacked(board);
 		checkForConnectivity(board);
 		checkTooManyButterflys(board);
+		checkTooManySparrows(board);
 		checkButterflyPlacedByFourthRound(board);
 		
 		return getTurnResult(board);
@@ -151,7 +174,9 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		{
 			HantoCommonPiece piece = board.getPieces(coord)[0];
 			if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == color)
+			{
 				return coord;
+			}
 		}
 		
 		return null;
@@ -187,11 +212,41 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		}
 	}
 
+	private void checkTooManySparrows(IHantoBoard board) throws HantoException {
+		int numOfBlueSparrows = 0;
+		int numOfRedSparrows = 0;
+		HantoCoordinate[] takenLocations = board.getAllTakenLocations();
+		for(HantoCoordinate coord : takenLocations)
+		{
+			HantoCommonPiece piece = board.getPieces(coord)[0];
+			if(piece.getType() == HantoPieceType.SPARROW)
+			{
+				if(piece.getColor() == HantoPlayerColor.BLUE)
+				{
+					numOfBlueSparrows++;
+				}
+				else
+				{
+					numOfRedSparrows++;
+				}
+			}
+		}
+		
+		if(numOfBlueSparrows > 5)
+		{
+			throw new HantoException("Blue has too many sparrows.");
+		}
+		else if(numOfRedSparrows > 5)
+		{
+			throw new HantoException("Red has too many sparrows.");
+		}
+	}
+
 	private void checkForConnectivity(IHantoBoard board) throws HantoException {
 		HantoCoordinate[] takenLocations = board.getAllTakenLocations();
 		if(takenLocations.length > 0)
 		{
-			HashSet<HantoCoordinate> visited = new HashSet<>();
+			Set<HantoCoordinate> visited = new HashSet<>();
 			buildConnectivity(takenLocations[0], visited, board);
 			
 			if(visited.size() != takenLocations.length)
@@ -219,12 +274,16 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 			if(currentTurnColor == HantoPlayerColor.BLUE)
 			{
 				if(!isButterflyOfColor(HantoPlayerColor.BLUE, board))
-					throw new HantoException("Blue did not place butterfly by 4th turn.");
+				{
+					throw new HantoException("Blue did not place butterfly by 4th turn.");	
+				}
 			}
 			else
 			{
 				if(!isButterflyOfColor(HantoPlayerColor.RED, board))
+				{
 					throw new HantoException("Blue did not place butterfly by 4th turn.");
+				}
 			}
 		}
 	}
@@ -256,7 +315,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		return numPieces == 6;
 	}
 
-	private void buildConnectivity(HantoCoordinate at, HashSet<HantoCoordinate> visited, IHantoBoard board)
+	private void buildConnectivity(HantoCoordinate at, Set<HantoCoordinate> visited, IHantoBoard board)
 	{
 		visited.add(at);
 		
@@ -264,10 +323,14 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		for(HantoCoordinate coord : adjacent)
 		{
 			if(visited.contains(coord))
+			{
 				continue;
+			}
 			
 			if(board.getPieces(coord).length == 0)
+			{
 				continue;
+			}
 			
 			buildConnectivity(coord, visited, board);
 		}
@@ -281,7 +344,9 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		{
 			HantoCommonPiece piece = board.getPieces(coord)[0];
 			if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == color)
+			{
 				return true;
+			}
 		}
 		
 		return false;
