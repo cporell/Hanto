@@ -1,5 +1,13 @@
 package hanto.studentCPBP.common;
 
-public interface IHantoRuleSet {
+import hanto.common.HantoException;
+import hanto.common.HantoPlayerColor;
+import hanto.common.MoveResult;
 
+public interface IHantoRuleSet
+{
+	MoveResult checkBoard(IHantoBoard board) throws HantoException;
+	HantoPlayerColor getCurrentTurn();
+	void beginTurn();
+	void endTurn();
 }

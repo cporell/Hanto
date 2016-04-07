@@ -1,5 +1,6 @@
 package hanto.studentCPBP.common;
 
-public interface IHantoPieceBehaviour {
+public interface IHantoPieceBehaviour
+{
 
 }
