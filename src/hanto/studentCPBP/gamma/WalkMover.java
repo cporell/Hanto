@@ -15,6 +15,16 @@ public class WalkMover implements IHantoMover
 	private HantoCommonPiece piece;
 	private HantoCoordinate to;
 	
+	public HantoCoordinate getTargetLocation()
+	{
+		return to;
+	}
+	
+	public HantoCommonPiece getPiece()
+	{
+		return piece;
+	}
+	
 	public WalkMover(HantoCommonPiece piece, HantoCoordinate to) 
 	{
 		this.piece = piece;
@@ -24,17 +34,6 @@ public class WalkMover implements IHantoMover
 	@Override
 	public boolean iterateMove(IHantoBoard board) throws HantoException 
 	{
-		if(to.equals(board.getPieceLocation(piece)))
-		{
-			throw new HantoException("Cannot move to the same location.");
-		}
-		
-		HashSet<HantoCoordinate> adjacent = new HashSet<>(Arrays.asList(board.getAdjacent(board.getPieceLocation(piece))));
-		if(!adjacent.contains(new HantoCoordinateImpl(to)))
-		{
-			throw new HantoException("Cannot walk more than one space.");
-		}
-		
 		board.movePiece(piece, to);
 		
 		return false;

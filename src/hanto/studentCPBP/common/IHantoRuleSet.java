@@ -10,4 +10,6 @@ public interface IHantoRuleSet
 	HantoPlayerColor getCurrentTurn();
 	void beginTurn();
 	void endTurn();
+	int getTurnNumber();
+	IHantoMoverValidator createMoverValidator(IHantoMover mover);
 }

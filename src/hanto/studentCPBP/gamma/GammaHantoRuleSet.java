@@ -10,18 +10,36 @@ import hanto.common.MoveResult;
 import hanto.studentCPBP.common.HantoCommonPiece;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.IHantoBoard;
+import hanto.studentCPBP.common.IHantoMover;
+import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.IHantoRuleSet;
 
 public class GammaHantoRuleSet implements IHantoRuleSet
 {
 	private HantoPlayerColor currentTurnColor;
 	private int moveCount = 0;
+	private boolean isGameOver = false;
 	
 	public GammaHantoRuleSet(HantoPlayerColor startingColor)
 	{
 		currentTurnColor = startingColor;
 	}
 	
+	@Override
+	public IHantoMoverValidator createMoverValidator(IHantoMover mover) 
+	{
+		if(mover instanceof PlaceMover)
+		{
+			return new PlaceMoverValidator((PlaceMover) mover, this);
+		}
+		else if(mover instanceof WalkMover)
+		{
+			return new WalkMoverValidator((WalkMover) mover, this);
+		}
+		
+		return null;
+	}
+
 	@Override
 	public MoveResult checkBoard(IHantoBoard board) throws HantoException 
 	{
@@ -54,8 +72,13 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		currentTurnColor = currentTurnColor == HantoPlayerColor.BLUE ? HantoPlayerColor.RED : HantoPlayerColor.BLUE;
 	}
 
-	private MoveResult getTurnResult(IHantoBoard board) 
+	private MoveResult getTurnResult(IHantoBoard board) throws HantoException
 	{
+		if(isGameOver)
+		{
+			throw new HantoException("You cannot place a piece after the game is over.");
+		}
+		
 		HantoCoordinate blueButterflyLocation = getButterflyOfColorLocation(HantoPlayerColor.BLUE, board);
 		HantoCoordinate redButterflyLocation = getButterflyOfColorLocation(HantoPlayerColor.RED, board);
 		
@@ -84,14 +107,22 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		if(isBlueSurrounded && isRedSurrounded)
 		{
 			result = MoveResult.DRAW;
+			isGameOver = true;
 		}
 		else if(isBlueSurrounded)
 		{
 			result = MoveResult.RED_WINS;
+			isGameOver = true;
 		}
 		else if(isRedSurrounded)
 		{
 			result = MoveResult.BLUE_WINS;
+			isGameOver = true;
+		}
+		else if(moveCount == 39)
+		{
+			result = MoveResult.DRAW;
+			isGameOver = true;
 		}
 		else
 		{
@@ -101,7 +132,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		return result;
 	}
 
-	private int getTurnNumber()
+	public int getTurnNumber()
 	{
 		return (moveCount / 2) + 1;
 	}
@@ -111,6 +142,19 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		{
 			throw new HantoException("Must start at origin.");
 		}
+	}
+
+	private HantoCoordinate getButterflyOfColorLocation(HantoPlayerColor color, IHantoBoard board)
+	{
+		HantoCoordinate[] allCoords = board.getAllTakenLocations();
+		for(HantoCoordinate coord : allCoords)
+		{
+			HantoCommonPiece piece = board.getPieces(coord)[0];
+			if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == color)
+				return coord;
+		}
+		
+		return null;
 	}
 
 	private void checkTooManyButterflys(IHantoBoard board) throws HantoException {
@@ -228,6 +272,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 			buildConnectivity(coord, visited, board);
 		}
 	}
+
 	
 	private boolean isButterflyOfColor(HantoPlayerColor color, IHantoBoard board)
 	{
@@ -240,18 +285,5 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		}
 		
 		return false;
-	}
-	
-	private HantoCoordinate getButterflyOfColorLocation(HantoPlayerColor color, IHantoBoard board)
-	{
-		HantoCoordinate[] allCoords = board.getAllTakenLocations();
-		for(HantoCoordinate coord : allCoords)
-		{
-			HantoCommonPiece piece = board.getPieces(coord)[0];
-			if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == color)
-				return coord;
-		}
-		
-		return null;
 	}
 }

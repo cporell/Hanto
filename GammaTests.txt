@@ -1,19 +1,22 @@
 X pieces can walk
 X cannot move piece that doesn't exist
 X piece must match specified type
-- pieces cannot move to same spot
-- pieces cannot move more than one space
-- pieces cannot be moved where they break continuity
-- pieces cannot be moved ontop of eachother
-- game can play 20 turns
-- game can gives draw after 20 turns.
-- pieces placed next to pieces of the same color
-- pieces cannot be placed next to opposing pieces
-- first two pieces do not care about this rule
-- pieces are continous after moving
-- can't move from an invalid location (through enemeis)
-- can win from moving
-- red can win from moving win
-- blue can win from moving
-- can draw from moving
-- can't move if you haven't placed your butterfly
+X pieces cannot move to same spot
+X pieces cannot move more than one space
+X pieces cannot be moved where they break continuity
+X pieces cannot be moved ontop of eachother
+X cannot move opponents piece
+X pieces placed next to pieces of the same color
+X pieces cannot be placed next to opposing pieces
+X first two pieces do not care about this rule
+X pieces are continous after moving
+X can't move from an invalid location (through enemeis)
+X can win from moving
+X red can win from moving win
+X blue can win from moving
+X can draw from moving
+X can't move if you haven't placed your butterfly
+X game can play 20 turns
+X game can gives draw after 20 turns.
+X game cannot play past win
+X game cannot play past 20

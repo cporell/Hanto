@@ -65,6 +65,8 @@ public class GammaHantoGame implements HantoGame
 			mover = selectedPiece.createWalkMover(to);
 		}
 		
+		rules.createMoverValidator(mover).check(board);
+		
 		boolean shouldContinue;
 		MoveResult result;
 		do
