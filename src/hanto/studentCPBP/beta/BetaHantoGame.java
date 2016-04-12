@@ -170,7 +170,7 @@ public class BetaHantoGame implements HantoGame
 		}
 		else if(moveNum == 0 && !where.equals(new HantoCoordinateImpl(0, 0)))
 		{
-			throw new MoveException("First move must be at (0, 0).");
+			throw new HantoException("First move must be at (0, 0).");
 		}
 		
 		switch(currentTurn)
@@ -178,21 +178,21 @@ public class BetaHantoGame implements HantoGame
 		case BLUE:
 			if((moveNum >= 6) && (!blueButterflyPlaced) && (type != HantoPieceType.BUTTERFLY))
 			{
-				throw new MoveException("Illegal move: Blue has no Butterfly and must place it at this point.");
+				throw new HantoException("Illegal move: Blue has no Butterfly and must place it at this point.");
 			}
 			else if(type == HantoPieceType.BUTTERFLY && blueButterflyPlaced)
 			{
-				throw new MoveException("Illegal move: Blue attempted to place a second Butterfly.");
+				throw new HantoException("Illegal move: Blue attempted to place a second Butterfly.");
 			}
 			break;
 		case RED:
 			if((moveNum >= 7) && (!redButterflyPlaced) && (type != HantoPieceType.BUTTERFLY))
 			{
-				throw new MoveException("Illegal move: Red has no Butterfly and must place it at this point.");
+				throw new HantoException("Illegal move: Red has no Butterfly and must place it at this point.");
 			}
 			else if(type == HantoPieceType.BUTTERFLY && redButterflyPlaced)
 			{
-				throw new MoveException("Illegal move: Red attempted to place a second Butterfly.");
+				throw new HantoException("Illegal move: Red attempted to place a second Butterfly.");
 			}
 			break;
 		}
