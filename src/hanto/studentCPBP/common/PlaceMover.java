@@ -10,27 +10,24 @@
  * Copyright ©2016 Gary F. Pollice
  *******************************************************************************/
 
-package hanto.studentCPBP.gamma;
+package hanto.studentCPBP.common;
 
 import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
-import hanto.studentCPBP.common.HantoCommonPiece;
-import hanto.studentCPBP.common.IHantoBoard;
-import hanto.studentCPBP.common.IHantoMover;
+import hanto.common.HantoPiece;
 
 /**
- * Mover for the "walk" behavior.
+ * Mover for piece placement.
  * @author Benny Peake bpeake
  * @author Connor Porell cgporell
  */
-public class WalkMover implements IHantoMover
+public class PlaceMover implements IHantoMover
 {
 	private HantoCommonPiece piece;
-	private HantoCoordinate to;
+	private HantoCoordinate at;
 	
 	public HantoCoordinate getTargetLocation()
 	{
-		return to;
+		return at;
 	}
 	
 	public HantoCommonPiece getPiece()
@@ -39,20 +36,34 @@ public class WalkMover implements IHantoMover
 	}
 	
 	/**
-	 * Builds a WalkMover for the given piece and location
+	 * Builds a PlaceMover for the given piece and location
 	 * @param piece The piece we are placing
-	 * @param to The location we are placing at
+	 * @param at The location we are placing at
 	 */
-	public WalkMover(HantoCommonPiece piece, HantoCoordinate to) 
+	public PlaceMover(HantoCommonPiece piece, HantoCoordinate at)
 	{
 		this.piece = piece;
-		this.to = to; 
+		this.at = at;
 	}
 	
 	@Override
-	public boolean iterateMove(IHantoBoard board) throws HantoException 
+	public boolean iterateMove(IHantoBoard board)
 	{
-		board.movePiece(piece, to);
+		board.addPiece(piece, at);
+		
+		HantoCoordinate[] adjacent = board.getAdjacent(at);
+		int ofSameColor = 0;
+		for(HantoCoordinate coord : adjacent)
+		{
+			HantoPiece[] pieces = board.getPieces(at);
+			for(HantoPiece adjPiece : pieces)
+			{
+				if(adjPiece.getColor() == piece.getColor())
+				{
+					ofSameColor++;
+				}
+			}
+		}
 		
 		return false;
 	}

@@ -17,6 +17,7 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentCPBP.common.HantoCommonPiece;
 import hanto.studentCPBP.common.IHantoMover;
+import hanto.studentCPBP.common.PlaceMover;
 
 /**
  * Placeholer piece is used for pieces that aren't valid in the current version of Hanto.

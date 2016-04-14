@@ -44,6 +44,12 @@ public interface IHantoBoard
 	HantoCommonPiece[] getPieces(HantoCoordinate at);
 	
 	/**
+	 * Get all pieces on the board.
+	 * @return An array of all pieces on the board.
+	 */
+	HantoCommonPiece[] getPieces();
+	
+	/**
 	 * Given a piece, look up its location.
 	 * @param piece The desired piece
 	 * @return Its location

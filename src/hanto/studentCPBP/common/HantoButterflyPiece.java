@@ -10,28 +10,27 @@
  * Copyright ©2016 Gary F. Pollice
  *******************************************************************************/
 
-package hanto.studentCPBP.gamma;
+package hanto.studentCPBP.common;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentCPBP.common.HantoCommonPiece;
-import hanto.studentCPBP.common.IHantoMover;
 
 /**
- * Implementation of Sparrow piece for Gamma Hanto
+ * Implementation of Butterfly piece for Gamma Hanto
  * @author Benny Peake bpeake
  * @author Connor Porell cgporell
  */
-public class HantoSparrowPiece extends HantoCommonPiece {
+public class HantoButterflyPiece extends HantoCommonPiece
+{
 
 	/**
-	 * Builds a Sparrow piece
+	 * Builds a Butterfly piece
 	 * @param color Owner of this piece
 	 */
-	public HantoSparrowPiece(HantoPlayerColor color)
+	public HantoButterflyPiece(HantoPlayerColor color)
 	{
-		super(color, HantoPieceType.SPARROW);
+		super(color, HantoPieceType.BUTTERFLY);
 	}
 
 	@Override
@@ -41,9 +40,8 @@ public class HantoSparrowPiece extends HantoCommonPiece {
 	}
 
 	@Override
-	public IHantoMover createWalkMover(HantoCoordinate to)
+	public IHantoMover createWalkMover(HantoCoordinate to) 
 	{
-		// TODO Auto-generated method stub
 		return new WalkMover(this, to);
 	}
 

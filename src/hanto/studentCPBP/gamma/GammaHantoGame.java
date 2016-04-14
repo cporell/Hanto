@@ -12,6 +12,8 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentCPBP.common.CommonHantoBoard;
+import hanto.studentCPBP.common.CommonHantoGame;
 import hanto.studentCPBP.common.HantoCommonPiece;
 import hanto.studentCPBP.common.IHantoBoard;
 import hanto.studentCPBP.common.IHantoMover;
@@ -24,87 +26,30 @@ import hanto.studentCPBP.common.IHantoRuleSet;
  * @author Connor Porell cgporell
  *
  */
-public class GammaHantoGame implements HantoGame
+public class GammaHantoGame extends CommonHantoGame
 {
-	private IHantoBoard board;
-	private IHantoRuleSet rules;
-	private IHantoPieceFactory pieceFactory;
-	
-	/**
-	 * Builds a GammaHanto game and sets the starting player appropriately.
-	 * @param startColor Starting player
-	 */
+
 	public GammaHantoGame(HantoPlayerColor startColor)
 	{
-		board = new GammaHantoBoard();
-		rules = new GammaHantoRuleSet(startColor);
-		pieceFactory = new GammaHantoPieceFactory();
-	}
-	
-	@Override 
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
-			throws HantoException 
-	{
-		rules.beginTurn();
-		
-		IHantoMover mover;
-		if(from == null)
-		{
-			HantoCommonPiece piece = pieceFactory.createPiece(pieceType, rules.getCurrentTurn());
-			mover = piece.createPlaceMover(to);
-		}
-		else
-		{
-			HantoCommonPiece[] pieces = board.getPieces(from);
-			HantoCommonPiece selectedPiece = null;
-			for(HantoCommonPiece piece : pieces)
-			{
-				if(piece.getType() == pieceType)
-				{
-					selectedPiece = piece;
-					break;
-				}
-			}
-			
-			if(selectedPiece == null)
-			{
-				throw new HantoException("The piece does not exist.");
-			}
-			
-			mover = selectedPiece.createWalkMover(to);
-		}
-		
-		rules.createMoverValidator(mover).check(board);
-		
-		boolean shouldContinue;
-		MoveResult result;
-		do
-		{
-			shouldContinue = mover.iterateMove(board);
-			result = rules.checkBoard(board);
-			if(result != MoveResult.OK)
-			{
-				break;
-			}
-		}
-		while(shouldContinue);
-		
-		rules.endTurn();
-		
-		return result;
+		super(startColor);
 	}
 
 	@Override
-	public HantoPiece getPieceAt(HantoCoordinate where) 
+	protected IHantoBoard CreateBoard()
 	{
-		if(board.getPieces(where).length > 0)
-		{
-			return board.getPieces(where)[0];
-		}
-		else
-		{
-			return null;
-		}
+		return new CommonHantoBoard();
+	}
+
+	@Override
+	protected IHantoRuleSet CreateRuleSet(HantoPlayerColor startingColor)
+	{
+		return new GammaHantoRuleSet(startingColor);
+	}
+
+	@Override
+	protected IHantoPieceFactory CreatePieceFactory() 
+	{
+		return new GammaHantoPieceFactory();
 	}
 
 	@Override
@@ -112,5 +57,4 @@ public class GammaHantoGame implements HantoGame
 	{
 		return null;
 	}
-
 }

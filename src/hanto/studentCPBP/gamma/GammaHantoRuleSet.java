@@ -26,6 +26,8 @@ import hanto.studentCPBP.common.IHantoBoard;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.IHantoRuleSet;
+import hanto.studentCPBP.common.PlaceMover;
+import hanto.studentCPBP.common.WalkMover;
 
 /**
  * Custom rules for Gamma Hanto

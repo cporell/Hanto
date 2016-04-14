@@ -24,6 +24,7 @@ import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.IHantoBoard;
 import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.IHantoRuleSet;
+import hanto.studentCPBP.common.WalkMover;
 
 /**
  * Move validator for the "walk" behavior.
