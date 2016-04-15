@@ -25,7 +25,7 @@ import hanto.studentCPBP.common.PlaceMover;
  * @author Benny Peake bpeake
  * @author Connor Porell cgporell
  */
-public class PlaceMoverValidator implements IHantoMoverValidator
+public class GammaHantoPlaceMoverValidator implements IHantoMoverValidator
 {
 	private PlaceMover mover;
 	private IHantoRuleSet rules;
@@ -35,7 +35,7 @@ public class PlaceMoverValidator implements IHantoMoverValidator
 	 * @param mover The given PlaceMover
 	 * @param rules the rules for this version of Hanto
 	 */
-	public PlaceMoverValidator(PlaceMover mover, IHantoRuleSet rules)
+	public GammaHantoPlaceMoverValidator(PlaceMover mover, IHantoRuleSet rules)
 	{
 		this.mover = mover;
 		this.rules = rules;

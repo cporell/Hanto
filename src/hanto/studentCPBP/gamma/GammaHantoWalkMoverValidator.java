@@ -31,7 +31,7 @@ import hanto.studentCPBP.common.WalkMover;
  * @author Benny Peake bpeake
  * @author Connor Porell cgporell
  */
-public class WalkMoverValidator implements IHantoMoverValidator 
+public class GammaHantoWalkMoverValidator implements IHantoMoverValidator 
 {
 	private WalkMover mover;
 	private IHantoRuleSet rules;
@@ -41,7 +41,7 @@ public class WalkMoverValidator implements IHantoMoverValidator
 	 * @param mover The given WalkMover
 	 * @param rules the rules for this version of Hanto
 	 */
-	public WalkMoverValidator(WalkMover mover, IHantoRuleSet rules) 
+	public GammaHantoWalkMoverValidator(WalkMover mover, IHantoRuleSet rules) 
 	{
 		this.mover = mover;
 		this.rules = rules;

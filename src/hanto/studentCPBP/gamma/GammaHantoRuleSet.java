@@ -54,11 +54,11 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 	{
 		if(mover instanceof PlaceMover)
 		{
-			return new PlaceMoverValidator((PlaceMover) mover, this);
+			return new GammaHantoPlaceMoverValidator((PlaceMover) mover, this);
 		}
 		else if(mover instanceof WalkMover)
 		{
-			return new WalkMoverValidator((WalkMover) mover, this);
+			return new GammaHantoWalkMoverValidator((WalkMover) mover, this);
 		}
 		
 		return null;
