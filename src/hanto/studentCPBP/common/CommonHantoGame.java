@@ -46,7 +46,7 @@ public abstract class CommonHantoGame implements HantoGame
 			HantoCommonPiece[] pieces = board.getPieces(from);
 			HantoCommonPiece selectedPiece = null;
 			for(HantoCommonPiece piece : pieces)
-			{
+			{ 
 				if(piece.getType() == pieceType)
 				{
 					selectedPiece = piece;
