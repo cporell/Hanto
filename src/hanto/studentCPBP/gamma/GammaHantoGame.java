@@ -5,18 +5,10 @@
  */
 package hanto.studentCPBP.gamma;
 
-import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
-import hanto.common.HantoGame;
-import hanto.common.HantoPiece;
-import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.common.MoveResult;
 import hanto.studentCPBP.common.CommonHantoBoard;
 import hanto.studentCPBP.common.CommonHantoGame;
-import hanto.studentCPBP.common.HantoCommonPiece;
 import hanto.studentCPBP.common.IHantoBoard;
-import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoPieceFactory;
 import hanto.studentCPBP.common.IHantoRuleSet;
 

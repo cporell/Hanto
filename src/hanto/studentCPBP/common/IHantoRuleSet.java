@@ -29,7 +29,7 @@ public interface IHantoRuleSet
 	 * @return A move result stating if that move is okay, results in victory, or a draw.
 	 * @throws HantoException Thrown if a move is illegal.
 	 */
-	MoveResult checkBoard(IHantoBoard board) throws HantoException;
+	void checkBoard(IHantoBoard board) throws HantoException;
 	
 	/**
 	 * Gets the color of the player whose turn it is
@@ -40,12 +40,12 @@ public interface IHantoRuleSet
 	/**
 	 * Actions to do at the start of a turn
 	 */
-	void beginTurn();
+	void beginTurn(IHantoBoard board) throws HantoException;
 	
 	/**
 	 * Actions to do at the end of a turn, mainly increment the turn counter, switch current player.
 	 */
-	void endTurn();
+	MoveResult endTurn(IHantoBoard board) throws HantoException;
 	
 	/**
 	 * Returns the turn number based on the number of moves that have passed.

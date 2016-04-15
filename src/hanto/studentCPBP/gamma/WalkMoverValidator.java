@@ -48,7 +48,7 @@ public class WalkMoverValidator implements IHantoMoverValidator
 	}
 	
 	@Override
-	public void check(IHantoBoard board) throws HantoException 
+	public void checkIteration(IHantoBoard board) throws HantoException 
 	{
 		checkIsMovingOurPiece();
 		checkNotMovingToSameSpace(board);

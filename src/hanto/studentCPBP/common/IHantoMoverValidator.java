@@ -26,5 +26,5 @@ public interface IHantoMoverValidator
 	 * @param board The current game board
 	 * @throws HantoException Whenever there is an illegal move.
 	 */
-	void check(IHantoBoard board) throws HantoException;
+	void checkIteration(IHantoBoard board) throws HantoException;
 }

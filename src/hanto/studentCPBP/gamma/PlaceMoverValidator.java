@@ -42,7 +42,7 @@ public class PlaceMoverValidator implements IHantoMoverValidator
 	}
 	
 	@Override
-	public void check(IHantoBoard board) throws HantoException 
+	public void checkIteration(IHantoBoard board) throws HantoException 
 	{
 		if(rules.getTurnNumber() > 1)
 		{

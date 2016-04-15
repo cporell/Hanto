@@ -7,8 +7,6 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentCPBP.gamma.GammaHantoPieceFactory;
-import hanto.studentCPBP.gamma.GammaHantoRuleSet;
 
 public abstract class CommonHantoGame implements HantoGame
 {
@@ -35,7 +33,7 @@ public abstract class CommonHantoGame implements HantoGame
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException 
 	{
-		rules.beginTurn();
+		rules.beginTurn(board);
 		
 		IHantoMover mover;
 		if(from == null)
@@ -64,24 +62,18 @@ public abstract class CommonHantoGame implements HantoGame
 			mover = selectedPiece.createWalkMover(to);
 		}
 		
-		rules.createMoverValidator(mover).check(board);
+		IHantoMoverValidator validator = rules.createMoverValidator(mover);
 		
 		boolean shouldContinue;
-		MoveResult result;
 		do
 		{
+			validator.checkIteration(board);
 			shouldContinue = mover.iterateMove(board);
-			result = rules.checkBoard(board);
-			if(result != MoveResult.OK)
-			{
-				break;
-			}
+			rules.checkBoard(board);
 		}
 		while(shouldContinue);
 		
-		rules.endTurn();
-		
-		return result;
+		return rules.endTurn(board);
 	}
 
 	@Override

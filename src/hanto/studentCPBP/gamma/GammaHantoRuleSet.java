@@ -65,7 +65,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 	}
 
 	@Override
-	public MoveResult checkBoard(IHantoBoard board) throws HantoException 
+	public void checkBoard(IHantoBoard board) throws HantoException 
 	{
 		checkAllValidPieces(board);
 		checkStartAtOrigin(board);
@@ -74,8 +74,6 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		checkTooManyButterflys(board);
 		checkTooManySparrows(board);
 		checkButterflyPlacedByFourthRound(board);
-		
-		return getTurnResult(board);
 	}
 
 	@Override
@@ -85,25 +83,27 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 	}
 
 	@Override
-	public void beginTurn() 
-	{
-		
-	}
-
-	@Override
-	public void endTurn() 
-	{
-		moveCount++;
-		currentTurnColor = currentTurnColor == HantoPlayerColor.BLUE ? HantoPlayerColor.RED : HantoPlayerColor.BLUE;
-	}
-
-	private MoveResult getTurnResult(IHantoBoard board) throws HantoException
+	public void beginTurn(IHantoBoard board) throws HantoException 
 	{
 		if(isGameOver)
 		{
 			throw new HantoException("You cannot place a piece after the game is over.");
 		}
+	}
+
+	@Override
+	public MoveResult endTurn(IHantoBoard board) throws HantoException 
+	{
+		MoveResult result = getTurnResult(board);
 		
+		moveCount++;
+		currentTurnColor = currentTurnColor == HantoPlayerColor.BLUE ? HantoPlayerColor.RED : HantoPlayerColor.BLUE;
+		
+		return result;
+	}
+
+	private MoveResult getTurnResult(IHantoBoard board) throws HantoException
+	{
 		HantoCoordinate blueButterflyLocation = getButterflyOfColorLocation(HantoPlayerColor.BLUE, board);
 		HantoCoordinate redButterflyLocation = getButterflyOfColorLocation(HantoPlayerColor.RED, board);
 		

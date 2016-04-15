@@ -11,10 +11,7 @@
 
 package hanto.studentCPBP.delta;
 
-import static hanto.common.HantoPieceType.*;
-import static hanto.common.MoveResult.*;
 import static hanto.common.HantoPlayerColor.*;
-import static org.junit.Assert.*;
 import hanto.common.*;
 import hanto.studentCPBP.HantoGameFactory;
 
