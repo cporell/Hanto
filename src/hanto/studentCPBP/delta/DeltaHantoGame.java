@@ -1,6 +1,7 @@
 package hanto.studentCPBP.delta;
 
 import hanto.common.HantoPlayerColor;
+import hanto.studentCPBP.common.CommonHantoBoard;
 import hanto.studentCPBP.common.CommonHantoGame;
 import hanto.studentCPBP.common.IHantoBoard;
 import hanto.studentCPBP.common.IHantoPieceFactory;
@@ -14,26 +15,26 @@ public class DeltaHantoGame extends CommonHantoGame {
 	}
 
 	@Override
-	protected IHantoBoard CreateBoard() {
-		// TODO Auto-generated method stub
-		return null;
+	protected IHantoBoard CreateBoard() 
+	{
+		return new CommonHantoBoard();
 	}
 
 	@Override
-	protected IHantoRuleSet CreateRuleSet(HantoPlayerColor startingColor) {
-		// TODO Auto-generated method stub
-		return null;
+	protected IHantoRuleSet CreateRuleSet(HantoPlayerColor startingColor) 
+	{
+		return new DeltaHantoRuleSet(startingColor);
 	}
 
 	@Override
-	protected IHantoPieceFactory CreatePieceFactory() {
-		// TODO Auto-generated method stub
-		return null;
+	protected IHantoPieceFactory CreatePieceFactory() 
+	{
+		return new DeltaHantoPieceFactory();
 	}
 
 	@Override
-	public String getPrintableBoard() {
-		// TODO Auto-generated method stub
+	public String getPrintableBoard() 
+	{
 		return null;
 	}
 
