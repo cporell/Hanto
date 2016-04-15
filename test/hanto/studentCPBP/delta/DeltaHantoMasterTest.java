@@ -88,6 +88,18 @@ public class DeltaHantoMasterTest
 
 	//===============DELTA HANTO TESTS================================================
 	
+	@Test
+	public void testCanPlaceCrab()
+	{
+		
+	}
+	
+	@Test
+	public void testCrabCanWalkOne()
+	{
+		
+	}
+	
 	// Helper methods
 	/**
 	 * Make a test coord
