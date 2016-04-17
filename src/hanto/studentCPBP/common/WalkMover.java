@@ -49,9 +49,16 @@ public class WalkMover implements IHantoMover
 	@Override
 	public boolean iterateMove(IHantoBoard board) throws HantoException 
 	{
-		board.movePiece(piece, to);
+		HantoCoordinate current = board.getPieceLocation(piece);
+		int offsetX = to.getX() - current.getX();
+		int offsetY = to.getY() - current.getY();
+		int dirX = (int) Math.signum(offsetX);
+		int dirY = (int) Math.signum(offsetY);
 		
-		return false;
+		HantoCoordinateImpl target = new HantoCoordinateImpl(current.getX() + dirX, current.getY() + dirY);
+		board.movePiece(piece, target);
+		
+		return !(target.getX() == to.getX() && target.getY() == to.getY());
 	}
 
 }

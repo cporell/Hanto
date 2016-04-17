@@ -49,7 +49,8 @@ public class DeltaHantoGame extends CommonHantoGame {
 	}
 
 	@Override
-	public String getPrintableBoard() {
+	public String getPrintableBoard() 
+	{
 		return null;
 	}
 

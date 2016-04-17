@@ -92,6 +92,7 @@ public class DeltaHantoMasterTest
 
 	//===============DELTA HANTO TESTS================================================
 	
+<<<<<<< HEAD
 	// Tests that a player cannot place more than 4 sparrows
 	@Test //1
 	(expected = HantoException.class)
@@ -350,6 +351,20 @@ public class DeltaHantoMasterTest
 	
 	//=============================================================================================
 	
+
+	@Test
+	public void testCanPlaceCrab()
+	{
+		
+	}
+	
+	@Test
+	public void testCrabCanWalkOne()
+	{
+		
+	}
+
+	//============================================================================================
 	
 	// Helper methods
 	/**

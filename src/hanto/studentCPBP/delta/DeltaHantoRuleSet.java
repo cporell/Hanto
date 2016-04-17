@@ -74,7 +74,7 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	}
 
 	@Override
-	public HantoPlayerColor getCurrentTurn() 
+	public HantoPlayerColor getCurrentTurn()
 	{
 		return currentTurn == blueHand ? HantoPlayerColor.BLUE : HantoPlayerColor.RED;
 	}
@@ -166,7 +166,7 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	}
 
 	@Override
-	public int getTurnNumber() 
+	public int getTurnNumber()
 	{
 		return (moveCount / 2) + 1;
 	}
