@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.studentCPBP.delta;
 
 import java.util.HashSet;
@@ -19,8 +29,6 @@ import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.IHantoRuleSet;
 import hanto.studentCPBP.common.PlaceMover;
 import hanto.studentCPBP.common.WalkMover;
-import hanto.studentCPBP.gamma.GammaHantoPlaceMoverValidator;
-import hanto.studentCPBP.gamma.GammaHantoWalkMoverValidator;
 
 /**
  * Custom rules for Delta Hanto
@@ -37,6 +45,10 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	private CommonHantoHand redHand;
 	private HantoPieceType currentPiece = null;
 	
+	/**
+	 * Construct a DeltaHanto rule set
+	 * @param startingColor The player who goes first
+	 */
 	public DeltaHantoRuleSet(HantoPlayerColor startingColor)
 	{
 		HantoHandFactory playerFactory = HantoHandFactory.getInstance();
@@ -385,7 +397,8 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		}
 	}
 
-	
+	/*
+	 * TODO: Delete if we really don't need this
 	private boolean isButterflyOfColor(HantoPlayerColor color, IHantoBoard board)
 	{
 		HantoCoordinate[] allCoords = board.getAllTakenLocations();
@@ -400,7 +413,7 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		
 		return false;
 	}
-	
+	*/
 	
 
 }

@@ -28,7 +28,6 @@ public interface IHantoRuleSet
 	 * Check the state of the board to see if the move is okay, or game-ending.
 	 * @param board The current board
 	 * @param pieceType The piece type we are using
-	 * @return A move result stating if that move is okay, results in victory, or a draw.
 	 * @throws HantoException Thrown if a move is illegal.
 	 */
 	void checkBoard(IHantoBoard board, HantoPieceType pieceType) throws HantoException;
@@ -41,11 +40,16 @@ public interface IHantoRuleSet
 	
 	/**
 	 * Actions to do at the start of a turn
+	 * @param board The board state
+	 * @throws HantoException A Hanto Exception upon discovering an illegal move
 	 */
 	void beginTurn(IHantoBoard board) throws HantoException;
 	
 	/**
 	 * Actions to do at the end of a turn, mainly increment the turn counter, switch current player.
+	 * @param board The board state
+	 * @throws HantoException A Hanto Exception upon discovering an illegal move
+	 * @return The result of the move (Red win, Blue win, OK, Draw)
 	 */
 	MoveResult endTurn(IHantoBoard board) throws HantoException;
 	

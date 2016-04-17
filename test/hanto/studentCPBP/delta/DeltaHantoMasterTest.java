@@ -322,28 +322,8 @@ public class DeltaHantoMasterTest
 		game.makeMove(SPARROW, null, makeCoordinate(0,3));
 	}
 	
-	/**
-	 * Test cannot be played after the time limit is reached.
-	 */
-	@Test // 15
-	(expected = HantoException.class)
-	public void testCannotPlayGameAfterTimeLimitReached() throws HantoException
-	{
-		MoveResult mr = MoveResult.OK;
-		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
-		game.makeMove(BUTTERFLY, null, makeCoordinate(0,1)); // R1
-		game.makeMove(SPARROW, null, makeCoordinate(0,-1)); // B2
-		game.makeMove(SPARROW, null, makeCoordinate(1,1)); // R2
-		for(int i = 4; i < 40; i +=4)
-		{
-			game.makeMove(SPARROW, makeCoordinate(0,-1), makeCoordinate(1,-1)); // B3
-			game.makeMove(SPARROW, makeCoordinate(1,1), makeCoordinate(0,2)); //
-			game.makeMove(SPARROW, makeCoordinate(1,-1), makeCoordinate(0,-1)); // 
-			mr = game.makeMove(SPARROW, makeCoordinate(0,2), makeCoordinate(1,1)); // 	
-		}
-		assertEquals(MoveResult.DRAW, mr);
-		game.makeMove(SPARROW, makeCoordinate(0, -1), makeCoordinate(1, -1));
-	}
+
+	// Removed time limit test, as Delta Hanto does not support a time limit
 	
 	/**
 	 * Test cannot place more than 5 sparrows

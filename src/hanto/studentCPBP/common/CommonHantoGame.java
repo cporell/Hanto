@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package hanto.studentCPBP.common;
 
 import hanto.common.HantoCoordinate;
@@ -8,6 +17,12 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 
+/**
+ * Template for HantoGames.
+ * @author cgporell
+ * @author bpeake
+ *
+ */
 public abstract class CommonHantoGame implements HantoGame
 {
 	private IHantoBoard board;
@@ -25,8 +40,23 @@ public abstract class CommonHantoGame implements HantoGame
 		pieceFactory = CreatePieceFactory();
 	}
 	
+	/**
+	 * Create a board for a particular version of Hanto.
+	 * @return The Hanto board
+	 */
 	protected abstract IHantoBoard CreateBoard();
+	
+	/**
+	 * Create a ruleset for a particular version of Hanto.
+	 * @param startingColor The player who goes first.
+	 * @return The Hanto rules
+	 */
 	protected abstract IHantoRuleSet CreateRuleSet(HantoPlayerColor startingColor);
+	
+	/**
+	 * Create a Hanto Piece Factory for a particular version of Hanto.
+	 * @return A HantoPieceFactory
+	 */
 	protected abstract IHantoPieceFactory CreatePieceFactory();
 	
 	@Override 
