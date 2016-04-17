@@ -69,7 +69,7 @@ public abstract class CommonHantoGame implements HantoGame
 		{
 			validator.checkIteration(board);
 			shouldContinue = mover.iterateMove(board);
-			rules.checkBoard(board);
+			rules.checkBoard(board, pieceType);
 		}
 		while(shouldContinue);
 		

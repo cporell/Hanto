@@ -11,9 +11,13 @@
 
 package hanto.studentCPBP.delta;
 
+import static hanto.common.HantoPieceType.BUTTERFLY;
+import static hanto.common.HantoPieceType.SPARROW;
 import static hanto.common.HantoPlayerColor.*;
 import hanto.common.*;
 import hanto.studentCPBP.HantoGameFactory;
+
+import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
 
@@ -87,6 +91,285 @@ public class DeltaHantoMasterTest
 	}
 
 	//===============DELTA HANTO TESTS================================================
+	
+	// Tests that a player cannot place more than 4 sparrows
+	@Test //1
+	(expected = HantoException.class)
+	public void TestPlayerCannotPlaceMoreThanFourSparrows() throws HantoException
+	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 1));
+		game.makeMove(HantoPieceType.SPARROW, null, makeCoordinate(0, -1)); //b1 sparrow
+		game.makeMove(HantoPieceType.SPARROW, null, makeCoordinate(0, 2));
+		game.makeMove(HantoPieceType.SPARROW, null, makeCoordinate(0, -2)); // b2 sparrow
+		game.makeMove(HantoPieceType.SPARROW, makeCoordinate(0, 2), makeCoordinate(1,1));
+		game.makeMove(HantoPieceType.SPARROW, null, makeCoordinate(0, -3)); // b3 sparrow
+		game.makeMove(HantoPieceType.SPARROW, makeCoordinate(1, 1), makeCoordinate(0,2));
+		game.makeMove(HantoPieceType.SPARROW, null, makeCoordinate(0, -4)); // b4 sparrow
+		game.makeMove(HantoPieceType.SPARROW, makeCoordinate(0, 2), makeCoordinate(1,1));		
+		game.makeMove(HantoPieceType.SPARROW, null, makeCoordinate(0, -5)); // Blue attempts 5th sparrow
+	}
+	
+	// Tests that a player cannot place more than 4 crabs
+	@Test //2
+	(expected = HantoException.class)
+	public void TestPlayerCannotPlaceMoreThanFourCrabs() throws HantoException
+	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 1));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0, -1)); //b1 crab
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0, 2));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0, -2)); // b2 crab
+		game.makeMove(HantoPieceType.CRAB, makeCoordinate(0, 2), makeCoordinate(1,1));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0, -3)); // b3 crab
+		game.makeMove(HantoPieceType.CRAB, makeCoordinate(1, 1), makeCoordinate(0,2));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0, -4)); // b4 crab
+		game.makeMove(HantoPieceType.CRAB, makeCoordinate(0, 2), makeCoordinate(1,1));		
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0, -5)); // Blue attempts 5th crab	
+	}
+	
+	// "Legacy" test for checking that we don't have multiple butterflies per player
+	// This will be used to validiate player hands
+	@Test //3
+	(expected = HantoException.class)
+	public void TestPlayerCannotPlaceMoreThanOneButterfly() throws HantoException
+	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 1));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, -1));
+	}
+	
+	//============================LEGACY TESTS FROM GAMMA==========================================
+	
+	
+	/**
+	 * Test that we can move a piece by walking.
+	 * @throws HantoException
+	 */
+	@Test // 1 
+	public void pieceCanWalk() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(0, -1));
+		
+		assertEquals(null, game.getPieceAt(makeCoordinate(0, 0)));
+		
+		HantoPiece piece = game.getPieceAt(makeCoordinate(0, -1));
+		assertEquals(BUTTERFLY, piece.getType());
+		assertEquals(BLUE, piece.getColor());
+	}
+	
+	/**
+	 * Test that we can't attempt to move a piece that doesn't exist
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) //2
+	public void cannotMovePieceThatDoesntExist() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(1, 0), makeCoordinate(2, -1));
+	}
+	
+	/**
+	 * Test that when we want to move a piece, we must refer to it by the appropriate
+	 * type.
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) //3
+	public void cannotMovePieceOfWrongType() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(SPARROW, makeCoordinate(0, 0), makeCoordinate(0, -1));
+	}
+	
+	/**
+	 * Test that a piece cannot walk to the spot from which it started. (aka walk in place)
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) //4
+	public void piecesCannotMoveToTheSameSpot() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(0, 0));
+	}
+	
+	/**
+	 * Test that in Gamma, we can't walk more than one space.
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) //5
+	public void piecesCannotMoveMoreThanOneSpace() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(SPARROW, null, makeCoordinate(2, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(2, 0));
+	}
+	
+	/**
+	 * Test that all pieces are connected after a Walk.
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) //6
+	public void piecesMustBeContinousWhenMoving() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(-1, 0));
+	}
+	
+	/**
+	 * Place that we cannot move onto an already occupied space
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) // 7
+	public void piecesCannotMoveOnTopOfEachother() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(1, -1));
+	}
+	
+	/**
+	 * Test that a piece can only be placed next pieces of the same color
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) // 8
+	public void piecesMustBePlacedNextToSameColor() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(SPARROW, null, makeCoordinate(2, -1));
+	}
+	
+	/**
+	 * Test that we cannot place pieces next to the opponent
+	 */
+	@Test(expected = HantoException.class) // 9
+	public void piecesCannotBePlacedNextToOpponent() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(SPARROW, null, makeCoordinate(1, 0));
+	}
+	
+	/**
+	 * Test that we cannot move an opponent's piece
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) // 10
+	public void cannotMoveOpponentsPiece() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(BUTTERFLY, null, makeCoordinate(1, -1));
+		game.makeMove(BUTTERFLY, makeCoordinate(1, -1), makeCoordinate(0, 1));
+	}
+	
+	/**
+	 * Test that we cannot move without a butterfly on the board
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) // 11
+	public void cannotMoveIfNoButterfly() throws HantoException
+	{
+		game.makeMove(SPARROW, null, makeCoordinate(0, 0));
+		game.makeMove(SPARROW, null, makeCoordinate(1, -1));
+		game.makeMove(SPARROW, makeCoordinate(0, 0), makeCoordinate(1, 0));
+	}
+	
+	/**
+	 * Test cannot Walk if there is not enough space.
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) // 12
+	public void cannotMoveThroughPieces() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0)); //b1
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 1)); //r1
+		game.makeMove(SPARROW, null, makeCoordinate(-1, 0)); //b2
+		game.makeMove(SPARROW, null, makeCoordinate(-1, 2)); //r2
+		game.makeMove(SPARROW, null, makeCoordinate(1, -1)); //b3
+		game.makeMove(SPARROW, null, makeCoordinate(-2, 2)); //r3
+		game.makeMove(SPARROW, makeCoordinate(-1, 0), makeCoordinate(-1, 1)); //b4
+		game.makeMove(SPARROW, null, makeCoordinate(-3, 2)); //r4
+		game.makeMove(SPARROW, null, makeCoordinate(2, -1)); //b5
+		game.makeMove(SPARROW, makeCoordinate(-3,  2), makeCoordinate(-2, 1)); //r5
+		game.makeMove(SPARROW, makeCoordinate(-1, 1), makeCoordinate(-1, 0)); //b6
+	}
+	
+	/**
+	 * Test that we cannot play after someone wins
+	 * @throws HantoException
+	 */
+	@Test (expected = HantoException.class) // 14
+	public void testCannotPlayAfterWin() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,1)); // R1
+		game.makeMove(SPARROW, null, makeCoordinate(-1,0)); // B2
+		game.makeMove(SPARROW, null, makeCoordinate(-1,2)); // R2
+		game.makeMove(SPARROW, null, makeCoordinate(1,-1)); // B3
+		game.makeMove(SPARROW, null, makeCoordinate(1,1)); // R3
+		game.makeMove(SPARROW, makeCoordinate(-1,0), makeCoordinate(-1, 1)); // B4
+		game.makeMove(SPARROW, null, makeCoordinate(0, 2));// R4
+		MoveResult result =game.makeMove(SPARROW, makeCoordinate(1, -1), makeCoordinate(1, 0));
+		
+		assertEquals(MoveResult.BLUE_WINS, result);
+		game.makeMove(SPARROW, null, makeCoordinate(0,3));
+	}
+	
+	/**
+	 * Test cannot be played after the time limit is reached.
+	 */
+	@Test // 15
+	(expected = HantoException.class)
+	public void testCannotPlayGameAfterTimeLimitReached() throws HantoException
+	{
+		MoveResult mr = MoveResult.OK;
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,1)); // R1
+		game.makeMove(SPARROW, null, makeCoordinate(0,-1)); // B2
+		game.makeMove(SPARROW, null, makeCoordinate(1,1)); // R2
+		for(int i = 4; i < 40; i +=4)
+		{
+			game.makeMove(SPARROW, makeCoordinate(0,-1), makeCoordinate(1,-1)); // B3
+			game.makeMove(SPARROW, makeCoordinate(1,1), makeCoordinate(0,2)); //
+			game.makeMove(SPARROW, makeCoordinate(1,-1), makeCoordinate(0,-1)); // 
+			mr = game.makeMove(SPARROW, makeCoordinate(0,2), makeCoordinate(1,1)); // 	
+		}
+		assertEquals(MoveResult.DRAW, mr);
+		game.makeMove(SPARROW, makeCoordinate(0, -1), makeCoordinate(1, -1));
+	}
+	
+	/**
+	 * Test cannot place more than 5 sparrows
+	 */
+	@Test // 16
+	(expected = HantoException.class)
+	public void testCannotPlaceMoreThanFiveSparrows() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,1)); // R1
+		game.makeMove(SPARROW, null, makeCoordinate(0, -1)); //b2
+		game.makeMove(SPARROW, null, makeCoordinate(0, 2)); //r2
+		game.makeMove(SPARROW, null, makeCoordinate(0, -2)); //b3
+		game.makeMove(SPARROW, null, makeCoordinate(0, 3)); //r3
+		game.makeMove(SPARROW, null, makeCoordinate(0, -3)); //b4
+		game.makeMove(SPARROW, null, makeCoordinate(0, 4)); //r4
+		game.makeMove(SPARROW, null, makeCoordinate(0, -4)); //b5
+		game.makeMove(SPARROW, null, makeCoordinate(0, 5)); //r5
+		game.makeMove(SPARROW, null, makeCoordinate(0, -5)); //b6
+		game.makeMove(SPARROW, null, makeCoordinate(0, 6)); //r6
+		game.makeMove(SPARROW, null, makeCoordinate(0, -6)); //b7
+		
+	}
+	
+	//=============================================================================================
+	
 	
 	// Helper methods
 	/**

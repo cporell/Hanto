@@ -65,7 +65,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 	}
 
 	@Override
-	public void checkBoard(IHantoBoard board) throws HantoException 
+	public void checkBoard(IHantoBoard board, HantoPieceType piece) throws HantoException 
 	{
 		checkAllValidPieces(board);
 		checkStartAtOrigin(board);
