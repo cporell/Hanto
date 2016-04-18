@@ -16,6 +16,7 @@ import static hanto.common.HantoPieceType.SPARROW;
 import static hanto.common.HantoPlayerColor.*;
 import hanto.common.*;
 import hanto.studentCPBP.HantoGameFactory;
+import static org.junit.Assert.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -351,15 +352,49 @@ public class DeltaHantoMasterTest
 	
 
 	@Test
-	public void testCanPlaceCrab()
+	public void testCanPlaceCrab() throws HantoException
 	{
-		
+		MoveResult result = game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0, 0));
+		assertEquals(HantoPieceType.CRAB, game.getPieceAt(makeCoordinate(0, 0)).getType());	
+		assertEquals(MoveResult.OK, result);
 	}
 	
 	@Test
-	public void testCrabCanWalkOne()
+	public void testCanMoveCrabOneSpace() throws HantoException
 	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, -1));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(1, 0));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0, -2));
+		MoveResult result = game.makeMove(HantoPieceType.CRAB, makeCoordinate(1, 0), makeCoordinate(0, 1));
 		
+		assertEquals(HantoPieceType.CRAB, game.getPieceAt(makeCoordinate(0, 1)).getType());	
+		assertEquals(MoveResult.OK, result);
+	}
+	
+	@Test
+	public void testCanMoveCrabTwoSpaces() throws HantoException
+	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, -1));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(1, 0));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0, -2));
+		MoveResult result = game.makeMove(HantoPieceType.CRAB, makeCoordinate(1, 0), makeCoordinate(1, -2));
+		
+		assertEquals(HantoPieceType.CRAB, game.getPieceAt(makeCoordinate(1, -2)).getType());	
+		assertEquals(MoveResult.OK, result);
+	}
+	
+	@Test(expected = HantoException.class)
+	public void testCannotMoveFourSpaces() throws HantoException
+	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, -1));
+		game.makeMove(HantoPieceType.SPARROW, null, makeCoordinate(0, 1));
+		game.makeMove(HantoPieceType.SPARROW, null, makeCoordinate(0, -2));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(1, 1));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0, -3));
+		game.makeMove(HantoPieceType.CRAB, makeCoordinate(1, 1), makeCoordinate(1, -3));
 	}
 
 	//============================================================================================

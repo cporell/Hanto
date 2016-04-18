@@ -1,13 +1,3 @@
-/*******************************************************************************
- * This files was developed for CS4233: Object-Oriented Analysis & Design.
- * The course was taken at Worcester Polytechnic Institute.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-
 package hanto.studentCPBP.delta;
 
 import java.util.Arrays;
@@ -24,36 +14,40 @@ import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.IHantoRuleSet;
 import hanto.studentCPBP.common.WalkMover;
 
-/**
- * Walk Mover Validator for Delta Hanto
- * @author cgporell
- * @author bpeake
- *
- */
-public class DeltaHantoWalkMoverValidator implements IHantoMoverValidator {
-
+public class DeltaHantoWalkMoverValidator implements IHantoMoverValidator 
+{
 	private WalkMover mover;
 	private IHantoRuleSet rules;
+	private int stepsLeft;
 	
 	/**
 	 * Creates a validator for walking pieces.
 	 * @param mover The given WalkMover
 	 * @param rules the rules for this version of Hanto
 	 */
-	public DeltaHantoWalkMoverValidator(WalkMover mover, IHantoRuleSet rules) 
+	public DeltaHantoWalkMoverValidator(WalkMover mover, IHantoRuleSet rules, int maxSteps) 
 	{
 		this.mover = mover;
 		this.rules = rules;
+		this.stepsLeft = maxSteps;
 	}
 	
 	@Override
 	public void checkIteration(IHantoBoard board) throws HantoException 
 	{
+		checkNotMovingToManySpaces();
 		checkIsMovingOurPiece();
 		checkNotMovingToSameSpace(board);
-		checkNotMovingMoreThanOneSpace(board);
 		checkNotMovingBeforeButterflyPlaced(board);		
 		checkNotMovingThroughPieces(board);
+	}
+
+	private void checkNotMovingToManySpaces() throws HantoException {
+		stepsLeft--;
+		if(stepsLeft < 0)
+		{
+			throw new HantoException("Moved to many spaces");
+		}
 	}
 
 	private void checkNotMovingThroughPieces(IHantoBoard board) throws HantoException {
@@ -105,14 +99,6 @@ public class DeltaHantoWalkMoverValidator implements IHantoMoverValidator {
 		}
 		
 		throw new HantoException("Cannot move piece before placing your butterfly");
-	}
-
-	private void checkNotMovingMoreThanOneSpace(IHantoBoard board) throws HantoException {
-		Set<HantoCoordinate> adjacent = new HashSet<>(Arrays.asList(board.getAdjacent(board.getPieceLocation(mover.getPiece()))));
-		if(!adjacent.contains(new HantoCoordinateImpl(mover.getTargetLocation())))
-		{
-			throw new HantoException("Cannot walk more than one space.");
-		}
 	}
 
 	private void checkNotMovingToSameSpace(IHantoBoard board) throws HantoException

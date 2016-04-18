@@ -40,7 +40,6 @@ public class HantoCrabPiece extends HantoCommonPiece {
 	@Override
 	public IHantoMover createWalkMover(HantoCoordinate to)
 	{
-		// TODO Auto-generated method stub
 		return new WalkMover(this, to);
 	}
 

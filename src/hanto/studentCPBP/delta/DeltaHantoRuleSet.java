@@ -20,6 +20,7 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentCPBP.common.CommonHantoHand;
+import hanto.studentCPBP.common.DefaultHantoMoverValidator;
 import hanto.studentCPBP.common.HantoCommonPiece;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.HantoHandFactory;
@@ -54,9 +55,28 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		HantoHandFactory playerFactory = HantoHandFactory.getInstance();
 		blueHand = playerFactory.makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.BLUE);
 		redHand = playerFactory.makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED);
-		//currentTurn = startingColor == HantoPlayerColor.BLUE ? HantoPlayerColor.BLUE : HantoPlayerColor.RED;
 		currentTurn = startingColor == HantoPlayerColor.BLUE ? blueHand : redHand;
+	}
+	
+	@Override
+	public IHantoMoverValidator createMoverValidator(IHantoMover mover) 
+	{
+		if(mover instanceof PlaceMover)
+		{
+			return new DeltaHantoPlaceMoveValidator((PlaceMover) mover, this);
+		}
+		else if(mover instanceof WalkMover)
+		{
+			switch(((WalkMover) mover).getPiece().getType())
+			{
+			case BUTTERFLY:
+				return new DeltaHantoWalkMoverValidator((WalkMover) mover, this, 1);
+			case CRAB:
+				return new DeltaHantoWalkMoverValidator((WalkMover) mover, this, 3);
+			}
+		}
 		
+		return new DefaultHantoMoverValidator();
 	}
 	
 	@Override
@@ -169,21 +189,6 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	public int getTurnNumber()
 	{
 		return (moveCount / 2) + 1;
-	}
-
-	@Override
-	public IHantoMoverValidator createMoverValidator(IHantoMover mover) 
-	{
-		if(mover instanceof PlaceMover)
-		{
-			return new DeltaHantoPlaceMoverValidator((PlaceMover) mover, this);
-		}
-		else if(mover instanceof WalkMover)
-		{
-			return new DeltaHantoWalkMoverValidator((WalkMover) mover, this);
-		}
-		
-		return null;
 	}
 	
 	private void checkStartAtOrigin(IHantoBoard board) throws HantoException {
