@@ -21,6 +21,7 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentCPBP.common.CommonHantoHand;
 import hanto.studentCPBP.common.DefaultHantoMoverValidator;
+import hanto.studentCPBP.common.FlyMover;
 import hanto.studentCPBP.common.HantoCommonPiece;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.HantoHandFactory;
@@ -74,6 +75,10 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 			case CRAB:
 				return new DeltaHantoWalkMoverValidator((WalkMover) mover, this, 3);
 			}
+		}
+		else if(mover instanceof FlyMover)
+		{
+			return new DeltaHantoFlyMoverValidator((FlyMover) mover, this);
 		}
 		
 		return new DefaultHantoMoverValidator();

@@ -35,7 +35,7 @@ public class GammaHantoPieceFactory implements IHantoPieceFactory
 		case BUTTERFLY:
 			return new HantoButterflyPiece(color);
 		case SPARROW:
-			return new HantoSparrowPiece(color);
+			return new GammaHantoSparrowPiece(color);
 		case CRAB:
 		case CRANE:
 		case DOVE:
