@@ -103,6 +103,12 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		return result;
 	}
 
+	@Override
+	public void onNoInput() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private MoveResult getTurnResult(IHantoBoard board) throws HantoException
 	{
 		HantoCoordinate blueButterflyLocation = getButterflyOfColorLocation(HantoPlayerColor.BLUE, board);

@@ -43,6 +43,7 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	private CommonHantoHand currentTurn;
 	private int moveCount = 0;
 	private boolean isGameOver = false;
+	private boolean triggerSurrender;
 	private CommonHantoHand blueHand;
 	private CommonHantoHand redHand;
 	private HantoPieceType currentPiece = null;
@@ -133,6 +134,18 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		return result;
 	}
 
+	@Override
+	public void onNoInput() 
+	{
+		triggerSurrender = true;
+	}
+
+	@Override
+	public int getTurnNumber()
+	{
+		return (moveCount / 2) + 1;
+	}
+
 	private MoveResult getTurnResult(IHantoBoard board) 
 	{
 		HantoCoordinate blueButterflyLocation = getButterflyOfColorLocation(HantoPlayerColor.BLUE, board);
@@ -175,6 +188,11 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 			result = MoveResult.BLUE_WINS;
 			isGameOver = true;
 		}
+		else if(triggerSurrender)
+		{
+			result = getCurrentTurn() == HantoPlayerColor.RED ? MoveResult.BLUE_WINS : MoveResult.RED_WINS;
+			isGameOver = true;
+		}
 		else
 		{
 			result = MoveResult.OK;
@@ -183,12 +201,6 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		return result;
 	}
 
-	@Override
-	public int getTurnNumber()
-	{
-		return (moveCount / 2) + 1;
-	}
-	
 	private void checkStartAtOrigin(IHantoBoard board) throws HantoException {
 		if(moveCount == 0 && board.getPieces(new HantoCoordinateImpl(0, 0)).length == 0)
 		{

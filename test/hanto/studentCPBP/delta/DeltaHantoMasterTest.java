@@ -409,6 +409,25 @@ public class DeltaHantoMasterTest
 		
 		assertEquals(MoveResult.RED_WINS, result);
 	}
+	
+	@Test
+	public void testSparrowCanFlyThroughPieces() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0)); //b1
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 1)); //r1
+		game.makeMove(SPARROW, null, makeCoordinate(-1, 0)); //b2
+		game.makeMove(SPARROW, null, makeCoordinate(-1, 2)); //r2
+		game.makeMove(SPARROW, null, makeCoordinate(1, -1)); //b3
+		game.makeMove(SPARROW, null, makeCoordinate(-2, 2)); //r3
+		game.makeMove(SPARROW, makeCoordinate(-1, 0), makeCoordinate(-1, 1)); //b4
+		game.makeMove(SPARROW, null, makeCoordinate(-3, 2)); //r4
+		game.makeMove(SPARROW, null, makeCoordinate(2, -1)); //b5
+		game.makeMove(SPARROW, makeCoordinate(-3,  2), makeCoordinate(-2, 1)); //r5
+		MoveResult result = game.makeMove(SPARROW, makeCoordinate(-1, 1), makeCoordinate(-1, 0)); //b6
+		
+		assertEquals(MoveResult.OK, result);
+		assertEquals(SPARROW, game.getPieceAt(makeCoordinate(-1, 0)));
+	}
 
 	//============================================================================================
 	

@@ -66,7 +66,12 @@ public abstract class CommonHantoGame implements HantoGame
 		rules.beginTurn(board);
 		
 		IHantoMover mover;
-		if(from == null)
+		if(from == null && to == null && pieceType == null)
+		{
+			rules.onNoInput();
+			return rules.endTurn(board);
+		}
+		else if(from == null)
 		{
 			HantoCommonPiece piece = pieceFactory.createPiece(pieceType, rules.getCurrentTurn());
 			mover = piece.createPlaceMover(to);
