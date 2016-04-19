@@ -80,4 +80,26 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 			throw new HantoException("Cannot move piece through other pieces");
 		}
 	}
+
+	private void checkNotMovingBeforeButterflyPlaced(IHantoBoard board) throws HantoException {
+		if(!rules.getCurrentHand().getButterflyPlaced())
+		{
+			throw new HantoException("Cannot move piece before placing your butterfly");
+		}
+	}
+
+	private void checkNotMovingToSameSpace(IHantoBoard board) throws HantoException
+	{
+		if(mover.getTargetLocation().equals(board.getPieceLocation(mover.getPiece())))
+		{
+			throw new HantoException("Cannot move to the same location.");
+		}
+	}
+
+	private void checkIsMovingOurPiece() throws HantoException {
+		if(rules.getCurrentTurn() != mover.getPiece().getColor())
+		{
+			throw new HantoException("Cannot move piece that is not your color.");
+		}
+	}
 }

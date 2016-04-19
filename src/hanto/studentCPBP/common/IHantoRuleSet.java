@@ -58,14 +58,7 @@ public interface IHantoRuleSet
 	 * @return Turn number
 	 */
 	int getTurnNumber();
-	
-	/**
-	 * Get the hand of the current player
-	 * @return The hand of the current player
-	 */
-	CommonHantoHand getCurrentHand();
-	
-	
+		
 	/**
 	 * Creates a validator for a given mover.
 	 * @param mover The mover we wish to construct a validator from.

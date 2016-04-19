@@ -104,7 +104,10 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		return currentTurn == blueHand ? HantoPlayerColor.BLUE : HantoPlayerColor.RED;
 	}
 	
-	@Override
+	/**
+	 * Get the hand of the current player
+	 * @return The hand of the current player
+	 */
 	public CommonHantoHand getCurrentHand()
 	{
 		return currentTurn;
