@@ -16,7 +16,6 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentCPBP.common.HantoButterflyPiece;
 import hanto.studentCPBP.common.HantoCommonPiece;
-import hanto.studentCPBP.common.HantoSparrowPiece;
 import hanto.studentCPBP.common.IHantoPieceFactory;
 import hanto.studentCPBP.common.PlaceholderPiece;
 

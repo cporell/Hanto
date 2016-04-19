@@ -1,19 +1,27 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package hanto.studentCPBP.delta;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
-import hanto.common.HantoPieceType;
-import hanto.studentCPBP.common.HantoCommonPiece;
-import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.IHantoBoard;
-import hanto.studentCPBP.common.IHantoMoverValidator;
-import hanto.studentCPBP.common.IHantoRuleSet;
 import hanto.studentCPBP.common.WalkMover;
 
+/**
+ * DeltaHantoWalkMoverValidator validates Walking behavior for any number of steps
+ * @author bpeake
+ *
+ */
 public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValidator 
 {
 	private int stepsLeft;
@@ -22,11 +30,12 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 	 * Creates a validator for walking pieces.
 	 * @param mover The given WalkMover
 	 * @param rules the rules for this version of Hanto
+	 * @param maxSteps the maximum amount of spaces this piece can walk in a turn
 	 */
 	public DeltaHantoWalkMoverValidator(WalkMover mover, DeltaHantoRuleSet rules, int maxSteps) 
 	{
 		super(mover, rules);
-		this.stepsLeft = maxSteps;
+		stepsLeft = maxSteps;
 	}
 	
 	@Override

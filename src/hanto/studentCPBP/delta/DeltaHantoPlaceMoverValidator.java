@@ -15,7 +15,6 @@ import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.studentCPBP.common.IHantoBoard;
 import hanto.studentCPBP.common.IHantoMoverValidator;
-import hanto.studentCPBP.common.IHantoRuleSet;
 import hanto.studentCPBP.common.PlaceMover;
 
 /**

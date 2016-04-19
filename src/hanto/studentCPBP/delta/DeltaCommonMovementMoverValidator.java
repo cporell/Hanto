@@ -1,14 +1,18 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package hanto.studentCPBP.delta;
 
-import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
-import hanto.common.HantoPieceType;
-import hanto.studentCPBP.common.FlyMover;
-import hanto.studentCPBP.common.HantoCommonPiece;
 import hanto.studentCPBP.common.IHantoBoard;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
-import hanto.studentCPBP.common.IHantoRuleSet;
 
 /**
  * This is a base helper class to use with any validator for movement.
@@ -41,6 +45,12 @@ public abstract class DeltaCommonMovementMoverValidator implements IHantoMoverVa
 		return rules;
 	}
 
+	/**
+	 * Check that we are not attempting to move a piece to the same spot it started from
+	 * (i.e. moving in place)
+	 * @param board The current game state
+	 * @throws HantoException If we are attempting to move in place
+	 */
 	protected void checkNotMovingToSameSpace(IHantoBoard board) throws HantoException
 	{
 		if(getMover().getTargetLocation().equals(board.getPieceLocation(getMover().getPiece())))
@@ -49,6 +59,10 @@ public abstract class DeltaCommonMovementMoverValidator implements IHantoMoverVa
 		}
 	}
 
+	/**
+	 * Check that we are only moving pieces of our own color
+	 * @throws HantoException If we attempt to move an opponent's piece
+	 */
 	protected void checkIsMovingOurPiece() throws HantoException 
 	{
 		if(getRules().getCurrentTurn() != getMover().getPiece().getColor())
@@ -57,6 +71,11 @@ public abstract class DeltaCommonMovementMoverValidator implements IHantoMoverVa
 		}
 	}
 	
+	/**
+	 * Check that we are not attempting to move a piece if our Butterfly is not on the board
+	 * @param board The current game state
+	 * @throws HantoException If we attempt to move a piece before placing the Butterfly
+	 */
 	protected void checkNotMovingBeforeButterflyPlaced(IHantoBoard board) throws HantoException 
 	{
 		if(!getRules().getCurrentHand().getButterflyPlaced())

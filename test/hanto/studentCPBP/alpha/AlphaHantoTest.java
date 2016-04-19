@@ -1,3 +1,4 @@
+// $codepro.audit.disable
 /*******************************************************************************
  * This files was developed for CS4233: Object-Oriented Analysis & Design.
  * The course was taken at Worcester Polytechnic Institute.
@@ -34,6 +35,11 @@ public class AlphaHantoTest
 	{
 		private final int x, y;
 		
+		/**
+		 * Builds a new Test Hanto Coord
+		 * @param x X-val
+		 * @param y Y-val
+		 */
 		public TestHantoCoordinate(int x, int y)
 		{
 			this.x = x;
