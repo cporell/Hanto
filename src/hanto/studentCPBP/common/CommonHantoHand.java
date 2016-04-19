@@ -56,6 +56,16 @@ public abstract class CommonHantoHand
 	}
 	
 	/**
+	 * Checks to see if a type is in the hand.
+	 * @param pieceType The type to check for.
+	 * @return True if the hand can hold this type of piece, false otherwise.
+	 */
+	public boolean checkHandForType(HantoPieceType pieceType)
+	{
+		return hand.containsKey(pieceType);
+	}
+	
+	/**
 	 * Remove a piece from the player's hand
 	 * @param pieceType The piece type to remove
 	 */

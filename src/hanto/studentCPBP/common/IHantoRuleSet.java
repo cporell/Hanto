@@ -58,13 +58,6 @@ public interface IHantoRuleSet
 	 * @return Turn number
 	 */
 	int getTurnNumber();
-	
-	/**
-	 * Get the hand of the current player
-	 * @return The hand of the current player
-	 * @throws HantoException Possible exception that can be thrown.
-	 */
-	CommonHantoHand getCurrentHand() throws HantoException;
 
 	/**
 	 * Creates a validator for a given mover.

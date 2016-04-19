@@ -2,7 +2,7 @@
  * MoveException is used to notify when an illegal move occurs.
  * Allows to throw an exception and declare a winner.
  */
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.beta;
 
 /**
  * An exception thrown when an invalid move occurs.

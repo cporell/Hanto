@@ -18,6 +18,7 @@ import static hanto.common.MoveResult.*;
 import static org.junit.Assert.*;
 import org.junit.*;
 import hanto.common.*;
+import hanto.studentCPBP.HantoGameFactory;
 
 /**
  * Test cases for Alpha Hanto
@@ -61,7 +62,7 @@ public class AlphaHantoTest
 	
 	@Before
 	public void setup() {
-		game = new AlphaHantoGame();
+		game = (AlphaHantoGame) HantoGameFactory.getInstance().makeHantoGame(HantoGameID.ALPHA_HANTO);
 	}
 	
 	@Test	// 1

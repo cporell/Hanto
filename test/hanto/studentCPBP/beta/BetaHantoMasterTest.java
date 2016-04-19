@@ -155,7 +155,7 @@ public class BetaHantoMasterTest
 	 * Test that Blue cannot place 2 Butterflies
 	 * @throws HantoException
 	 */
-	@Test // 6
+	@Test(expected = HantoException.class) // 6
 	public void testBLUECannotPlaceTwoButterfliesPerPlayer() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
@@ -168,7 +168,7 @@ public class BetaHantoMasterTest
 	 * Test that Red cannt place 2 Butterflies
 	 * @throws HantoException
 	 */
-	@Test // 7
+	@Test(expected = HantoException.class) // 7
 	public void testREDCannotPlaceTwoButterflies() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
@@ -182,7 +182,7 @@ public class BetaHantoMasterTest
 	 * Test that not placing the Butterfly (for Blue) on the 4th turn is a game over
 	 * @throws HantoException
 	 */
-	@Test // 8 
+	@Test(expected = HantoException.class) // 8 
 	public void testBlueMustPlaceButterflyOnFourthMoveIfNotPlacedAlready() throws HantoException
 	{
 		game.makeMove(SPARROW, null, makeCoordinate(0,0)); // B1
@@ -199,7 +199,7 @@ public class BetaHantoMasterTest
 	 * Tests that not placing the Butterfly (for Red) on the 4th turn is a game over
 	 * @throws HantoException
 	 */
-	@Test // 9 
+	@Test(expected = HantoException.class) // 9 
 	public void testRedMustPlaceButterflyOnFourthMoveIfNotPlacedAlready() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
@@ -308,7 +308,7 @@ public class BetaHantoMasterTest
 	 * Test that the first piece can only be placed at 0,0
 	 * @throws HantoException
 	 */
-	@Test //15
+	@Test(expected = HantoException.class) //15
 	public void testMustStartAtOrigin() throws HantoException
 	{
 		MoveResult result = game.makeMove(BUTTERFLY, null, makeCoordinate(1,0));

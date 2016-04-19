@@ -6,43 +6,40 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Copyright ©2016 Gary F. Pollice
  *******************************************************************************/
 
-package hanto.studentCPBP.delta;
+package hanto.studentCPBP.common;
 
-import hanto.common.HantoPiece;
+import hanto.common.HantoCoordinate;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 
 /**
- * Implementation of a piece for Delta
+ * Placeholer piece is used for pieces that aren't valid in the current version of Hanto.
+ * EG: If we tried making a Horse in GammaHanto, it would be created as a Placeholder piece.
  * @author Benny Peake bpeake
  * @author Connor Porell cgporell
  */
-public class DeltaHantoPiece implements HantoPiece {
+public class PlaceholderPiece extends HantoCommonPiece
+{
 
-	private HantoPlayerColor color;
-	private HantoPieceType type;
-
-	/**
-	 * Piece for Delta Hanto, takes in a color and type
-	 * @param color Player color (owner)
-	 * @param type Type of the piece
-	 */
-	public DeltaHantoPiece(HantoPlayerColor color, HantoPieceType type)
+	public PlaceholderPiece(HantoPlayerColor color, HantoPieceType type)
 	{
-		this.color = color;
-		this.type = type;
+		super(color, type);
 	}
 
 	@Override
-	public HantoPlayerColor getColor() {
-		return color;
+	public IHantoMover createPlaceMover(HantoCoordinate at) 
+	{
+		return new PlaceMover(this, at);
 	}
 
 	@Override
-	public HantoPieceType getType() {
-		return type;
+	public IHantoMover createWalkMover(HantoCoordinate to) 
+	{
+		return null;
 	}
 
 }

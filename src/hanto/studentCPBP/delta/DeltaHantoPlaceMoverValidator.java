@@ -43,6 +43,11 @@ public class DeltaHantoPlaceMoverValidator implements IHantoMoverValidator {
 	@Override
 	public void checkIteration(IHantoBoard board) throws HantoException 
 	{
+		if(!rules.getCurrentHand().checkHandForType(mover.getPiece().getType()))
+		{
+			throw new HantoException("Invalid piece placed on board.");
+		}
+		
 		if(rules.getCurrentHand().getCountOfPieceInHand(mover.getPiece().getType()) <= 0)
 		{
 			throw new HantoException("You cannot place a piece of type: " +

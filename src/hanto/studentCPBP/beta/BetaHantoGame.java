@@ -18,7 +18,6 @@ import java.util.Map;
 import hanto.common.*;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.HantoPieceImpl;
-import hanto.studentCPBP.common.MoveException;
 
 /**
  * Beta version of Hanto

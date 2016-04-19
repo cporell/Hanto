@@ -93,9 +93,6 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		checkStartAtOrigin(board);
 		checkForDoubleStacked(board);
 		checkForConnectivity(board);
-		checkTooManyButterflys(board);
-		checkTooManySparrows(board);
-		checkTooManyCrabs(board);
 		checkButterflyPlacedByFourthRound(board);
 	}
 
@@ -210,107 +207,16 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 
 	private HantoCoordinate getButterflyOfColorLocation(HantoPlayerColor color, IHantoBoard board)
 	{
-		HantoCoordinate[] allCoords = board.getAllTakenLocations();
-		for(HantoCoordinate coord : allCoords)
+		HantoCommonPiece[] pieces = board.getPieces();
+		for(HantoCommonPiece piece : pieces)
 		{
-			HantoCommonPiece piece = board.getPieces(coord)[0];
 			if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == color)
 			{
-				return coord;
+				return board.getPieceLocation(piece);
 			}
 		}
 		
 		return null;
-	}
-
-	private void checkTooManyButterflys(IHantoBoard board) throws HantoException {
-		int numOfBlueButterflys = 0;
-		int numOfRedButterflys = 0;
-		HantoCoordinate[] takenLocations = board.getAllTakenLocations();
-		for(HantoCoordinate coord : takenLocations)
-		{
-			HantoCommonPiece piece = board.getPieces(coord)[0];
-			if(piece.getType() == HantoPieceType.BUTTERFLY)
-			{
-				if(piece.getColor() == HantoPlayerColor.BLUE)
-				{
-					numOfBlueButterflys++;
-				}
-				else
-				{
-					numOfRedButterflys++;
-				}
-			}
-		}
-		
-		if(numOfBlueButterflys > 1)
-		{
-			throw new HantoException("Blue has too many butterflys.");
-		}
-		else if(numOfRedButterflys > 1)
-		{
-			throw new HantoException("Red has too many butterflys.");
-		}
-	}
-
-	private void checkTooManySparrows(IHantoBoard board) throws HantoException {
-		int numOfBlueSparrows = 0;
-		int numOfRedSparrows = 0;
-		HantoCoordinate[] takenLocations = board.getAllTakenLocations();
-		for(HantoCoordinate coord : takenLocations)
-		{
-			HantoCommonPiece piece = board.getPieces(coord)[0];
-			if(piece.getType() == HantoPieceType.SPARROW)
-			{
-				if(piece.getColor() == HantoPlayerColor.BLUE)
-				{
-					numOfBlueSparrows++;
-				}
-				else
-				{
-					numOfRedSparrows++;
-				}
-			}
-		}
-		
-		if(numOfBlueSparrows > 4)
-		{
-			throw new HantoException("Blue has too many sparrows.");
-		}
-		else if(numOfRedSparrows > 4)
-		{
-			throw new HantoException("Red has too many sparrows.");
-		}
-	}
-	
-	private void checkTooManyCrabs(IHantoBoard board) throws HantoException {
-		int numOfBlueCrabs = 0;
-		int numOfRedCrabs = 0;
-		HantoCoordinate[] takenLocations = board.getAllTakenLocations();
-		for(HantoCoordinate coord : takenLocations)
-		{
-			HantoCommonPiece piece = board.getPieces(coord)[0];
-			if(piece.getType() == HantoPieceType.CRAB)
-			{
-				if(piece.getColor() == HantoPlayerColor.BLUE)
-				{
-					numOfBlueCrabs++;
-				}
-				else
-				{
-					numOfRedCrabs++;
-				}
-			}
-		}
-		
-		if(numOfBlueCrabs > 4)
-		{
-			throw new HantoException("Blue has too many crabs.");
-		}
-		else if(numOfRedCrabs > 4)
-		{
-			throw new HantoException("Red has too many crabs.");
-		}
 	}
 
 	private void checkForConnectivity(IHantoBoard board) throws HantoException {

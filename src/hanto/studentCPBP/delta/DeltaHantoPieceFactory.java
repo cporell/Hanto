@@ -17,7 +17,7 @@ import hanto.studentCPBP.common.HantoCommonPiece;
 import hanto.studentCPBP.common.HantoCrabPiece;
 import hanto.studentCPBP.common.HantoSparrowPiece;
 import hanto.studentCPBP.common.IHantoPieceFactory;
-import hanto.studentCPBP.gamma.PlaceholderPiece;
+import hanto.studentCPBP.common.PlaceholderPiece;
 
 /**
  * Piece Factory for Delta Hanto
@@ -44,7 +44,6 @@ public class DeltaHantoPieceFactory implements IHantoPieceFactory
 		case HORSE:
 		default:
 			return new PlaceholderPiece(color, type);
-		
 		}
 	}
 

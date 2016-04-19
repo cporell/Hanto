@@ -18,6 +18,7 @@ import hanto.studentCPBP.common.HantoButterflyPiece;
 import hanto.studentCPBP.common.HantoCommonPiece;
 import hanto.studentCPBP.common.HantoSparrowPiece;
 import hanto.studentCPBP.common.IHantoPieceFactory;
+import hanto.studentCPBP.common.PlaceholderPiece;
 
 /**
  * Piece factory for Gamma Hanto

@@ -50,12 +50,6 @@ public class HantoHandFactory
 		CommonHantoHand player = null;
 		switch(gameId)
 		{
-		case ALPHA_HANTO:
-			break;
-		case BETA_HANTO:
-			break;
-		case GAMMA_HANTO:
-			break;
 		case DELTA_HANTO:
 			player = new DeltaHantoHand(color);
 			player.addPieceToHand(HantoPieceType.BUTTERFLY, 1);
