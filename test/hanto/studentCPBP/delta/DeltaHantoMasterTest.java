@@ -13,6 +13,7 @@ package hanto.studentCPBP.delta;
 
 import static hanto.common.HantoPieceType.BUTTERFLY;
 import static hanto.common.HantoPieceType.SPARROW;
+import static hanto.common.HantoPieceType.CRAB;
 import static hanto.common.HantoPlayerColor.*;
 import hanto.common.*;
 import hanto.studentCPBP.HantoGameFactory;
@@ -295,10 +296,10 @@ public class DeltaHantoMasterTest
 		game.makeMove(SPARROW, null, makeCoordinate(1, -1)); //b3
 		game.makeMove(SPARROW, null, makeCoordinate(-2, 2)); //r3
 		game.makeMove(SPARROW, makeCoordinate(-1, 0), makeCoordinate(-1, 1)); //b4
-		game.makeMove(SPARROW, null, makeCoordinate(-3, 2)); //r4
-		game.makeMove(SPARROW, null, makeCoordinate(2, -1)); //b5
-		game.makeMove(SPARROW, makeCoordinate(-3,  2), makeCoordinate(-2, 1)); //r5
-		game.makeMove(SPARROW, makeCoordinate(-1, 1), makeCoordinate(-1, 0)); //b6
+		game.makeMove(CRAB, null, makeCoordinate(-3, 2)); //r4
+		game.makeMove(CRAB, null, makeCoordinate(2, -1)); //b5
+		game.makeMove(CRAB, makeCoordinate(-3,  2), makeCoordinate(-2, 1)); //r5
+		game.makeMove(CRAB, makeCoordinate(-1, 1), makeCoordinate(-1, 0)); //b6
 	}
 	
 	/**
