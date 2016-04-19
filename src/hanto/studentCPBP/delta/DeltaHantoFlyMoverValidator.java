@@ -10,11 +10,8 @@ import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.IHantoRuleSet;
 import hanto.studentCPBP.common.WalkMover;
 
-public class DeltaHantoFlyMoverValidator implements IHantoMoverValidator
-{
-	private FlyMover mover;
-	private IHantoRuleSet rules;
-	
+public class DeltaHantoFlyMoverValidator extends DeltaCommonMovementMoverValidator
+{	
 	/**
 	 * Creates a validator for walking pieces.
 	 * @param mover The given WalkMover
@@ -22,8 +19,7 @@ public class DeltaHantoFlyMoverValidator implements IHantoMoverValidator
 	 */
 	public DeltaHantoFlyMoverValidator(FlyMover mover, IHantoRuleSet rules) 
 	{
-		this.mover = mover;
-		this.rules = rules;
+		super(mover, rules);
 	}
 
 	@Override
@@ -32,38 +28,5 @@ public class DeltaHantoFlyMoverValidator implements IHantoMoverValidator
 		checkNotMovingToSameSpace(board);
 		checkIsMovingOurPiece();
 		checkNotMovingBeforeButterflyPlaced(board);
-	}
-
-	private void checkNotMovingToSameSpace(IHantoBoard board) throws HantoException
-	{
-		if(mover.getTargetLocation().equals(board.getPieceLocation(mover.getPiece())))
-		{
-			throw new HantoException("Cannot move to the same location.");
-		}
-	}
-
-	private void checkIsMovingOurPiece() throws HantoException 
-	{
-		if(rules.getCurrentTurn() != mover.getPiece().getColor())
-		{
-			throw new HantoException("Cannot move piece that is not your color.");
-		}
-	}
-	
-	private void checkNotMovingBeforeButterflyPlaced(IHantoBoard board) throws HantoException {
-		HantoCoordinate[] takenCoords = board.getAllTakenLocations();
-		for(HantoCoordinate coord : takenCoords)
-		{
-			HantoCommonPiece[] pieces = board.getPieces(coord);
-			for(HantoCommonPiece piece : pieces)
-			{
-				if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == rules.getCurrentTurn())
-				{
-					return;
-				}
-			}
-		}
-		
-		throw new HantoException("Cannot move piece before placing your butterfly");
 	}
 }

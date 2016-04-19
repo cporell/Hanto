@@ -397,6 +397,18 @@ public class DeltaHantoMasterTest
 		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0, -3));
 		game.makeMove(HantoPieceType.CRAB, makeCoordinate(1, 1), makeCoordinate(1, -3));
 	}
+	
+	//============================================================================================
+	
+	@Test
+	public void testPlayerCanResign() throws HantoException
+	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, -1));
+		MoveResult result = game.makeMove(null, null, null);
+		
+		assertEquals(MoveResult.RED_WINS, result);
+	}
 
 	//============================================================================================
 	

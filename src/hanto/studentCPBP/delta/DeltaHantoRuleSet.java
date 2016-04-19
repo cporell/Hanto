@@ -64,7 +64,7 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	{
 		if(mover instanceof PlaceMover)
 		{
-			return new DeltaHantoPlaceMoveValidator((PlaceMover) mover, this);
+			return new DeltaHantoPlaceMoverValidator((PlaceMover) mover, this);
 		}
 		else if(mover instanceof WalkMover)
 		{
@@ -126,7 +126,6 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		MoveResult result = getTurnResult(board);
 		
 		moveCount++;
-		//currentTurn = currentTurn == HantoPlayerColor.BLUE ? HantoPlayerColor.RED : HantoPlayerColor.BLUE;
 		currentTurn = currentTurn == blueHand ? redHand : blueHand;
 		
 		return result;
@@ -134,9 +133,6 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 
 	private void resolveHands() 
 	{
-		/*
-		currentTurn.takePieceFromHand(currentPiece);
-		*/
 	}
 
 	private MoveResult getTurnResult(IHantoBoard board) 
@@ -147,7 +143,6 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		boolean isBlueSurrounded;
 		boolean isRedSurrounded;
 		
-		//if(blueButterflyLocation != null)
 		if(blueHand.getButterflyPlaced())
 		{
 			isBlueSurrounded = checkLocationSurrounded(board, blueButterflyLocation);
@@ -157,7 +152,6 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 			isBlueSurrounded = false;
 		}
 		
-		//if(redButterflyLocation != null)
 		if(redHand.getButterflyPlaced())
 		{
 			isRedSurrounded = checkLocationSurrounded(board, redButterflyLocation);
@@ -183,13 +177,6 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 			result = MoveResult.BLUE_WINS;
 			isGameOver = true;
 		}
-		/*
-		else if(moveCount == 39)
-		{
-			result = MoveResult.DRAW;
-			isGameOver = true;
-		}
-		*/
 		else
 		{
 			result = MoveResult.OK;
@@ -345,10 +332,8 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	{
 		if(getTurnNumber() == 4)
 		{
-			//if(currentTurn == HantoPlayerColor.BLUE)
 			if(currentTurn == blueHand)
 			{
-				//if(!isButterflyOfColor(HantoPlayerColor.BLUE, board))
 				if(!blueHand.getButterflyPlaced())
 				{
 					throw new HantoException("Blue did not place butterfly by 4th turn.");	
@@ -356,7 +341,6 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 			}
 			else
 			{
-				//if(!isButterflyOfColor(HantoPlayerColor.RED, board))
 				if(!redHand.getButterflyPlaced())
 				{
 					throw new HantoException("Red did not place butterfly by 4th turn.");
@@ -414,24 +398,4 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 			buildConnectivity(coord, visited, board);
 		}
 	}
-
-	/*
-	 * TODO: Delete if we really don't need this
-	private boolean isButterflyOfColor(HantoPlayerColor color, IHantoBoard board)
-	{
-		HantoCoordinate[] allCoords = board.getAllTakenLocations();
-		for(HantoCoordinate coord : allCoords)
-		{
-			HantoCommonPiece piece = board.getPieces(coord)[0];
-			if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == color)
-			{
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	*/
-	
-
 }

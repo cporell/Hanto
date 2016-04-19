@@ -10,7 +10,7 @@ public class FlyMover implements IHantoMover
 	
 	public HantoCoordinate getTargetLocation()
 	{
-		return to;
+		return new HantoCoordinateImpl(to);
 	}
 	
 	public HantoCommonPiece getPiece()

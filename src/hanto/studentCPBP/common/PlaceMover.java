@@ -27,7 +27,7 @@ public class PlaceMover implements IHantoMover
 	
 	public HantoCoordinate getTargetLocation()
 	{
-		return at;
+		return new HantoCoordinateImpl(at);
 	}
 	
 	public HantoCommonPiece getPiece()

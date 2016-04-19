@@ -63,7 +63,7 @@ public interface IHantoRuleSet
 	 * Get the hand of the current player
 	 * @return The hand of the current player
 	 */
-	public CommonHantoHand getCurrentHand();
+	CommonHantoHand getCurrentHand();
 	
 	
 	/**
