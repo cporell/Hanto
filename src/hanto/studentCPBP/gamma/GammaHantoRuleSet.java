@@ -20,6 +20,7 @@ import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentCPBP.common.CommonHantoHand;
 import hanto.studentCPBP.common.HantoCommonPiece;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.IHantoBoard;
@@ -352,5 +353,11 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		}
 		
 		return false;
+	}
+
+	@Override
+	public CommonHantoHand getCurrentHand() {
+		// Return null, Hands not used for Gamma
+		return null;
 	}
 }

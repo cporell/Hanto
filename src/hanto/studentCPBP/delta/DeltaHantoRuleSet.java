@@ -98,6 +98,12 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	{
 		return currentTurn == blueHand ? HantoPlayerColor.BLUE : HantoPlayerColor.RED;
 	}
+	
+	@Override
+	public CommonHantoHand getCurrentHand()
+	{
+		return currentTurn;
+	}
 
 	@Override
 	public void beginTurn(IHantoBoard board) throws HantoException 
@@ -123,7 +129,9 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 
 	private void resolveHands() 
 	{
+		/*
 		currentTurn.takePieceFromHand(currentPiece);
+		*/
 	}
 
 	private MoveResult getTurnResult(IHantoBoard board) 
@@ -361,7 +369,7 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 					piece.getType() != HantoPieceType.CRAB && 
 					piece.getType() != HantoPieceType.SPARROW)
 			{
-				throw new HantoException("Can only place butterfly or sparrow.");
+				throw new HantoException("Can only place butterfly or sparrow or crab.");
 			}
 		}
 	}

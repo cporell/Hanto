@@ -24,7 +24,7 @@ import hanto.common.HantoPlayerColor;
 public abstract class CommonHantoHand 
 {
 	private Map<HantoPieceType, Integer> hand;
-	private boolean butterflyPlaced;
+	private boolean butterflyPlaced = false;
 	private HantoPlayerColor playerColor;
 	
 	/**
@@ -34,7 +34,6 @@ public abstract class CommonHantoHand
 	public CommonHantoHand(HantoPlayerColor color)
 	{
 		hand = new HashMap<HantoPieceType, Integer>();
-		butterflyPlaced = false;
 		playerColor = color;
 	}
 	

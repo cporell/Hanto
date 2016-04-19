@@ -85,6 +85,12 @@ public class DeltaHantoWalkMoverValidator implements IHantoMoverValidator
 	}
 
 	private void checkNotMovingBeforeButterflyPlaced(IHantoBoard board) throws HantoException {
+		if(!rules.getCurrentHand().getButterflyPlaced())
+		{
+			throw new HantoException("Cannot move piece before placing your butterfly");
+		}
+			
+		/*
 		HantoCoordinate[] takenCoords = board.getAllTakenLocations();
 		for(HantoCoordinate coord : takenCoords)
 		{
@@ -97,8 +103,8 @@ public class DeltaHantoWalkMoverValidator implements IHantoMoverValidator
 				}
 			}
 		}
-		
 		throw new HantoException("Cannot move piece before placing your butterfly");
+		*/
 	}
 
 	private void checkNotMovingToSameSpace(IHantoBoard board) throws HantoException
