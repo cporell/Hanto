@@ -17,7 +17,7 @@ public class DeltaHantoFlyMoverValidator extends DeltaCommonMovementMoverValidat
 	 * @param mover The given WalkMover
 	 * @param rules the rules for this version of Hanto
 	 */
-	public DeltaHantoFlyMoverValidator(FlyMover mover, IHantoRuleSet rules) 
+	public DeltaHantoFlyMoverValidator(FlyMover mover, DeltaHantoRuleSet rules) 
 	{
 		super(mover, rules);
 	}

@@ -354,10 +354,4 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		
 		return false;
 	}
-
-	@Override
-	public CommonHantoHand getCurrentHand() {
-		// Return null, Hands not used for Gamma
-		return null;
-	}
 }

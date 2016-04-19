@@ -23,7 +23,7 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 	 * @param mover The given WalkMover
 	 * @param rules the rules for this version of Hanto
 	 */
-	public DeltaHantoWalkMoverValidator(WalkMover mover, IHantoRuleSet rules, int maxSteps) 
+	public DeltaHantoWalkMoverValidator(WalkMover mover, DeltaHantoRuleSet rules, int maxSteps) 
 	{
 		super(mover, rules);
 		this.stepsLeft = maxSteps;
@@ -81,23 +81,23 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 		}
 	}
 
-	private void checkNotMovingBeforeButterflyPlaced(IHantoBoard board) throws HantoException {
-		if(!rules.getCurrentHand().getButterflyPlaced())
+	protected void checkNotMovingBeforeButterflyPlaced(IHantoBoard board) throws HantoException {
+		if(!getRules().getCurrentHand().getButterflyPlaced())
 		{
 			throw new HantoException("Cannot move piece before placing your butterfly");
 		}
 	}
 
-	private void checkNotMovingToSameSpace(IHantoBoard board) throws HantoException
+	protected void checkNotMovingToSameSpace(IHantoBoard board) throws HantoException
 	{
-		if(mover.getTargetLocation().equals(board.getPieceLocation(mover.getPiece())))
+		if(getMover().getTargetLocation().equals(board.getPieceLocation(getMover().getPiece())))
 		{
 			throw new HantoException("Cannot move to the same location.");
 		}
 	}
 
-	private void checkIsMovingOurPiece() throws HantoException {
-		if(rules.getCurrentTurn() != mover.getPiece().getColor())
+	protected void checkIsMovingOurPiece() throws HantoException {
+		if(getRules().getCurrentTurn() != getMover().getPiece().getColor())
 		{
 			throw new HantoException("Cannot move piece that is not your color.");
 		}

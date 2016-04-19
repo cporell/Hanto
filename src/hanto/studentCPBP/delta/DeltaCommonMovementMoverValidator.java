@@ -18,14 +18,14 @@ import hanto.studentCPBP.common.IHantoRuleSet;
 public abstract class DeltaCommonMovementMoverValidator implements IHantoMoverValidator 
 {
 	private IHantoMover mover;
-	private IHantoRuleSet rules;
+	private DeltaHantoRuleSet rules;
 	
 	/**
 	 * Creates a validator for walking pieces.
 	 * @param mover The given WalkMover
 	 * @param rules the rules for this version of Hanto
 	 */
-	public DeltaCommonMovementMoverValidator(IHantoMover mover, IHantoRuleSet rules) 
+	public DeltaCommonMovementMoverValidator(IHantoMover mover, DeltaHantoRuleSet rules) 
 	{
 		this.mover = mover;
 		this.rules = rules;
@@ -36,7 +36,7 @@ public abstract class DeltaCommonMovementMoverValidator implements IHantoMoverVa
 		return mover;
 	}
 	
-	public IHantoRuleSet getRules()
+	public DeltaHantoRuleSet getRules()
 	{
 		return rules;
 	}

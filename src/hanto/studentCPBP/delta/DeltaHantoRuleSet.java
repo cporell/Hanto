@@ -125,17 +125,12 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	@Override
 	public MoveResult endTurn(IHantoBoard board) throws HantoException 
 	{
-		resolveHands();
 		MoveResult result = getTurnResult(board);
 		
 		moveCount++;
 		currentTurn = currentTurn == blueHand ? redHand : blueHand;
 		
 		return result;
-	}
-
-	private void resolveHands() 
-	{
 	}
 
 	private MoveResult getTurnResult(IHantoBoard board) 

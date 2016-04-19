@@ -27,14 +27,14 @@ import hanto.studentCPBP.common.PlaceMover;
 public class DeltaHantoPlaceMoverValidator implements IHantoMoverValidator {
 
 	private PlaceMover mover;
-	private IHantoRuleSet rules;
+	private DeltaHantoRuleSet rules;
 	
 	/**
 	 * Creates a validator for placing pieces.
 	 * @param mover The given PlaceMover
 	 * @param rules the rules for this version of Hanto
 	 */
-	public DeltaHantoPlaceMoverValidator(PlaceMover mover, IHantoRuleSet rules)
+	public DeltaHantoPlaceMoverValidator(PlaceMover mover, DeltaHantoRuleSet rules)
 	{
 		this.mover = mover;
 		this.rules = rules;
