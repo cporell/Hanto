@@ -43,6 +43,13 @@ public class DeltaHantoPlaceMoverValidator implements IHantoMoverValidator {
 	@Override
 	public void checkIteration(IHantoBoard board) throws HantoException 
 	{
+		if(rules.getCurrentHand().getCountOfPieceInHand(mover.getPiece().getType()) <= 0)
+		{
+			throw new HantoException("You cannot place a piece of type: " +
+									 mover.getPiece().getType().toString() +
+									 ". None are left in your hand.");
+		}
+		
 		if(rules.getTurnNumber() > 1)
 		{
 			HantoCoordinate[] adjacent = board.getAdjacent(mover.getTargetLocation());
@@ -74,5 +81,6 @@ public class DeltaHantoPlaceMoverValidator implements IHantoMoverValidator {
 				throw new HantoException("You cannot place next to an opponents piece.");
 			}
 		}
+		rules.getCurrentHand().takePieceFromHand(mover.getPiece().getType());
 	}
 }
