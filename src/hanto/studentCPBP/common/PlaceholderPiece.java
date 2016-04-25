@@ -22,7 +22,7 @@ import hanto.common.HantoPlayerColor;
  * @author Benny Peake bpeake
  * @author Connor Porell cgporell
  */
-public class PlaceholderPiece extends HantoCommonPiece
+public class PlaceholderPiece extends CommonHantoPiece
 {
 
 	public PlaceholderPiece(HantoPlayerColor color, HantoPieceType type)

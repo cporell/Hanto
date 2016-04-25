@@ -25,13 +25,13 @@ import hanto.common.HantoCoordinate;
  */
 public class CommonHantoBoard implements IHantoBoard
 {
-	private Map<HantoCoordinateImpl, List<HantoCommonPiece>> boardLookup = new HashMap<>();
-	private Map<HantoCommonPiece, HantoCoordinateImpl> pieceLookup = new HashMap<>();
+	private Map<HantoCoordinateImpl, List<CommonHantoPiece>> boardLookup = new HashMap<>();
+	private Map<CommonHantoPiece, HantoCoordinateImpl> pieceLookup = new HashMap<>();
 	
 	@Override
-	public void addPiece(HantoCommonPiece piece, HantoCoordinate at) 
+	public void addPiece(CommonHantoPiece piece, HantoCoordinate at) 
 	{
-		List<HantoCommonPiece> current = boardLookup.get(convertToLocalCoordImpl(at));
+		List<CommonHantoPiece> current = boardLookup.get(convertToLocalCoordImpl(at));
 		if(current == null)
 		{
 			current = new ArrayList<>();
@@ -43,24 +43,24 @@ public class CommonHantoBoard implements IHantoBoard
 	}
 
 	@Override
-	public HantoCommonPiece[] getPieces(HantoCoordinate at) 
+	public CommonHantoPiece[] getPieces(HantoCoordinate at) 
 	{
-		List<HantoCommonPiece> pieces = boardLookup.get(convertToLocalCoordImpl(at));
+		List<CommonHantoPiece> pieces = boardLookup.get(convertToLocalCoordImpl(at));
 		if(pieces == null)
 		{
-			return new HantoCommonPiece[0];
+			return new CommonHantoPiece[0];
 		}
 		else
 		{
-			HantoCommonPiece[] pieceArray = new HantoCommonPiece[pieces.size()];
+			CommonHantoPiece[] pieceArray = new CommonHantoPiece[pieces.size()];
 			return pieces.toArray(pieceArray);
 		}
 	}
 	
 	@Override
-	public HantoCommonPiece[] getPieces() 
+	public CommonHantoPiece[] getPieces() 
 	{
-		HantoCommonPiece[] pieces = new HantoCommonPiece[pieceLookup.size()];
+		CommonHantoPiece[] pieces = new CommonHantoPiece[pieceLookup.size()];
 		return pieceLookup.keySet().toArray(pieces);
 	}
 
@@ -88,9 +88,9 @@ public class CommonHantoBoard implements IHantoBoard
 	}
  
 	@Override
-	public void movePiece(HantoCommonPiece piece, HantoCoordinate to)
+	public void movePiece(CommonHantoPiece piece, HantoCoordinate to)
 	{
-		List<HantoCommonPiece> fromPieces = boardLookup.get(pieceLookup.get(piece));
+		List<CommonHantoPiece> fromPieces = boardLookup.get(pieceLookup.get(piece));
 		fromPieces.remove(piece);
 		
 		if(fromPieces.size() == 0)
@@ -107,7 +107,7 @@ public class CommonHantoBoard implements IHantoBoard
 	}
 
 	@Override
-	public HantoCoordinate getPieceLocation(HantoCommonPiece piece) 
+	public HantoCoordinate getPieceLocation(CommonHantoPiece piece) 
 	{
 		return pieceLookup.get(piece);
 	}

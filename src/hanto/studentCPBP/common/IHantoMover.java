@@ -32,7 +32,7 @@ public interface IHantoMover
 	 * Gets the piece that this mover is one.
 	 * @return The piece that this mover is on.
 	 */
-	HantoCommonPiece getPiece();
+	CommonHantoPiece getPiece();
 	
 	/**
 	 * Check the move step-by-step to make sure it is valid.

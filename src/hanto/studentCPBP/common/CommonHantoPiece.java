@@ -22,7 +22,7 @@ import hanto.common.HantoPlayerColor;
  * @author Benny Peake bpeake
  * @author Connor Porell cgporell
  */
-public abstract class HantoCommonPiece implements HantoPiece
+public abstract class CommonHantoPiece implements HantoPiece
 {
 	private final HantoPlayerColor color;
 	private final HantoPieceType type;
@@ -32,7 +32,7 @@ public abstract class HantoCommonPiece implements HantoPiece
 	 * @param color the piece color
 	 * @param type the piece type
 	 */
-	public HantoCommonPiece(HantoPlayerColor color, HantoPieceType type)
+	public CommonHantoPiece(HantoPlayerColor color, HantoPieceType type)
 	{
 		this.color = color;
 		this.type = type;

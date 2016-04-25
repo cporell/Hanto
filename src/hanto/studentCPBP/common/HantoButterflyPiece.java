@@ -21,7 +21,7 @@ import hanto.common.HantoPlayerColor;
  * @author Benny Peake bpeake
  * @author Connor Porell cgporell
  */
-public class HantoButterflyPiece extends HantoCommonPiece
+public class HantoButterflyPiece extends CommonHantoPiece
 {
 
 	/**

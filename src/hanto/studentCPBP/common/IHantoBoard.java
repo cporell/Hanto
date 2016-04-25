@@ -26,14 +26,14 @@ public interface IHantoBoard
 	 * @param piece
 	 * @param at
 	 */
-	void addPiece(HantoCommonPiece piece, HantoCoordinate at);
+	void addPiece(CommonHantoPiece piece, HantoCoordinate at);
 	
 	/**
 	 * Moves a piece on the board
 	 * @param piece
 	 * @param to
 	 */
-	void movePiece(HantoCommonPiece piece, HantoCoordinate to);
+	void movePiece(CommonHantoPiece piece, HantoCoordinate to);
 	
 	/**
 	 * Get all pieces at a location. 
@@ -41,20 +41,20 @@ public interface IHantoBoard
 	 * @return All pieces at a location on the board. We return an array since our plan is moving
 	 * a piece first, then seeing if it is an acceptable move.
 	 */
-	HantoCommonPiece[] getPieces(HantoCoordinate at);
+	CommonHantoPiece[] getPieces(HantoCoordinate at);
 	
 	/**
 	 * Get all pieces on the board.
 	 * @return An array of all pieces on the board.
 	 */
-	HantoCommonPiece[] getPieces();
+	CommonHantoPiece[] getPieces();
 	
 	/**
 	 * Given a piece, look up its location.
 	 * @param piece The desired piece
 	 * @return Its location
 	 */
-	HantoCoordinate getPieceLocation(HantoCommonPiece piece);
+	HantoCoordinate getPieceLocation(CommonHantoPiece piece);
 	
 	/**
 	 * Returns all occupied locations on the board

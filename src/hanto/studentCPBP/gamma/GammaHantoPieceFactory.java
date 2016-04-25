@@ -15,7 +15,7 @@ package hanto.studentCPBP.gamma;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentCPBP.common.HantoButterflyPiece;
-import hanto.studentCPBP.common.HantoCommonPiece;
+import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.IHantoPieceFactory;
 import hanto.studentCPBP.common.PlaceholderPiece;
 
@@ -28,7 +28,7 @@ public class GammaHantoPieceFactory implements IHantoPieceFactory
 {
 
 	@Override
-	public HantoCommonPiece createPiece(HantoPieceType type, HantoPlayerColor color) 
+	public CommonHantoPiece createPiece(HantoPieceType type, HantoPlayerColor color) 
 	{
 		switch(type)
 		{

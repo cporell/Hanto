@@ -28,5 +28,5 @@ public interface IHantoPieceFactory
 	 * @param color The player color
 	 * @return A new HantoCommonPiece
 	 */
-	HantoCommonPiece createPiece(HantoPieceType type, HantoPlayerColor color);
+	CommonHantoPiece createPiece(HantoPieceType type, HantoPlayerColor color);
 }

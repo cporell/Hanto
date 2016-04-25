@@ -22,7 +22,7 @@ import hanto.common.HantoException;
  */
 public class WalkMover implements IHantoMover
 {
-	private HantoCommonPiece piece;
+	private CommonHantoPiece piece;
 	private HantoCoordinate to;
 	
 	public HantoCoordinate getTargetLocation()
@@ -30,7 +30,7 @@ public class WalkMover implements IHantoMover
 		return new HantoCoordinateImpl(to);
 	}
 	
-	public HantoCommonPiece getPiece()
+	public CommonHantoPiece getPiece()
 	{
 		return piece;
 	}
@@ -40,7 +40,7 @@ public class WalkMover implements IHantoMover
 	 * @param piece The piece we are placing
 	 * @param to The location we are placing at
 	 */
-	public WalkMover(HantoCommonPiece piece, HantoCoordinate to) 
+	public WalkMover(CommonHantoPiece piece, HantoCoordinate to) 
 	{
 		this.piece = piece;
 		this.to = to; 

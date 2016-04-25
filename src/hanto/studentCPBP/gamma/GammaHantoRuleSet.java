@@ -20,7 +20,7 @@ import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentCPBP.common.HantoCommonPiece;
+import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.IHantoBoard;
 import hanto.studentCPBP.common.IHantoMover;
@@ -180,7 +180,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		HantoCoordinate[] allCoords = board.getAllTakenLocations();
 		for(HantoCoordinate coord : allCoords)
 		{
-			HantoCommonPiece piece = board.getPieces(coord)[0];
+			CommonHantoPiece piece = board.getPieces(coord)[0];
 			if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == color)
 			{
 				return coord;
@@ -196,7 +196,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		HantoCoordinate[] takenLocations = board.getAllTakenLocations();
 		for(HantoCoordinate coord : takenLocations)
 		{
-			HantoCommonPiece piece = board.getPieces(coord)[0];
+			CommonHantoPiece piece = board.getPieces(coord)[0];
 			if(piece.getType() == HantoPieceType.BUTTERFLY)
 			{
 				if(piece.getColor() == HantoPlayerColor.BLUE)
@@ -226,7 +226,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		HantoCoordinate[] takenLocations = board.getAllTakenLocations();
 		for(HantoCoordinate coord : takenLocations)
 		{
-			HantoCommonPiece piece = board.getPieces(coord)[0];
+			CommonHantoPiece piece = board.getPieces(coord)[0];
 			if(piece.getType() == HantoPieceType.SPARROW)
 			{
 				if(piece.getColor() == HantoPlayerColor.BLUE)
@@ -300,7 +300,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		HantoCoordinate[] allCoords = board.getAllTakenLocations();
 		for(HantoCoordinate coord : allCoords)
 		{
-			HantoCommonPiece piece = board.getPieces(coord)[0];
+			CommonHantoPiece piece = board.getPieces(coord)[0];
 			if(piece.getType() != HantoPieceType.BUTTERFLY && piece.getType() != HantoPieceType.SPARROW)
 			{
 				throw new HantoException("Can only place butterfly or sparrow.");
@@ -350,7 +350,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		HantoCoordinate[] allCoords = board.getAllTakenLocations();
 		for(HantoCoordinate coord : allCoords)
 		{
-			HantoCommonPiece piece = board.getPieces(coord)[0];
+			CommonHantoPiece piece = board.getPieces(coord)[0];
 			if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == color)
 			{
 				return true;

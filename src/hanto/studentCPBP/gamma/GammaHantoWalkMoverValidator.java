@@ -19,7 +19,7 @@ import java.util.Set;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
-import hanto.studentCPBP.common.HantoCommonPiece;
+import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.IHantoBoard;
 import hanto.studentCPBP.common.IHantoMoverValidator;
@@ -95,8 +95,8 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 		HantoCoordinate[] takenCoords = board.getAllTakenLocations();
 		for(HantoCoordinate coord : takenCoords)
 		{
-			HantoCommonPiece[] pieces = board.getPieces(coord);
-			for(HantoCommonPiece piece : pieces)
+			CommonHantoPiece[] pieces = board.getPieces(coord);
+			for(CommonHantoPiece piece : pieces)
 			{
 				if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == rules.getCurrentTurn())
 				{

@@ -20,7 +20,7 @@ import hanto.common.HantoPlayerColor;
  * @author bpeake
  *
  */
-public class HantoCrabPiece extends HantoCommonPiece {
+public class HantoCrabPiece extends CommonHantoPiece {
 
 	/**
 	 * Builds a Sparrow piece

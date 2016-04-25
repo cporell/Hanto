@@ -15,7 +15,7 @@ package hanto.studentCPBP.gamma;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentCPBP.common.HantoCommonPiece;
+import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.PlaceMover;
 import hanto.studentCPBP.common.WalkMover;
@@ -25,7 +25,7 @@ import hanto.studentCPBP.common.WalkMover;
  * @author Benny Peake bpeake
  * @author Connor Porell cgporell
  */
-public class GammaHantoSparrowPiece extends HantoCommonPiece
+public class GammaHantoSparrowPiece extends CommonHantoPiece
 {
 
 	/**

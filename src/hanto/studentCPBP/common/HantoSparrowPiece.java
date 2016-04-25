@@ -21,7 +21,7 @@ import hanto.common.HantoPlayerColor;
  * @author Benny Peake bpeake
  * @author Connor Porell cgporell
  */
-public class HantoSparrowPiece extends HantoCommonPiece
+public class HantoSparrowPiece extends CommonHantoPiece
 {
 
 	/**

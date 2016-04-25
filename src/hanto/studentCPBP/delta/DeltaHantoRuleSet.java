@@ -22,7 +22,7 @@ import hanto.common.MoveResult;
 import hanto.studentCPBP.common.CommonHantoHand;
 import hanto.studentCPBP.common.DefaultHantoMoverValidator;
 import hanto.studentCPBP.common.FlyMover;
-import hanto.studentCPBP.common.HantoCommonPiece;
+import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.HantoHandFactory;
 import hanto.studentCPBP.common.IHantoBoard;
@@ -207,8 +207,8 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 
 	private HantoCoordinate getButterflyOfColorLocation(HantoPlayerColor color, IHantoBoard board)
 	{
-		HantoCommonPiece[] pieces = board.getPieces();
-		for(HantoCommonPiece piece : pieces)
+		CommonHantoPiece[] pieces = board.getPieces();
+		for(CommonHantoPiece piece : pieces)
 		{
 			if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == color)
 			{
@@ -269,7 +269,7 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		HantoCoordinate[] allCoords = board.getAllTakenLocations();
 		for(HantoCoordinate coord : allCoords)
 		{
-			HantoCommonPiece piece = board.getPieces(coord)[0];
+			CommonHantoPiece piece = board.getPieces(coord)[0];
 			if(piece.getType() != HantoPieceType.BUTTERFLY && 
 					piece.getType() != HantoPieceType.CRAB && 
 					piece.getType() != HantoPieceType.SPARROW)
