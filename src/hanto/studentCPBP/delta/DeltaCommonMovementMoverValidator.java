@@ -65,7 +65,7 @@ public abstract class DeltaCommonMovementMoverValidator implements IHantoMoverVa
 	 */
 	protected void checkIsMovingOurPiece() throws HantoException 
 	{
-		if(getRules().getCurrentTurn() != getMover().getPiece().getColor())
+		if(getRules().getCurrentTurn().getPlayerColor() != getMover().getPiece().getColor())
 		{
 			throw new HantoException("Cannot move piece that is not your color.");
 		}

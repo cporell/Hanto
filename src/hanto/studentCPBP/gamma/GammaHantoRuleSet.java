@@ -17,12 +17,15 @@ import java.util.Set;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
+import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentCPBP.common.CommonHantoHand;
 import hanto.studentCPBP.common.CommonHantoPiece;
+import hanto.studentCPBP.common.GenericHantoRuleCollection;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
+import hanto.studentCPBP.common.HantoHandFactory;
 import hanto.studentCPBP.common.IHantoBoard;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
@@ -35,21 +38,18 @@ import hanto.studentCPBP.common.WalkMover;
  * @author Benny Peake bpeake
  * @author Connor Porell cgporell
  */
-public class GammaHantoRuleSet implements IHantoRuleSet
-{
-	private CommonHantoHand currentTurnColor;
-	private int moveCount = 0;
-	private CommonHantoHand blueHand;
-	private CommonHantoHand redHand;
-	private boolean isGameOver = false;
-	
+public class GammaHantoRuleSet extends GenericHantoRuleCollection
+{	
 	/**
 	 * Builds a ruleset for Gamma Hanto, based on the starting color.
 	 * @param startingColor THe starting player
 	 */
 	public GammaHantoRuleSet(HantoPlayerColor startingColor)
 	{
-		currentTurnColor = startingColor;
+		HantoHandFactory playerFactory = HantoHandFactory.getInstance();
+		setBlueHand(playerFactory.makeHantoHand(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE));
+		setRedHand(playerFactory.makeHantoHand(HantoGameID.GAMMA_HANTO, HantoPlayerColor.RED));
+		currentTurn = startingColor == HantoPlayerColor.BLUE ? getBlueHand() : getRedHand();
 	}
 	
 	@Override
@@ -80,15 +80,15 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 	}
 
 	@Override
-	public HantoPlayerColor getCurrentTurn()
+	public CommonHantoHand getCurrentTurn()
 	{
-		return currentTurnColor;
+		return currentTurn;
 	}
 
 	@Override
 	public void beginTurn(IHantoBoard board) throws HantoException 
 	{
-		if(isGameOver)
+		if(getIsGameOver())
 		{
 			throw new HantoException("You cannot place a piece after the game is over.");
 		}
@@ -100,7 +100,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		MoveResult result = getTurnResult(board);
 		
 		moveCount++;
-		currentTurnColor = currentTurnColor == HantoPlayerColor.BLUE ? HantoPlayerColor.RED : HantoPlayerColor.BLUE;
+		currentTurn = currentTurn == getBlueHand() ? getRedHand() : getBlueHand();
 		
 		return result;
 	}
@@ -140,22 +140,22 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 		if(isBlueSurrounded && isRedSurrounded)
 		{
 			result = MoveResult.DRAW;
-			isGameOver = true;
+			setIsGameOver(true);
 		}
 		else if(isBlueSurrounded)
 		{
 			result = MoveResult.RED_WINS;
-			isGameOver = true;
+			setIsGameOver(true);
 		}
 		else if(isRedSurrounded)
 		{
 			result = MoveResult.BLUE_WINS;
-			isGameOver = true;
+			setIsGameOver(true);
 		}
 		else if(moveCount == 39)
 		{
 			result = MoveResult.DRAW;
-			isGameOver = true;
+			setIsGameOver(true);
 		}
 		else
 		{
@@ -281,7 +281,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 	{
 		if(getTurnNumber() == 4)
 		{
-			if(currentTurnColor == HantoPlayerColor.BLUE)
+			if(currentTurn == getBlueHand())
 			{
 				if(!isButterflyOfColor(HantoPlayerColor.BLUE, board))
 				{

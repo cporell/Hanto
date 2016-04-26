@@ -13,7 +13,9 @@ package hanto.studentCPBP.common;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.studentCPBP.beta.BetaHantoHand;
 import hanto.studentCPBP.delta.DeltaHantoHand;
+import hanto.studentCPBP.gamma.GammaHantoHand;
 
 /**
  * Factory class for building Hanto players
@@ -50,6 +52,16 @@ public class HantoHandFactory
 		CommonHantoHand player = null;
 		switch(gameId)
 		{
+		case BETA_HANTO:
+			player = new BetaHantoHand(color);
+			player.addPieceToHand(HantoPieceType.BUTTERFLY, 1);
+			player.addPieceToHand(HantoPieceType.SPARROW, 5);
+			break;
+		case GAMMA_HANTO:
+			player = new GammaHantoHand(color);
+			player.addPieceToHand(HantoPieceType.BUTTERFLY, 1);
+			player.addPieceToHand(HantoPieceType.SPARROW, 5);
+			break;
 		case DELTA_HANTO:
 			player = new DeltaHantoHand(color);
 			player.addPieceToHand(HantoPieceType.BUTTERFLY, 1);

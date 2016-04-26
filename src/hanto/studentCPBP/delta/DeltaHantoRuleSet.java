@@ -22,6 +22,7 @@ import hanto.common.MoveResult;
 import hanto.studentCPBP.common.CommonHantoHand;
 import hanto.studentCPBP.common.DefaultHantoMoverValidator;
 import hanto.studentCPBP.common.FlyMover;
+import hanto.studentCPBP.common.GenericHantoRuleCollection;
 import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.HantoHandFactory;
@@ -38,14 +39,9 @@ import hanto.studentCPBP.common.WalkMover;
  * @author bpeake
  *
  */
-public class DeltaHantoRuleSet implements IHantoRuleSet
+public class DeltaHantoRuleSet extends GenericHantoRuleCollection
 {
-	private CommonHantoHand currentTurn;
-	private int moveCount = 0;
-	private boolean isGameOver = false;
 	private boolean triggerSurrender;
-	private CommonHantoHand blueHand;
-	private CommonHantoHand redHand;
 	
 	/**
 	 * Construct a DeltaHanto rule set
@@ -54,9 +50,9 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	public DeltaHantoRuleSet(HantoPlayerColor startingColor)
 	{
 		HantoHandFactory playerFactory = HantoHandFactory.getInstance();
-		blueHand = playerFactory.makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.BLUE);
-		redHand = playerFactory.makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED);
-		currentTurn = startingColor == HantoPlayerColor.BLUE ? blueHand : redHand;
+		setBlueHand(playerFactory.makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.BLUE));
+		setRedHand(playerFactory.makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED));
+		currentTurn = startingColor == HantoPlayerColor.BLUE ? getBlueHand() : getRedHand();
 	}
 	
 	@Override
@@ -95,9 +91,9 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	}
 
 	@Override
-	public HantoPlayerColor getCurrentTurn()
+	public CommonHantoHand getCurrentTurn()
 	{
-		return currentTurn == blueHand ? HantoPlayerColor.BLUE : HantoPlayerColor.RED;
+		return currentTurn == getBlueHand() ? getBlueHand() : getRedHand();
 	}
 	
 	/**
@@ -112,7 +108,7 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	@Override
 	public void beginTurn(IHantoBoard board) throws HantoException 
 	{
-		if(isGameOver)
+		if(getIsGameOver())
 		{
 			throw new HantoException("You cannot place a piece after the game is over.");
 		}
@@ -124,7 +120,7 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		MoveResult result = getTurnResult(board);
 		
 		moveCount++;
-		currentTurn = currentTurn == blueHand ? redHand : blueHand;
+		currentTurn = currentTurn == getBlueHand() ? getRedHand() : getBlueHand();
 		
 		return result;
 	}
@@ -149,7 +145,7 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		boolean isBlueSurrounded;
 		boolean isRedSurrounded;
 		
-		if(blueHand.getButterflyPlaced())
+		if(getBlueHand().getButterflyPlaced())
 		{
 			isBlueSurrounded = checkLocationSurrounded(board, blueButterflyLocation);
 		}
@@ -158,7 +154,7 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 			isBlueSurrounded = false;
 		}
 		
-		if(redHand.getButterflyPlaced())
+		if(getRedHand().getButterflyPlaced())
 		{
 			isRedSurrounded = checkLocationSurrounded(board, redButterflyLocation);
 		}
@@ -171,22 +167,22 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 		if(isBlueSurrounded && isRedSurrounded)
 		{
 			result = MoveResult.DRAW;
-			isGameOver = true;
+			setIsGameOver(true);
 		}
 		else if(isBlueSurrounded)
 		{
 			result = MoveResult.RED_WINS;
-			isGameOver = true;
+			setIsGameOver(true);
 		}
 		else if(isRedSurrounded)
 		{
 			result = MoveResult.BLUE_WINS;
-			isGameOver = true;
+			setIsGameOver(true);
 		}
 		else if(triggerSurrender)
 		{
-			result = getCurrentTurn() == HantoPlayerColor.RED ? MoveResult.BLUE_WINS : MoveResult.RED_WINS;
-			isGameOver = true;
+			result = getCurrentTurn() == getRedHand() ? MoveResult.BLUE_WINS : MoveResult.RED_WINS;
+			setIsGameOver(true);
 		}
 		else
 		{
@@ -246,16 +242,16 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	{
 		if(getTurnNumber() == 4)
 		{
-			if(currentTurn == blueHand)
+			if(currentTurn == getBlueHand())
 			{
-				if(!blueHand.getButterflyPlaced())
+				if(!getBlueHand().getButterflyPlaced())
 				{
 					throw new HantoException("Blue did not place butterfly by 4th turn.");	
 				}
 			}
 			else
 			{
-				if(!redHand.getButterflyPlaced())
+				if(!getRedHand().getButterflyPlaced())
 				{
 					throw new HantoException("Red did not place butterfly by 4th turn.");
 				}

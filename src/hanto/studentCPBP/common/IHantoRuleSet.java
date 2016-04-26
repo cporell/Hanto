@@ -32,10 +32,10 @@ public interface IHantoRuleSet
 	void checkBoard(IHantoBoard board) throws HantoException;
 	
 	/**
-	 * Gets the color of the player whose turn it is
-	 * @return PlayerColor of the current turn
+	 * Gets the hand of the player whose turn it is
+	 * @return HantoHand of the current turn
 	 */
-	HantoPlayerColor getCurrentTurn();
+	CommonHantoHand getCurrentTurn();
 	
 	/**
 	 * Actions to do at the start of a turn
