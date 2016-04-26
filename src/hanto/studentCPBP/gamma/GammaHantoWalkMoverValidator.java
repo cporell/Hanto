@@ -98,7 +98,7 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 			CommonHantoPiece[] pieces = board.getPieces(coord);
 			for(CommonHantoPiece piece : pieces)
 			{
-				if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == rules.getCurrentTurn().getPlayerColor())
+				if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == rules.getCurrentPlayer().getPlayerColor())
 				{
 					return;
 				}
@@ -125,7 +125,7 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 	}
 
 	private void checkIsMovingOurPiece() throws HantoException {
-		if(rules.getCurrentTurn().getPlayerColor() != mover.getPiece().getColor())
+		if(rules.getCurrentPlayer().getPlayerColor() != mover.getPiece().getColor())
 		{
 			throw new HantoException("Cannot move piece that is not your color.");
 		}

@@ -73,7 +73,7 @@ public abstract class CommonHantoGame implements HantoGame
 		}
 		else if(from == null)
 		{
-			CommonHantoPiece piece = pieceFactory.createPiece(pieceType, rules.getCurrentTurn().getPlayerColor());
+			CommonHantoPiece piece = pieceFactory.createPiece(pieceType, rules.getCurrentPlayer().getPlayerColor());
 			mover = piece.createPlaceMover(to);
 		}
 		else

@@ -44,12 +44,12 @@ public class GammaHantoPlaceMoverValidator implements IHantoMoverValidator
 	@Override
 	public void checkIteration(IHantoBoard board) throws HantoException 
 	{
-		if(!rules.getCurrentTurn().checkHandForType(mover.getPiece().getType()))
+		if(!rules.getCurrentPlayer().checkHandForType(mover.getPiece().getType()))
 		{
 			throw new HantoException("Invalid piece placed on board.");
 		}
 		
-		if(rules.getCurrentTurn().getCountOfPieceInHand(mover.getPiece().getType()) <= 0)
+		if(rules.getCurrentPlayer().getCountOfPieceInHand(mover.getPiece().getType()) <= 0)
 		{
 			throw new HantoException("You cannot place a piece of type: " +
 									 mover.getPiece().getType().toString() +

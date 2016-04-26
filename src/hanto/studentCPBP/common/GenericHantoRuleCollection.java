@@ -106,7 +106,7 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 	}
 
 	@Override
-	public CommonHantoHand getCurrentTurn() 
+	public CommonHantoHand getCurrentPlayer() 
 	{
 		return currentTurn;
 	}

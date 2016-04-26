@@ -91,7 +91,7 @@ public class DeltaHantoRuleSet extends GenericHantoRuleCollection
 	}
 
 	@Override
-	public CommonHantoHand getCurrentTurn()
+	public CommonHantoHand getCurrentPlayer()
 	{
 		return currentTurn == getBlueHand() ? getBlueHand() : getRedHand();
 	}
@@ -135,6 +135,12 @@ public class DeltaHantoRuleSet extends GenericHantoRuleCollection
 	public int getTurnNumber()
 	{
 		return (moveCount / 2) + 1;
+	}
+
+	@Override
+	public int getMoveNumber() 
+	{
+		return moveCount;
 	}
 
 	private MoveResult getTurnResult(IHantoBoard board) 
@@ -181,7 +187,7 @@ public class DeltaHantoRuleSet extends GenericHantoRuleCollection
 		}
 		else if(triggerSurrender)
 		{
-			result = getCurrentTurn() == getRedHand() ? MoveResult.BLUE_WINS : MoveResult.RED_WINS;
+			result = getCurrentPlayer() == getRedHand() ? MoveResult.BLUE_WINS : MoveResult.RED_WINS;
 			setIsGameOver(true);
 		}
 		else

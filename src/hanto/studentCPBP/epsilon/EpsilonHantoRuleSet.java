@@ -22,4 +22,10 @@ public class EpsilonHantoRuleSet extends GenericHantoRuleCollection
 
 	}
 
+	@Override
+	public int getMoveNumber() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

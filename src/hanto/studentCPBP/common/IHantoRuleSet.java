@@ -35,7 +35,7 @@ public interface IHantoRuleSet
 	 * Gets the hand of the player whose turn it is
 	 * @return HantoHand of the current turn
 	 */
-	CommonHantoHand getCurrentTurn();
+	CommonHantoHand getCurrentPlayer();
 	
 	/**
 	 * Actions to do at the start of a turn
@@ -57,6 +57,12 @@ public interface IHantoRuleSet
 	 * @return Turn number
 	 */
 	int getTurnNumber();
+	
+	/**
+	 * Returns the number of moves made.
+	 * @return The number of moves made.
+	 */
+	int getMoveNumber();
 
 	/**
 	 * Creates a validator for a given mover.

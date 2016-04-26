@@ -80,7 +80,7 @@ public class GammaHantoRuleSet extends GenericHantoRuleCollection
 	}
 
 	@Override
-	public CommonHantoHand getCurrentTurn()
+	public CommonHantoHand getCurrentPlayer()
 	{
 		return currentTurn;
 	}
@@ -170,6 +170,12 @@ public class GammaHantoRuleSet extends GenericHantoRuleCollection
 		return (moveCount / 2) + 1;
 	}
 	
+	@Override
+	public int getMoveNumber() 
+	{
+		return moveCount;
+	}
+
 	private void checkStartAtOrigin(IHantoBoard board) throws HantoException {
 		if(moveCount == 0 && board.getPieces(new HantoCoordinateImpl(0, 0)).length == 0)
 		{
