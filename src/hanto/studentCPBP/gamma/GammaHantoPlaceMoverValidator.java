@@ -35,7 +35,7 @@ public class GammaHantoPlaceMoverValidator implements IHantoMoverValidator
 	 * @param mover The given PlaceMover
 	 * @param rules the rules for this version of Hanto
 	 */
-	public GammaHantoPlaceMoverValidator(PlaceMover mover, IHantoRuleSet rules)
+	public GammaHantoPlaceMoverValidator(PlaceMover mover, GammaHantoRuleSet rules)
 	{
 		this.mover = mover;
 		this.rules = rules;
@@ -44,6 +44,18 @@ public class GammaHantoPlaceMoverValidator implements IHantoMoverValidator
 	@Override
 	public void checkIteration(IHantoBoard board) throws HantoException 
 	{
+		if(!rules.getCurrentHand().checkHandForType(mover.getPiece().getType()))
+		{
+			throw new HantoException("Invalid piece placed on board.");
+		}
+		
+		if(rules.getCurrentHand().getCountOfPieceInHand(mover.getPiece().getType()) <= 0)
+		{
+			throw new HantoException("You cannot place a piece of type: " +
+									 mover.getPiece().getType().toString() +
+									 ". None are left in your hand.");
+		}
+		
 		if(rules.getTurnNumber() > 1)
 		{
 			HantoCoordinate[] adjacent = board.getAdjacent(mover.getTargetLocation());

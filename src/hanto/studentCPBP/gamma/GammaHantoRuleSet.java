@@ -20,6 +20,7 @@ import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentCPBP.common.CommonHantoHand;
 import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.IHantoBoard;
@@ -36,8 +37,10 @@ import hanto.studentCPBP.common.WalkMover;
  */
 public class GammaHantoRuleSet implements IHantoRuleSet
 {
-	private HantoPlayerColor currentTurnColor;
+	private CommonHantoHand currentTurnColor;
 	private int moveCount = 0;
+	private CommonHantoHand blueHand;
+	private CommonHantoHand redHand;
 	private boolean isGameOver = false;
 	
 	/**
