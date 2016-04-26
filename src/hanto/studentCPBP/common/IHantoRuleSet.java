@@ -27,10 +27,9 @@ public interface IHantoRuleSet
 	/**
 	 * Check the state of the board to see if the move is okay, or game-ending.
 	 * @param board The current board
-	 * @param pieceType The piece type we are using
 	 * @throws HantoException Thrown if a move is illegal.
 	 */
-	void checkBoard(IHantoBoard board, HantoPieceType pieceType) throws HantoException;
+	void checkBoard(IHantoBoard board) throws HantoException;
 	
 	/**
 	 * Gets the color of the player whose turn it is

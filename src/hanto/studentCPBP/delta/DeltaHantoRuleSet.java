@@ -46,7 +46,6 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	private boolean triggerSurrender;
 	private CommonHantoHand blueHand;
 	private CommonHantoHand redHand;
-	private HantoPieceType currentPiece = null;
 	
 	/**
 	 * Construct a DeltaHanto rule set
@@ -86,9 +85,8 @@ public class DeltaHantoRuleSet implements IHantoRuleSet
 	}
 	
 	@Override
-	public void checkBoard(IHantoBoard board, HantoPieceType piece) throws HantoException 
+	public void checkBoard(IHantoBoard board) throws HantoException 
 	{
-		currentPiece = piece;
 		checkAllValidPieces(board);
 		checkStartAtOrigin(board);
 		checkForDoubleStacked(board);

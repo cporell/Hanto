@@ -65,7 +65,7 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 	}
 
 	@Override
-	public void checkBoard(IHantoBoard board, HantoPieceType piece) throws HantoException 
+	public void checkBoard(IHantoBoard board) throws HantoException 
 	{
 		checkAllValidPieces(board);
 		checkStartAtOrigin(board);
@@ -103,9 +103,8 @@ public class GammaHantoRuleSet implements IHantoRuleSet
 	}
 
 	@Override
-	public void onNoInput() {
-		// TODO Auto-generated method stub
-		
+	public void onNoInput() 
+	{
 	}
 
 	private MoveResult getTurnResult(IHantoBoard board) throws HantoException
