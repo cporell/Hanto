@@ -263,10 +263,10 @@ public class GammaHantoMasterTest
 		game.makeMove(SPARROW, null, makeCoordinate(1,1)); // R2
 		for(int i = 4; i < 40; i +=4)
 		{
-			game.makeMove(SPARROW, makeCoordinate(0,-1), makeCoordinate(1,-1)); // B3
-			game.makeMove(SPARROW, makeCoordinate(1,1), makeCoordinate(0,2)); //
-			game.makeMove(SPARROW, makeCoordinate(1,-1), makeCoordinate(0,-1)); // 
-			mr = game.makeMove(SPARROW, makeCoordinate(0,2), makeCoordinate(1,1)); // 	
+			game.makeMove(SPARROW, makeCoordinate(0,-1), makeCoordinate(1,-1)); // B
+			game.makeMove(SPARROW, makeCoordinate(1,1), makeCoordinate(0,2)); //R
+			game.makeMove(SPARROW, makeCoordinate(1,-1), makeCoordinate(0,-1)); //B 
+			mr = game.makeMove(SPARROW, makeCoordinate(0,2), makeCoordinate(1,1)); //R 	
 		}
 		assertEquals(MoveResult.DRAW, mr);
 	}

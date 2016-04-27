@@ -21,6 +21,9 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentCPBP.common.CommonHantoHand;
 import hanto.studentCPBP.common.DefaultHantoMoverValidator;
+import hanto.studentCPBP.common.EndConditionGetWinner;
+import hanto.studentCPBP.common.EndConditionPlayNRounds;
+import hanto.studentCPBP.common.EndConditionStaticWinner;
 import hanto.studentCPBP.common.FlyMover;
 import hanto.studentCPBP.common.GenericHantoRuleCollection;
 import hanto.studentCPBP.common.CommonHantoPiece;
@@ -31,6 +34,12 @@ import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.IHantoRuleSet;
 import hanto.studentCPBP.common.PlaceMover;
+import hanto.studentCPBP.common.RuleButterflyPlacedAfterRound;
+import hanto.studentCPBP.common.RuleLimitPiecesPerSpot;
+import hanto.studentCPBP.common.RuleMustBeContinousBoard;
+import hanto.studentCPBP.common.RuleMustStartAtOrigin;
+import hanto.studentCPBP.common.RuleValidPieceTypes;
+import hanto.studentCPBP.common.StartConditionCantPlaceAfterGameIsOver;
 import hanto.studentCPBP.common.WalkMover;
 
 /**
@@ -40,8 +49,8 @@ import hanto.studentCPBP.common.WalkMover;
  *
  */
 public class DeltaHantoRuleSet extends GenericHantoRuleCollection
-{
-	private boolean triggerSurrender;
+{	
+	private EndConditionStaticWinner winnerTrigger;
 	
 	/**
 	 * Construct a DeltaHanto rule set
@@ -49,10 +58,20 @@ public class DeltaHantoRuleSet extends GenericHantoRuleCollection
 	 */
 	public DeltaHantoRuleSet(HantoPlayerColor startingColor)
 	{
-		HantoHandFactory playerFactory = HantoHandFactory.getInstance();
-		setBlueHand(playerFactory.makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.BLUE));
-		setRedHand(playerFactory.makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED));
-		currentTurn = startingColor == HantoPlayerColor.BLUE ? getBlueHand() : getRedHand();
+		super(startingColor, 
+				HantoHandFactory.getInstance().makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.BLUE), 
+				HantoHandFactory.getInstance().makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED));
+		
+		addStartCondition(new StartConditionCantPlaceAfterGameIsOver(this));
+		
+		addRule(new RuleButterflyPlacedAfterRound(this, 4));
+		addRule(new RuleMustBeContinousBoard());
+		addRule(new RuleLimitPiecesPerSpot(1));
+		addRule(new RuleMustStartAtOrigin(this));
+		addRule(new RuleValidPieceTypes(HantoPieceType.BUTTERFLY, HantoPieceType.CRAB, HantoPieceType.SPARROW));
+		
+		addEndCondition(winnerTrigger = new EndConditionStaticWinner());
+		addEndCondition(new EndConditionGetWinner());
 	}
 	
 	@Override
@@ -79,239 +98,11 @@ public class DeltaHantoRuleSet extends GenericHantoRuleCollection
 		
 		return new DefaultHantoMoverValidator();
 	}
-	
-	@Override
-	public void checkBoard(IHantoBoard board) throws HantoException 
-	{
-		checkAllValidPieces(board);
-		checkStartAtOrigin(board);
-		checkForDoubleStacked(board);
-		checkForConnectivity(board);
-		checkButterflyPlacedByFourthRound(board);
-	}
-
-	@Override
-	public CommonHantoHand getCurrentPlayer()
-	{
-		return currentTurn == getBlueHand() ? getBlueHand() : getRedHand();
-	}
-	
-	/**
-	 * Get the hand of the current player
-	 * @return The hand of the current player
-	 */
-	public CommonHantoHand getCurrentHand()
-	{
-		return currentTurn;
-	}
-
-	@Override
-	public void beginTurn(IHantoBoard board) throws HantoException 
-	{
-		if(getIsGameOver())
-		{
-			throw new HantoException("You cannot place a piece after the game is over.");
-		}
-	}
-
-	@Override
-	public MoveResult endTurn(IHantoBoard board) throws HantoException 
-	{
-		MoveResult result = getTurnResult(board);
-		
-		moveCount++;
-		currentTurn = currentTurn == getBlueHand() ? getRedHand() : getBlueHand();
-		
-		return result;
-	}
 
 	@Override
 	public void onNoInput() 
 	{
-		triggerSurrender = true;
-	}
-
-	@Override
-	public int getTurnNumber()
-	{
-		return (moveCount / 2) + 1;
-	}
-
-	@Override
-	public int getMoveNumber() 
-	{
-		return moveCount;
-	}
-
-	private MoveResult getTurnResult(IHantoBoard board) 
-	{
-		HantoCoordinate blueButterflyLocation = getButterflyOfColorLocation(HantoPlayerColor.BLUE, board);
-		HantoCoordinate redButterflyLocation = getButterflyOfColorLocation(HantoPlayerColor.RED, board);
-		
-		boolean isBlueSurrounded;
-		boolean isRedSurrounded;
-		
-		if(getBlueHand().getButterflyPlaced())
-		{
-			isBlueSurrounded = checkLocationSurrounded(board, blueButterflyLocation);
-		}
-		else
-		{
-			isBlueSurrounded = false;
-		}
-		
-		if(getRedHand().getButterflyPlaced())
-		{
-			isRedSurrounded = checkLocationSurrounded(board, redButterflyLocation);
-		}
-		else
-		{
-			isRedSurrounded = false;
-		}
-		
-		MoveResult result;
-		if(isBlueSurrounded && isRedSurrounded)
-		{
-			result = MoveResult.DRAW;
-			setIsGameOver(true);
-		}
-		else if(isBlueSurrounded)
-		{
-			result = MoveResult.RED_WINS;
-			setIsGameOver(true);
-		}
-		else if(isRedSurrounded)
-		{
-			result = MoveResult.BLUE_WINS;
-			setIsGameOver(true);
-		}
-		else if(triggerSurrender)
-		{
-			result = getCurrentPlayer() == getRedHand() ? MoveResult.BLUE_WINS : MoveResult.RED_WINS;
-			setIsGameOver(true);
-		}
-		else
-		{
-			result = MoveResult.OK;
-		}
-		
-		return result;
-	}
-
-	private void checkStartAtOrigin(IHantoBoard board) throws HantoException {
-		if(moveCount == 0 && board.getPieces(new HantoCoordinateImpl(0, 0)).length == 0)
-		{
-			throw new HantoException("Must start at origin.");
-		}
-	}
-
-	private HantoCoordinate getButterflyOfColorLocation(HantoPlayerColor color, IHantoBoard board)
-	{
-		CommonHantoPiece[] pieces = board.getPieces();
-		for(CommonHantoPiece piece : pieces)
-		{
-			if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == color)
-			{
-				return board.getPieceLocation(piece);
-			}
-		}
-		
-		return null;
-	}
-
-	private void checkForConnectivity(IHantoBoard board) throws HantoException {
-		HantoCoordinate[] takenLocations = board.getAllTakenLocations();
-		if(takenLocations.length > 0)
-		{
-			Set<HantoCoordinate> visited = new HashSet<>();
-			buildConnectivity(takenLocations[0], visited, board);
-			
-			if(visited.size() != takenLocations.length)
-			{
-				throw new HantoException("Not all pieces are connected.");
-			}
-		}
-	}
-
-	private void checkForDoubleStacked(IHantoBoard board) throws HantoException {
-		HantoCoordinate[] allCoords = board.getAllTakenLocations();
-		for(HantoCoordinate coord : allCoords)
-		{
-			if(board.getPieces(coord).length > 1)
-			{
-				throw new HantoException("Cannot have multiple pieces at one location.");
-			}
-		}
-	}
-	
-	private void checkButterflyPlacedByFourthRound(IHantoBoard board) throws HantoException
-	{
-		if(getTurnNumber() == 4)
-		{
-			if(currentTurn == getBlueHand())
-			{
-				if(!getBlueHand().getButterflyPlaced())
-				{
-					throw new HantoException("Blue did not place butterfly by 4th turn.");	
-				}
-			}
-			else
-			{
-				if(!getRedHand().getButterflyPlaced())
-				{
-					throw new HantoException("Red did not place butterfly by 4th turn.");
-				}
-			}
-		}
-	}
-
-	private void checkAllValidPieces(IHantoBoard board) throws HantoException {
-		HantoCoordinate[] allCoords = board.getAllTakenLocations();
-		for(HantoCoordinate coord : allCoords)
-		{
-			CommonHantoPiece piece = board.getPieces(coord)[0];
-			if(piece.getType() != HantoPieceType.BUTTERFLY && 
-					piece.getType() != HantoPieceType.CRAB && 
-					piece.getType() != HantoPieceType.SPARROW)
-			{
-				throw new HantoException("Can only place butterfly or sparrow or crab.");
-			}
-		}
-	}
- 
-	private boolean checkLocationSurrounded(IHantoBoard board, HantoCoordinate blueButterflyLocation) 
-	{
-		HantoCoordinate[] adjacent = board.getAdjacent(blueButterflyLocation);
-		int numPieces = 0;
-		for(HantoCoordinate coord : adjacent)
-		{
-			if(board.getPieces(coord).length > 0)
-			{
-				numPieces++;
-			}
-		}
-		
-		return numPieces == 6;
-	}
-
-	private void buildConnectivity(HantoCoordinate at, Set<HantoCoordinate> visited, IHantoBoard board)
-	{
-		visited.add(at);
-		
-		HantoCoordinate[] adjacent = board.getAdjacent(at);
-		for(HantoCoordinate coord : adjacent)
-		{
-			if(visited.contains(coord))
-			{
-				continue;
-			}
-			
-			if(board.getPieces(coord).length == 0)
-			{
-				continue;
-			}
-			
-			buildConnectivity(coord, visited, board);
-		}
+		winnerTrigger.setWinner(getCurrentPlayer().getPlayerColor() == HantoPlayerColor.BLUE ? 
+				HantoPlayerColor.RED : HantoPlayerColor.BLUE);
 	}
 }

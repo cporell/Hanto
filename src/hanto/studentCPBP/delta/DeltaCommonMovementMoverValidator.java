@@ -78,7 +78,7 @@ public abstract class DeltaCommonMovementMoverValidator implements IHantoMoverVa
 	 */
 	protected void checkNotMovingBeforeButterflyPlaced(IHantoBoard board) throws HantoException 
 	{
-		if(!getRules().getCurrentHand().getButterflyPlaced())
+		if(!getRules().getCurrentPlayer().getButterflyPlaced())
 		{
 			throw new HantoException("Cannot move piece before placing your butterfly");
 		}

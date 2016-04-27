@@ -12,13 +12,14 @@ package hanto.studentCPBP.common;
 import java.util.ArrayList;
 
 import hanto.common.HantoException;
+import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 
 public abstract class GenericHantoRuleCollection implements IHantoRuleSet 
 {
-	protected CommonHantoHand currentTurn;
-	protected int moveCount = 0;
+	private CommonHantoHand currentTurn;
+	private int moveCount = 0;
 	private boolean isGameOver = false;
 	private CommonHantoHand blueHand;
 	private CommonHantoHand redHand;
@@ -41,6 +42,13 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 	private ArrayList<IRule> rules = new ArrayList<>();
 	private ArrayList<IStartCondition> startConditions = new ArrayList<>();
 	private ArrayList<IEndCondition> endConditions = new ArrayList<>();
+	
+	public GenericHantoRuleCollection(HantoPlayerColor startingPlayer, CommonHantoHand blueHand, CommonHantoHand redHand)
+	{
+		this.blueHand = blueHand;
+		this.redHand = redHand;
+		currentTurn = startingPlayer == HantoPlayerColor.BLUE ? getBlueHand() : getRedHand();
+	}
 	
 	/**
 	 * Gets whether or not the game is over
@@ -144,6 +152,12 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 	public int getTurnNumber() 
 	{
 		return (moveCount / 2) + 1;
+	}
+	
+	@Override
+	public int getMoveNumber() 
+	{
+		return moveCount;
 	}
 	
 	/**

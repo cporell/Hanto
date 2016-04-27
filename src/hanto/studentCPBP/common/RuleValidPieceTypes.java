@@ -9,7 +9,7 @@ public class RuleValidPieceTypes implements GenericHantoRuleCollection.IRule
 {
 	private HashSet<HantoPieceType> allowedTypes = new HashSet<>();
 	
-	public RuleValidPieceTypes(HantoPieceType[] allowedTypes)
+	public RuleValidPieceTypes(HantoPieceType... allowedTypes)
 	{
 		for(HantoPieceType type : allowedTypes)
 		{
@@ -22,7 +22,7 @@ public class RuleValidPieceTypes implements GenericHantoRuleCollection.IRule
 	{
 		for(CommonHantoPiece piece : board.getPieces())
 		{
-			if(!allowedTypes.contains(piece))
+			if(!allowedTypes.contains(piece.getType()))
 			{
 				throw new HantoException("Not a valid piece type.");
 			}

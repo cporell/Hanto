@@ -87,5 +87,6 @@ public class GammaHantoPlaceMoverValidator implements IHantoMoverValidator
 				throw new HantoException("You cannot place next to an opponents piece.");
 			}
 		}
+		rules.getCurrentPlayer().takePieceFromHand(mover.getPiece().getType());
 	}
 }
