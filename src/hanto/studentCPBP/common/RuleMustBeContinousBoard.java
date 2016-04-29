@@ -8,11 +8,11 @@ import hanto.common.HantoException;
 
 public class RuleMustBeContinousBoard implements GenericHantoRuleCollection.IRule
 {
-	private void buildConnectivity(HantoCoordinate at, Set<HantoCoordinate> visited, IHantoBoard board)
+	private void buildConnectivity(HantoCoordinate at, Set<HantoCoordinate> visited, IHantoGameState state)
 	{
 		visited.add(at);
 		
-		HantoCoordinate[] adjacent = board.getAdjacent(at);
+		HantoCoordinate[] adjacent = state.getAdjacent(at);
 		for(HantoCoordinate coord : adjacent)
 		{
 			if(visited.contains(coord))
@@ -20,23 +20,23 @@ public class RuleMustBeContinousBoard implements GenericHantoRuleCollection.IRul
 				continue;
 			}
 			
-			if(board.getPieces(coord).length == 0)
+			if(state.getPieces(coord).length == 0)
 			{
 				continue;
 			}
 			
-			buildConnectivity(coord, visited, board);
+			buildConnectivity(coord, visited, state);
 		}
 	}
 	
 	@Override
-	public void checkBoard(IHantoBoard board) throws HantoException 
+	public void check(IHantoGameState state) throws HantoException 
 	{
-		HantoCoordinate[] takenLocations = board.getAllTakenLocations();
+		HantoCoordinate[] takenLocations = state.getAllTakenLocations();
 		if(takenLocations.length > 0)
 		{
 			Set<HantoCoordinate> visited = new HashSet<>();
-			buildConnectivity(takenLocations[0], visited, board);
+			buildConnectivity(takenLocations[0], visited, state);
 			
 			if(visited.size() != takenLocations.length)
 			{

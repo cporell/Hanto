@@ -10,7 +10,8 @@
 package hanto.studentCPBP.delta;
 
 import hanto.common.HantoException;
-import hanto.studentCPBP.common.IHantoBoard;
+import hanto.common.HantoPieceType;
+import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
 
@@ -48,12 +49,12 @@ public abstract class DeltaCommonMovementMoverValidator implements IHantoMoverVa
 	/**
 	 * Check that we are not attempting to move a piece to the same spot it started from
 	 * (i.e. moving in place)
-	 * @param board The current game state
+	 * @param state The current game state
 	 * @throws HantoException If we are attempting to move in place
 	 */
-	protected void checkNotMovingToSameSpace(IHantoBoard board) throws HantoException
+	protected void checkNotMovingToSameSpace(IHantoGameState state) throws HantoException
 	{
-		if(getMover().getTargetLocation().equals(board.getPieceLocation(getMover().getPiece())))
+		if(getMover().getTargetLocation().equals(state.getPieceLocation(getMover().getPiece())))
 		{
 			throw new HantoException("Cannot move to the same location.");
 		}
@@ -61,11 +62,12 @@ public abstract class DeltaCommonMovementMoverValidator implements IHantoMoverVa
 
 	/**
 	 * Check that we are only moving pieces of our own color
+	 * @param state The current game state
 	 * @throws HantoException If we attempt to move an opponent's piece
 	 */
-	protected void checkIsMovingOurPiece() throws HantoException 
+	protected void checkIsMovingOurPiece(IHantoGameState state) throws HantoException 
 	{
-		if(getRules().getCurrentPlayer().getPlayerColor() != getMover().getPiece().getColor())
+		if(getRules().getCurrentPlayer(state) != getMover().getPiece().getColor())
 		{
 			throw new HantoException("Cannot move piece that is not your color.");
 		}
@@ -73,12 +75,12 @@ public abstract class DeltaCommonMovementMoverValidator implements IHantoMoverVa
 	
 	/**
 	 * Check that we are not attempting to move a piece if our Butterfly is not on the board
-	 * @param board The current game state
+	 * @param state The current game state
 	 * @throws HantoException If we attempt to move a piece before placing the Butterfly
 	 */
-	protected void checkNotMovingBeforeButterflyPlaced(IHantoBoard board) throws HantoException 
+	protected void checkNotMovingBeforeButterflyPlaced(IHantoGameState state) throws HantoException 
 	{
-		if(!getRules().getCurrentPlayer().getButterflyPlaced())
+		if(state.getPieces(getRules().getCurrentPlayer(state), HantoPieceType.BUTTERFLY).length == 0)
 		{
 			throw new HantoException("Cannot move piece before placing your butterfly");
 		}

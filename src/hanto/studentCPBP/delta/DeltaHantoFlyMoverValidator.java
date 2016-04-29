@@ -11,7 +11,7 @@ package hanto.studentCPBP.delta;
 
 import hanto.common.HantoException;
 import hanto.studentCPBP.common.FlyMover;
-import hanto.studentCPBP.common.IHantoBoard;
+import hanto.studentCPBP.common.IHantoGameState;
 
 /**
  * DeltaHantoFlyMoverValidator checks legality of Fly moves
@@ -32,10 +32,10 @@ public class DeltaHantoFlyMoverValidator extends DeltaCommonMovementMoverValidat
 	}
 
 	@Override
-	public void checkIteration(IHantoBoard board) throws HantoException 
+	public void checkIteration(IHantoGameState state) throws HantoException 
 	{
-		checkNotMovingToSameSpace(board);
-		checkIsMovingOurPiece();
-		checkNotMovingBeforeButterflyPlaced(board);
+		checkNotMovingToSameSpace(state);
+		checkIsMovingOurPiece(state);
+		checkNotMovingBeforeButterflyPlaced(state);
 	}
 }

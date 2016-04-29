@@ -19,8 +19,6 @@ import hanto.common.*;
 import hanto.studentCPBP.HantoGameFactory;
 import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.*;
 
 /**

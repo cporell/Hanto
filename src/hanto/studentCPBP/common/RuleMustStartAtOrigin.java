@@ -6,15 +6,10 @@ public class RuleMustStartAtOrigin implements GenericHantoRuleCollection.IRule
 {
 	private GenericHantoRuleCollection rules;
 	
-	public RuleMustStartAtOrigin(GenericHantoRuleCollection rules) 
-	{
-		this.rules = rules;
-	}
-	
 	@Override
-	public void checkBoard(IHantoBoard board) throws HantoException
+	public void check(IHantoGameState state) throws HantoException
 	{
-		if(rules.getMoveNumber() == 0 && board.getPieces(new HantoCoordinateImpl(0, 0)).length == 0)
+		if(state.getMoveNumber() == 0 && state.getPieces(new HantoCoordinateImpl(0, 0)).length == 0)
 		{
 			throw new HantoException("Must start at origin.");
 		}

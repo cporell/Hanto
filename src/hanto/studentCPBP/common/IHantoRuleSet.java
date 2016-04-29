@@ -13,7 +13,6 @@
 package hanto.studentCPBP.common;
 
 import hanto.common.HantoException;
-import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 
@@ -25,44 +24,40 @@ import hanto.common.MoveResult;
 public interface IHantoRuleSet
 {
 	/**
-	 * Check the state of the board to see if the move is okay, or game-ending.
-	 * @param board The current board
+	 * Check the state of the game to make sure it's valid.
+	 * @param state The current game state
 	 * @throws HantoException Thrown if a move is illegal.
 	 */
-	void checkBoard(IHantoBoard board) throws HantoException;
+	void check(IHantoGameState state) throws HantoException;
 	
 	/**
-	 * Gets the hand of the player whose turn it is
+	 * Gets the color of the player whose turn it is.
+	 * @param state The game state.
 	 * @return HantoHand of the current turn
 	 */
-	CommonHantoHand getCurrentPlayer();
+	HantoPlayerColor getCurrentPlayer(IHantoGameState state);
 	
 	/**
+	 * Gets the turn number given a game state.
+	 * @param state The game state.
+	 * @return The turn number the game is in.
+	 */
+	int getTurnNumber(IHantoGameState state);
+
+	/**
 	 * Actions to do at the start of a turn
-	 * @param board The board state
+	 * @param state The game state
 	 * @throws HantoException A Hanto Exception upon discovering an illegal move
 	 */
-	void beginTurn(IHantoBoard board) throws HantoException;
+	void beginTurn(IHantoGameState state) throws HantoException;
 	
 	/**
 	 * Actions to do at the end of a turn, mainly increment the turn counter, switch current player.
-	 * @param board The board state
+	 * @param state The game state
 	 * @throws HantoException A Hanto Exception upon discovering an illegal move
 	 * @return The result of the move (Red win, Blue win, OK, Draw)
 	 */
-	MoveResult endTurn(IHantoBoard board) throws HantoException;
-	
-	/**
-	 * Returns the turn number based on the number of moves that have passed.
-	 * @return Turn number
-	 */
-	int getTurnNumber();
-	
-	/**
-	 * Returns the number of moves made.
-	 * @return The number of moves made.
-	 */
-	int getMoveNumber();
+	MoveResult endTurn(IHantoGameState state) throws HantoException;
 
 	/**
 	 * Creates a validator for a given mover.
@@ -74,5 +69,5 @@ public interface IHantoRuleSet
 	/**
 	 * Called when no input is given to the game.
 	 */
-	void onNoInput();
+	void onNoInput(IHantoGameState state);
 }

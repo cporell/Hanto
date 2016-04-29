@@ -10,29 +10,18 @@
 
 package hanto.studentCPBP.delta;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.common.MoveResult;
-import hanto.studentCPBP.common.CommonHantoHand;
 import hanto.studentCPBP.common.DefaultHantoMoverValidator;
 import hanto.studentCPBP.common.EndConditionGetWinner;
-import hanto.studentCPBP.common.EndConditionPlayNRounds;
 import hanto.studentCPBP.common.EndConditionStaticWinner;
 import hanto.studentCPBP.common.FlyMover;
 import hanto.studentCPBP.common.GenericHantoRuleCollection;
-import hanto.studentCPBP.common.CommonHantoPiece;
-import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.HantoHandFactory;
-import hanto.studentCPBP.common.IHantoBoard;
+import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
-import hanto.studentCPBP.common.IHantoRuleSet;
 import hanto.studentCPBP.common.PlaceMover;
 import hanto.studentCPBP.common.RuleButterflyPlacedAfterRound;
 import hanto.studentCPBP.common.RuleLimitPiecesPerSpot;
@@ -62,12 +51,12 @@ public class DeltaHantoRuleSet extends GenericHantoRuleCollection
 				HantoHandFactory.getInstance().makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.BLUE), 
 				HantoHandFactory.getInstance().makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED));
 		
-		addStartCondition(new StartConditionCantPlaceAfterGameIsOver(this));
+		addStartCondition(new StartConditionCantPlaceAfterGameIsOver());
 		
 		addRule(new RuleButterflyPlacedAfterRound(this, 4));
 		addRule(new RuleMustBeContinousBoard());
 		addRule(new RuleLimitPiecesPerSpot(1));
-		addRule(new RuleMustStartAtOrigin(this));
+		addRule(new RuleMustStartAtOrigin());
 		addRule(new RuleValidPieceTypes(HantoPieceType.BUTTERFLY, HantoPieceType.CRAB, HantoPieceType.SPARROW));
 		
 		addEndCondition(winnerTrigger = new EndConditionStaticWinner());
@@ -100,9 +89,9 @@ public class DeltaHantoRuleSet extends GenericHantoRuleCollection
 	}
 
 	@Override
-	public void onNoInput() 
+	public void onNoInput(IHantoGameState state) 
 	{
-		winnerTrigger.setWinner(getCurrentPlayer().getPlayerColor() == HantoPlayerColor.BLUE ? 
+		winnerTrigger.setWinner(getCurrentPlayer(state) == HantoPlayerColor.BLUE ? 
 				HantoPlayerColor.RED : HantoPlayerColor.BLUE);
 	}
 }

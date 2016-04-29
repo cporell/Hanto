@@ -10,10 +10,11 @@
 
 package hanto.studentCPBP.delta;
 
+import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentCPBP.common.CommonHantoBoard;
+import hanto.studentCPBP.common.CommonHantoGameState;
 import hanto.studentCPBP.common.CommonHantoGame;
-import hanto.studentCPBP.common.IHantoBoard;
+import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoPieceFactory;
 import hanto.studentCPBP.common.IHantoRuleSet;
 
@@ -31,9 +32,31 @@ public class DeltaHantoGame extends CommonHantoGame {
 	}
 
 	@Override
-	protected IHantoBoard CreateBoard() 
+	protected IHantoGameState CreateGameState(IHantoPieceFactory pieceFactory) 
 	{
-		return new CommonHantoBoard();
+		CommonHantoGameState state = new CommonHantoGameState();
+		
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.BUTTERFLY, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.BLUE));
+		
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.BUTTERFLY, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.RED));
+		
+		return state;
 	}
 
 	@Override

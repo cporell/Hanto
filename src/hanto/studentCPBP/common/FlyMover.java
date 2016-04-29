@@ -45,9 +45,9 @@ public class FlyMover implements IHantoMover
 	}
 	
 	@Override
-	public boolean iterateMove(IHantoBoard board) throws HantoException 
+	public boolean iterateMove(IHantoGameState state) throws HantoException 
 	{
-		board.movePiece(piece, to);
+		state.movePiece(piece, to);
 		
 		return false;
 	}

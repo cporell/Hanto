@@ -15,7 +15,7 @@ package hanto.studentCPBP.gamma;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPiece;
-import hanto.studentCPBP.common.IHantoBoard;
+import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.IHantoRuleSet;
 import hanto.studentCPBP.common.PlaceMover;
@@ -42,28 +42,16 @@ public class GammaHantoPlaceMoverValidator implements IHantoMoverValidator
 	}
 	
 	@Override
-	public void checkIteration(IHantoBoard board) throws HantoException 
-	{
-		if(!rules.getCurrentPlayer().checkHandForType(mover.getPiece().getType()))
+	public void checkIteration(IHantoGameState state) throws HantoException 
+	{		
+		if(rules.getTurnNumber(state) > 1)
 		{
-			throw new HantoException("Invalid piece placed on board.");
-		}
-		
-		if(rules.getCurrentPlayer().getCountOfPieceInHand(mover.getPiece().getType()) <= 0)
-		{
-			throw new HantoException("You cannot place a piece of type: " +
-									 mover.getPiece().getType().toString() +
-									 ". None are left in your hand.");
-		}
-		
-		if(rules.getTurnNumber() > 1)
-		{
-			HantoCoordinate[] adjacent = board.getAdjacent(mover.getTargetLocation());
+			HantoCoordinate[] adjacent = state.getAdjacent(mover.getTargetLocation());
 			int adjOfSameColor = 0;
 			int adjOfOpntColor = 0;
 			for(HantoCoordinate coord : adjacent)
 			{
-				HantoPiece[] pieces = board.getPieces(coord);
+				HantoPiece[] pieces = state.getPieces(coord);
 				for(HantoPiece piece : pieces)
 				{
 					if(piece.getColor() == mover.getPiece().getColor())
@@ -87,6 +75,5 @@ public class GammaHantoPlaceMoverValidator implements IHantoMoverValidator
 				throw new HantoException("You cannot place next to an opponents piece.");
 			}
 		}
-		rules.getCurrentPlayer().takePieceFromHand(mover.getPiece().getType());
 	}
 }

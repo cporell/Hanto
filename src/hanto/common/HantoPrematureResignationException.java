@@ -6,25 +6,19 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Copyright ©2016 Gary F. Pollice
  *******************************************************************************/
 
-package hanto.studentCPBP.common;
-
-import hanto.common.HantoException;
+package hanto.common;
 
 /**
- * IHantoMoverValidator - given a board layout, checks that that move/layout is acceptable.
- * @author Benny Peake bpeake
- * @author Connor Porell cgporell
+ * Exception that is only thrown when a player resigns while there is still a valid
+ * move available for that player.
+ * @version Oct 6, 2014
  */
-public interface IHantoMoverValidator
+public class HantoPrematureResignationException extends HantoException
 {
-	/**
-	 * Runs a series of validity tests on a move, throws Exception if any fail.
-	 * @param state The current game state
-	 * @throws HantoException Whenever there is an illegal move.
-	 */
-	void checkIteration(IHantoGameState state) throws HantoException;
+	public HantoPrematureResignationException()
+	{
+		super("You resigned when you have a valid move available.");
+	}
 }
