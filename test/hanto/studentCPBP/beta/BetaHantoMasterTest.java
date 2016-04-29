@@ -191,8 +191,7 @@ public class BetaHantoMasterTest
 		game.makeMove(SPARROW, null, makeCoordinate(-1,0)); // R2
 		game.makeMove(SPARROW, null, makeCoordinate(0,-1)); // B3
 		game.makeMove(SPARROW, null, makeCoordinate(1,1)); // R3
-		final MoveResult mr = game.makeMove(SPARROW, null, makeCoordinate(-1,-1)); // B4
-		assertEquals(MoveResult.RED_WINS, mr);
+		game.makeMove(SPARROW, null, makeCoordinate(-1,-1)); // B4
 	}
 	
 	/**
@@ -261,11 +260,10 @@ public class BetaHantoMasterTest
 	 * Test that we can only place Butterflies/Sparrows in Beta Hanto
 	 * @throws HantoException
 	 */
-	@Test //12
+	@Test(expected = HantoException.class) //12
 	public void testCannotPlaceInvalidPiece() throws HantoException
 	{
-		MoveResult result = game.makeMove(HORSE, null, makeCoordinate(0,0)); // B1
-		assertEquals(MoveResult.RED_WINS, result);
+		game.makeMove(HORSE, null, makeCoordinate(0,0)); // B1
 	}
 	
 	/**

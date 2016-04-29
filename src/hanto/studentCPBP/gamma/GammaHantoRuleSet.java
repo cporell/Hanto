@@ -44,9 +44,7 @@ public class GammaHantoRuleSet extends GenericHantoRuleCollection
 	 */
 	public GammaHantoRuleSet(HantoPlayerColor startingColor)
 	{
-		super(startingColor, 
-				HantoHandFactory.getInstance().makeHantoHand(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE), 
-				HantoHandFactory.getInstance().makeHantoHand(HantoGameID.GAMMA_HANTO, HantoPlayerColor.RED));
+		super(startingColor);
 		
 		addStartCondition(new StartConditionCantPlaceAfterGameIsOver());
 		

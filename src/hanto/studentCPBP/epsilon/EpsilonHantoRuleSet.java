@@ -11,7 +11,7 @@ public class EpsilonHantoRuleSet extends GenericHantoRuleCollection
 	
 	
 	public EpsilonHantoRuleSet(HantoPlayerColor startingPlayer) {
-		super(startingPlayer, null, null);
+		super(startingPlayer);
 		// TODO Auto-generated constructor stub
 	}
 

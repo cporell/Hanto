@@ -47,9 +47,7 @@ public class DeltaHantoRuleSet extends GenericHantoRuleCollection
 	 */
 	public DeltaHantoRuleSet(HantoPlayerColor startingColor)
 	{
-		super(startingColor, 
-				HantoHandFactory.getInstance().makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.BLUE), 
-				HantoHandFactory.getInstance().makeHantoHand(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED));
+		super(startingColor);
 		
 		addStartCondition(new StartConditionCantPlaceAfterGameIsOver());
 		

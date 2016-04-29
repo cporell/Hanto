@@ -38,7 +38,7 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 	private ArrayList<IStartCondition> startConditions = new ArrayList<>();
 	private ArrayList<IEndCondition> endConditions = new ArrayList<>();
 	
-	public GenericHantoRuleCollection(HantoPlayerColor startingPlayer, CommonHantoHand blueHand, CommonHantoHand redHand)
+	public GenericHantoRuleCollection(HantoPlayerColor startingPlayer)
 	{
 		startingPlayerColor = startingPlayer;
 	}
