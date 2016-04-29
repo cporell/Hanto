@@ -12,7 +12,6 @@ package hanto.studentCPBP.common;
 import java.util.ArrayList;
 
 import hanto.common.HantoException;
-import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 

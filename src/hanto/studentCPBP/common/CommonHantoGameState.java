@@ -13,12 +13,10 @@ package hanto.studentCPBP.common;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 
@@ -54,9 +52,9 @@ public class CommonHantoGameState implements IHantoGameState
 	public void placePiece(CommonHantoPiece piece, HantoCoordinate at) 
 	{
 		Set<CommonHantoPiece> hand = playerHands.get(piece.getColor());
-		if(hand == null || !hand.remove(piece))
+		if(hand != null)
 		{
-			return;
+			hand.remove(piece);
 		}
 		
 		Set<CommonHantoPiece> current = boardLookup.get(convertToLocalCoordImpl(at));
