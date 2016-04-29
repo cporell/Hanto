@@ -15,31 +15,25 @@ public class EndConditionPlayerSurrounded implements GenericHantoRuleCollection.
 	}
 	
 	@Override
-	public MoveResult checkForResult(IHantoBoard board) 
+	public MoveResult checkForResult(IHantoGameState state) 
 	{
-		CommonHantoPiece butterfly = getPlayerButterfly(board);
+		CommonHantoPiece butterfly = getPlayerButterfly(state);
 		if(butterfly == null)
 			return MoveResult.OK;
 		
-		for(HantoCoordinate coord : board.getAdjacent(board.getPieceLocation(butterfly)))
+		for(HantoCoordinate coord : state.getAdjacent(state.getPieceLocation(butterfly)))
 		{
-			if(board.getPieces(coord).length != 1)
+			if(state.getPieces(coord).length != 1)
 				return MoveResult.OK;
 		}
 		
 		return player == HantoPlayerColor.RED ? MoveResult.BLUE_WINS : MoveResult.RED_WINS;
 	}
 
-	private CommonHantoPiece getPlayerButterfly(IHantoBoard board)
+	private CommonHantoPiece getPlayerButterfly(IHantoGameState state)
 	{
-		for(CommonHantoPiece piece : board.getPieces())
-		{
-			if(piece.getColor() == player && piece.getType() == HantoPieceType.BUTTERFLY)
-			{
-				return piece;
-			}
-		}
+		CommonHantoPiece[] butterflies = state.getPieces(player, HantoPieceType.BUTTERFLY);
 		
-		return null;
+		return butterflies.length == 0 ? null : butterflies[0];
 	}
 }

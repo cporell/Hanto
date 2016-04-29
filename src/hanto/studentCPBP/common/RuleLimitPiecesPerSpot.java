@@ -13,11 +13,11 @@ public class RuleLimitPiecesPerSpot implements GenericHantoRuleCollection.IRule
 	}
 	
 	@Override
-	public void checkBoard(IHantoBoard board) throws HantoException
+	public void check(IHantoGameState state) throws HantoException
 	{
-		for(HantoCoordinate coord : board.getAllTakenLocations())
+		for(HantoCoordinate coord : state.getAllTakenLocations())
 		{
-			if(board.getPieces(coord).length > max)
+			if(state.getPieces(coord).length > max)
 			{
 				throw new HantoException("Cannot put more than " + max + " pieces on a space");
 			}

@@ -18,25 +18,21 @@ import hanto.common.MoveResult;
 
 public abstract class GenericHantoRuleCollection implements IHantoRuleSet 
 {
-	private CommonHantoHand currentTurn;
-	private int moveCount = 0;
-	private boolean isGameOver = false;
-	private CommonHantoHand blueHand;
-	private CommonHantoHand redHand;
+	private HantoPlayerColor startingPlayerColor;
 	
 	public interface IRule
 	{
-		void checkBoard(IHantoBoard board) throws HantoException;
+		void check(IHantoGameState state) throws HantoException;
 	}
 	
 	public interface IStartCondition
 	{
-		void check(IHantoBoard board) throws HantoException;
+		void check(IHantoGameState state) throws HantoException;
 	}
 	
 	public interface IEndCondition
 	{
-		MoveResult checkForResult(IHantoBoard board);
+		MoveResult checkForResult(IHantoGameState state);
 	}
 	
 	private ArrayList<IRule> rules = new ArrayList<>();
@@ -45,29 +41,8 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 	
 	public GenericHantoRuleCollection(HantoPlayerColor startingPlayer, CommonHantoHand blueHand, CommonHantoHand redHand)
 	{
-		this.blueHand = blueHand;
-		this.redHand = redHand;
-		currentTurn = startingPlayer == HantoPlayerColor.BLUE ? getBlueHand() : getRedHand();
+		startingPlayerColor = startingPlayer;
 	}
-	
-	/**
-	 * Gets whether or not the game is over
-	 * @return
-	 */
-	protected boolean getIsGameOver()
-	{
-		return isGameOver;
-	}
-	
-	/**
-	 * Sets whether the game is over or not
-	 * @param gameOverStatus True if game is over, else false
-	 */
-	protected void setIsGameOver(boolean gameOverStatus)
-	{
-		isGameOver = gameOverStatus;
-	}
-	
 	/**
 	 * Add a rule to this rule collection
 	 * @param rule The rule we are adding
@@ -96,103 +71,52 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 	}
 	
 	@Override
-	public void beginTurn(IHantoBoard board) throws HantoException 
+	public void beginTurn(IHantoGameState state) throws HantoException 
 	{
 		for(IStartCondition condition : startConditions)
 		{
-			condition.check(board);
+			condition.check(state);
 		}
 	}
 	
 	@Override
-	public void checkBoard(IHantoBoard board) throws HantoException 
+	public void check(IHantoGameState state) throws HantoException 
 	{
 		for(IRule rule : rules)
 		{
-			rule.checkBoard(board);
+			rule.check(state);
 		}
 	}
 
 	@Override
-	public CommonHantoHand getCurrentPlayer() 
+	public HantoPlayerColor getCurrentPlayer(IHantoGameState state) 
 	{
-		return currentTurn;
-	}
-	
-	/**
-	 * Sets the current turn, given a hand
-	 * @param turn The Hand of the current player
-	 */
-	public void setCurrentTurn(CommonHantoHand turn)
-	{
-		currentTurn = turn;
+		HantoPlayerColor oppositeStarting = startingPlayerColor == HantoPlayerColor.RED ? HantoPlayerColor.BLUE : HantoPlayerColor.RED;
+		return state.getMoveNumber() % 2 == 0 ? startingPlayerColor : oppositeStarting;
 	}
 
 	@Override
-	public MoveResult endTurn(IHantoBoard board) throws HantoException 
+	public MoveResult endTurn(IHantoGameState state) throws HantoException 
 	{
 		MoveResult result = MoveResult.OK;
 		for(IEndCondition condition : endConditions)
 		{
-			result = condition.checkForResult(board);
+			result = condition.checkForResult(state);
 			if(result != MoveResult.OK)
 			{
-				isGameOver = true;
+				state.triggerGameOver();
 				break;
 			}
 		}
 		
-		moveCount++;
-		currentTurn = currentTurn == blueHand ? redHand : blueHand;
+		state.endMove();
 		
 		return result;
 	}
 
 	@Override
-	public int getTurnNumber() 
+	public int getTurnNumber(IHantoGameState state) 
 	{
-		return (moveCount / 2) + 1;
-	}
-	
-	@Override
-	public int getMoveNumber() 
-	{
-		return moveCount;
-	}
-	
-	/**
-	 * Returns the hand of the blue player
-	 * @return Blue's hand
-	 */
-	public CommonHantoHand getBlueHand()
-	{
-		return blueHand;
-	}
-	
-	/**
-	 * Sets the value of the blue hand
-	 * @param Contents of the hand
-	 */
-	public void setBlueHand(CommonHantoHand hand)
-	{
-		blueHand = hand;
-	}
-	
-	/**
-	 * Returns the hand of the red player
-	 * @return Red's hand
-	 */
-	public CommonHantoHand getRedHand()
-	{
-		return redHand;
-	}
-	
-	/**
-	 * Sets the value of the red hand
-	 * @param Contents of the hand
-	 */
-	public void setRedHand(CommonHantoHand hand)
-	{
-		redHand = hand;
+		return (state.getMoveNumber() / 2) + 1;
 	}
 }

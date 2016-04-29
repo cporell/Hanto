@@ -25,7 +25,7 @@ import hanto.common.MoveResult;
  */
 public abstract class CommonHantoGame implements HantoGame
 {
-	private IHantoBoard board;
+	private IHantoGameState state;
 	private IHantoRuleSet rules;
 	private IHantoPieceFactory pieceFactory;
 	
@@ -35,16 +35,16 @@ public abstract class CommonHantoGame implements HantoGame
 	 */
 	public CommonHantoGame(HantoPlayerColor startColor)
 	{
-		board = CreateBoard();
+		state = CreateGameState();
 		rules = CreateRuleSet(startColor);
 		pieceFactory = CreatePieceFactory();
 	}
 	
 	/**
-	 * Create a board for a particular version of Hanto.
-	 * @return The Hanto board
+	 * Create a game state to use for the game.
+	 * @return The hanto game state.
 	 */
-	protected abstract IHantoBoard CreateBoard();
+	protected abstract IHantoGameState CreateGameState();
 	
 	/**
 	 * Create a ruleset for a particular version of Hanto.
@@ -63,22 +63,29 @@ public abstract class CommonHantoGame implements HantoGame
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to)
 			throws HantoException 
 	{
-		rules.beginTurn(board);
+		rules.beginTurn(state);
 		
 		IHantoMover mover;
 		if(from == null && to == null && pieceType == null)
 		{
-			rules.onNoInput();
-			return rules.endTurn(board);
+			rules.onNoInput(state);
+			return rules.endTurn(state);
 		}
 		else if(from == null)
 		{
-			CommonHantoPiece piece = pieceFactory.createPiece(pieceType, rules.getCurrentPlayer().getPlayerColor());
+			CommonHantoPiece[] hand = state.getPiecesInHand(rules.getCurrentPlayer(state), pieceType);
+			if(hand.length == 0)
+			{
+				throw new HantoException("Cannot place piece, none in hand.");
+			}
+			
+			CommonHantoPiece piece = hand[0];
+			
 			mover = piece.createPlaceMover(to);
 		}
 		else
 		{
-			CommonHantoPiece[] pieces = board.getPieces(from);
+			CommonHantoPiece[] pieces = state.getPieces(from);
 			CommonHantoPiece selectedPiece = null;
 			for(CommonHantoPiece piece : pieces)
 			{ 
@@ -102,21 +109,21 @@ public abstract class CommonHantoGame implements HantoGame
 		boolean shouldContinue;
 		do
 		{
-			validator.checkIteration(board);
-			shouldContinue = mover.iterateMove(board);
-			rules.checkBoard(board);
+			validator.checkIteration(state);
+			shouldContinue = mover.iterateMove(state);
+			rules.check(state);
 		}
 		while(shouldContinue);
 		
-		return rules.endTurn(board);
+		return rules.endTurn(state);
 	}
 
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) 
 	{
-		if(board.getPieces(where).length > 0)
+		if(state.getPieces(where).length > 0)
 		{
-			return board.getPieces(where)[0];
+			return state.getPieces(where)[0];
 		}
 		else
 		{

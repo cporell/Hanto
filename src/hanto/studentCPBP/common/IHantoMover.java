@@ -36,9 +36,9 @@ public interface IHantoMover
 	
 	/**
 	 * Check the move step-by-step to make sure it is valid.
-	 * @param board The current game board
+	 * @param state The current game state.
 	 * @return False when movement is done (i.e it succeeded)
 	 * @throws HantoException Whenever an illegal move is made
 	 */
-	boolean iterateMove(IHantoBoard board) throws HantoException;
+	boolean iterateMove(IHantoGameState state) throws HantoException;
 }

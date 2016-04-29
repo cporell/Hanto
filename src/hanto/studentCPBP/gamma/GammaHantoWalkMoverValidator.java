@@ -21,7 +21,7 @@ import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
-import hanto.studentCPBP.common.IHantoBoard;
+import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.IHantoRuleSet;
 import hanto.studentCPBP.common.WalkMover;
@@ -48,28 +48,28 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 	}
 	
 	@Override
-	public void checkIteration(IHantoBoard board) throws HantoException 
+	public void checkIteration(IHantoGameState state) throws HantoException 
 	{
-		checkIsMovingOurPiece();
-		checkNotMovingToSameSpace(board);
-		checkNotMovingMoreThanOneSpace(board);
-		checkNotMovingBeforeButterflyPlaced(board);		
-		checkNotMovingThroughPieces(board);
+		checkIsMovingOurPiece(state);
+		checkNotMovingToSameSpace(state);
+		checkNotMovingMoreThanOneSpace(state);
+		checkNotMovingBeforeButterflyPlaced(state);		
+		checkNotMovingThroughPieces(state);
 	}
 
-	private void checkNotMovingThroughPieces(IHantoBoard board) throws HantoException {
-		HantoCoordinate from = board.getPieceLocation(mover.getPiece());
+	private void checkNotMovingThroughPieces(IHantoGameState state) throws HantoException {
+		HantoCoordinate from = state.getPieceLocation(mover.getPiece());
 		HantoCoordinate to = mover.getTargetLocation();
 		
-		HantoCoordinate[] adjFrom = board.getAdjacent(from);
-		HantoCoordinate[] adjTo = board.getAdjacent(to);
+		HantoCoordinate[] adjFrom = state.getAdjacent(from);
+		HantoCoordinate[] adjTo = state.getAdjacent(to);
 		
 		Set<HantoCoordinate> adjFromTakenSet = new HashSet<>();
 		Set<HantoCoordinate> adjToTakenSet = new HashSet<>();
 		
 		for(HantoCoordinate coord : adjFrom)
 		{
-			if(board.getPieces(coord).length > 0)
+			if(state.getPieces(coord).length > 0)
 			{
 				adjFromTakenSet.add(coord);
 			}
@@ -77,7 +77,7 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 		
 		for(HantoCoordinate coord : adjTo)
 		{
-			if(board.getPieces(coord).length > 0)
+			if(state.getPieces(coord).length > 0)
 			{
 				adjToTakenSet.add(coord);
 			}
@@ -91,14 +91,14 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 		}
 	}
 
-	private void checkNotMovingBeforeButterflyPlaced(IHantoBoard board) throws HantoException {
-		HantoCoordinate[] takenCoords = board.getAllTakenLocations();
+	private void checkNotMovingBeforeButterflyPlaced(IHantoGameState state) throws HantoException {
+		HantoCoordinate[] takenCoords = state.getAllTakenLocations();
 		for(HantoCoordinate coord : takenCoords)
 		{
-			CommonHantoPiece[] pieces = board.getPieces(coord);
+			CommonHantoPiece[] pieces = state.getPieces(coord);
 			for(CommonHantoPiece piece : pieces)
 			{
-				if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == rules.getCurrentPlayer().getPlayerColor())
+				if(piece.getType() == HantoPieceType.BUTTERFLY && piece.getColor() == rules.getCurrentPlayer(state))
 				{
 					return;
 				}
@@ -108,24 +108,24 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 		throw new HantoException("Cannot move piece before placing your butterfly");
 	}
 
-	private void checkNotMovingMoreThanOneSpace(IHantoBoard board) throws HantoException {
-		Set<HantoCoordinate> adjacent = new HashSet<>(Arrays.asList(board.getAdjacent(board.getPieceLocation(mover.getPiece()))));
+	private void checkNotMovingMoreThanOneSpace(IHantoGameState state) throws HantoException {
+		Set<HantoCoordinate> adjacent = new HashSet<>(Arrays.asList(state.getAdjacent(state.getPieceLocation(mover.getPiece()))));
 		if(!adjacent.contains(new HantoCoordinateImpl(mover.getTargetLocation())))
 		{
 			throw new HantoException("Cannot walk more than one space.");
 		}
 	}
 
-	private void checkNotMovingToSameSpace(IHantoBoard board) throws HantoException
+	private void checkNotMovingToSameSpace(IHantoGameState state) throws HantoException
 	{
-		if(mover.getTargetLocation().equals(board.getPieceLocation(mover.getPiece())))
+		if(mover.getTargetLocation().equals(state.getPieceLocation(mover.getPiece())))
 		{
 			throw new HantoException("Cannot move to the same location.");
 		}
 	}
 
-	private void checkIsMovingOurPiece() throws HantoException {
-		if(rules.getCurrentPlayer().getPlayerColor() != mover.getPiece().getColor())
+	private void checkIsMovingOurPiece(IHantoGameState state) throws HantoException {
+		if(rules.getCurrentPlayer(state) != mover.getPiece().getColor())
 		{
 			throw new HantoException("Cannot move piece that is not your color.");
 		}

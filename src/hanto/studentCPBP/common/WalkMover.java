@@ -47,16 +47,16 @@ public class WalkMover implements IHantoMover
 	}
 	
 	@Override
-	public boolean iterateMove(IHantoBoard board) throws HantoException 
+	public boolean iterateMove(IHantoGameState state) throws HantoException 
 	{
-		HantoCoordinate current = board.getPieceLocation(piece);
+		HantoCoordinate current = state.getPieceLocation(piece);
 		int offsetX = to.getX() - current.getX();
 		int offsetY = to.getY() - current.getY();
 		int dirX = (int) Math.signum(offsetX);
 		int dirY = (int) Math.signum(offsetY);
 		
 		HantoCoordinateImpl target = new HantoCoordinateImpl(current.getX() + dirX, current.getY() + dirY);
-		board.movePiece(piece, target);
+		state.movePiece(piece, target);
 		
 		return !(target.getX() == to.getX() && target.getY() == to.getY());
 	}

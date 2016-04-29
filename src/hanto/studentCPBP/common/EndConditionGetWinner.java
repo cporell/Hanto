@@ -14,7 +14,7 @@ public class EndConditionGetWinner implements GenericHantoRuleCollection.IEndCon
 	}
 	
 	@Override
-	public MoveResult checkForResult(IHantoBoard board) 
+	public MoveResult checkForResult(IHantoGameState board) 
 	{
 		MoveResult blueResult = blueSurrounded.checkForResult(board);
 		MoveResult redResult = redSurrounded.checkForResult(board);

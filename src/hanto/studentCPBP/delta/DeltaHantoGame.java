@@ -11,9 +11,9 @@
 package hanto.studentCPBP.delta;
 
 import hanto.common.HantoPlayerColor;
-import hanto.studentCPBP.common.CommonHantoBoard;
+import hanto.studentCPBP.common.CommonHantoGameState;
 import hanto.studentCPBP.common.CommonHantoGame;
-import hanto.studentCPBP.common.IHantoBoard;
+import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoPieceFactory;
 import hanto.studentCPBP.common.IHantoRuleSet;
 
@@ -31,9 +31,9 @@ public class DeltaHantoGame extends CommonHantoGame {
 	}
 
 	@Override
-	protected IHantoBoard CreateBoard() 
+	protected IHantoGameState CreateGameState() 
 	{
-		return new CommonHantoBoard();
+		return new CommonHantoGameState();
 	}
 
 	@Override

@@ -18,9 +18,9 @@ public class RuleValidPieceTypes implements GenericHantoRuleCollection.IRule
 	}
 	
 	@Override
-	public void checkBoard(IHantoBoard board) throws HantoException
+	public void check(IHantoGameState state) throws HantoException
 	{
-		for(CommonHantoPiece piece : board.getPieces())
+		for(CommonHantoPiece piece : state.getPieces())
 		{
 			if(!allowedTypes.contains(piece.getType()))
 			{

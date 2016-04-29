@@ -1,6 +1,8 @@
 package hanto.studentCPBP.common;
 
 import hanto.common.HantoException;
+import hanto.common.HantoPieceType;
+import hanto.common.HantoPlayerColor;
 
 public class RuleButterflyPlacedAfterRound implements GenericHantoRuleCollection.IRule
 {
@@ -14,20 +16,20 @@ public class RuleButterflyPlacedAfterRound implements GenericHantoRuleCollection
 	}
 	
 	@Override
-	public void checkBoard(IHantoBoard board) throws HantoException 
+	public void check(IHantoGameState state) throws HantoException 
 	{
-		if(rules.getTurnNumber() == round)
+		if(rules.getTurnNumber(state) == round)
 		{
-			if(rules.getCurrentPlayer() == rules.getBlueHand())
+			if(rules.getCurrentPlayer(state) == HantoPlayerColor.BLUE)
 			{
-				if(!rules.getBlueHand().getButterflyPlaced())
+				if(state.getPieces(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY).length == 0)
 				{
 					throw new HantoException("Blue did not place butterfly by turn " + round + ".");	
 				}
 			}
 			else
 			{
-				if(!rules.getRedHand().getButterflyPlaced())
+				if(state.getPieces(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY).length == 0)
 				{
 					throw new HantoException("Red did not place butterfly by turn " + round + ".");
 				}

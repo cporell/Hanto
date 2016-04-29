@@ -47,15 +47,15 @@ public class PlaceMover implements IHantoMover
 	}
 	
 	@Override
-	public boolean iterateMove(IHantoBoard board)
+	public boolean iterateMove(IHantoGameState state)
 	{
-		board.addPiece(piece, at);
+		state.placePiece(piece, at);
 		
-		HantoCoordinate[] adjacent = board.getAdjacent(at);
+		HantoCoordinate[] adjacent = state.getAdjacent(at);
 		int ofSameColor = 0;
 		for(HantoCoordinate coord : adjacent)
 		{
-			HantoPiece[] pieces = board.getPieces(at);
+			HantoPiece[] pieces = state.getPieces(at);
 			for(HantoPiece adjPiece : pieces)
 			{
 				if(adjPiece.getColor() == piece.getColor())

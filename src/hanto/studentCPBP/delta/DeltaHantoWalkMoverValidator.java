@@ -14,7 +14,7 @@ import java.util.Set;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
-import hanto.studentCPBP.common.IHantoBoard;
+import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.WalkMover;
 
 /**
@@ -39,13 +39,13 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 	}
 	
 	@Override
-	public void checkIteration(IHantoBoard board) throws HantoException 
+	public void checkIteration(IHantoGameState state) throws HantoException 
 	{
 		checkNotMovingToManySpaces();
-		checkIsMovingOurPiece();
-		checkNotMovingToSameSpace(board);
-		checkNotMovingBeforeButterflyPlaced(board);		
-		checkNotMovingThroughPieces(board);
+		checkIsMovingOurPiece(state);
+		checkNotMovingToSameSpace(state);
+		checkNotMovingBeforeButterflyPlaced(state);		
+		checkNotMovingThroughPieces(state);
 	}
 
 	private void checkNotMovingToManySpaces() throws HantoException 
@@ -57,20 +57,20 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 		}
 	}
 
-	private void checkNotMovingThroughPieces(IHantoBoard board) throws HantoException
+	private void checkNotMovingThroughPieces(IHantoGameState state) throws HantoException
 	{
-		HantoCoordinate from = board.getPieceLocation(getMover().getPiece());
+		HantoCoordinate from = state.getPieceLocation(getMover().getPiece());
 		HantoCoordinate to = getMover().getTargetLocation();
 		
-		HantoCoordinate[] adjFrom = board.getAdjacent(from);
-		HantoCoordinate[] adjTo = board.getAdjacent(to);
+		HantoCoordinate[] adjFrom = state.getAdjacent(from);
+		HantoCoordinate[] adjTo = state.getAdjacent(to);
 		
 		Set<HantoCoordinate> adjFromTakenSet = new HashSet<>();
 		Set<HantoCoordinate> adjToTakenSet = new HashSet<>();
 		
 		for(HantoCoordinate coord : adjFrom)
 		{
-			if(board.getPieces(coord).length > 0)
+			if(state.getPieces(coord).length > 0)
 			{
 				adjFromTakenSet.add(coord);
 			}
@@ -78,7 +78,7 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 		
 		for(HantoCoordinate coord : adjTo)
 		{
-			if(board.getPieces(coord).length > 0)
+			if(state.getPieces(coord).length > 0)
 			{
 				adjToTakenSet.add(coord);
 			}
