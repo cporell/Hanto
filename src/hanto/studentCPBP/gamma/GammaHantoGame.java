@@ -5,6 +5,7 @@
  */
 package hanto.studentCPBP.gamma;
 
+import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentCPBP.common.CommonHantoGameState;
 import hanto.studentCPBP.common.CommonHantoGame;
@@ -27,9 +28,25 @@ public class GammaHantoGame extends CommonHantoGame
 	}
 
 	@Override
-	protected IHantoGameState CreateGameState()
+	protected IHantoGameState CreateGameState(IHantoPieceFactory pieceFactory)
 	{
-		return new CommonHantoGameState();
+		CommonHantoGameState state = new CommonHantoGameState();
+		
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.BUTTERFLY, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.BLUE));
+		
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.BUTTERFLY, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.RED));
+		
+		return state;
 	}
 
 	@Override

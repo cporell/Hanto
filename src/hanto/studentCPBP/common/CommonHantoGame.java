@@ -35,16 +35,17 @@ public abstract class CommonHantoGame implements HantoGame
 	 */
 	public CommonHantoGame(HantoPlayerColor startColor)
 	{
-		state = CreateGameState();
 		rules = CreateRuleSet(startColor);
 		pieceFactory = CreatePieceFactory();
+		state = CreateGameState(pieceFactory);
 	}
 	
 	/**
 	 * Create a game state to use for the game.
+	 * @param pieceFactory the factory used to create initial pieces.
 	 * @return The hanto game state.
 	 */
-	protected abstract IHantoGameState CreateGameState();
+	protected abstract IHantoGameState CreateGameState(IHantoPieceFactory pieceFactory);
 	
 	/**
 	 * Create a ruleset for a particular version of Hanto.
