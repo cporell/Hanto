@@ -58,7 +58,7 @@ public class EpsilonHantoRuleSet extends GenericHantoRuleCollection
 		}
 		else if(mover instanceof JumpMover)
 		{
-			//return new EpsilonHantoJumpMoverValidator((JumpMover) mover, this);
+			return new EpsilonHantoJumpMoverValidator((JumpMover) mover, this);
 		}
 		
 		return null;
