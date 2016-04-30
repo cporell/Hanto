@@ -11,6 +11,7 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentCPBP.common.CommonHantoGame;
 
 public class TournamentPlayerTest 
 {
@@ -70,6 +71,24 @@ public class TournamentPlayerTest
 		assertEquals(MoveResult.DRAW, result);
 		assertEquals(HantoPlayerColor.BLUE, pieceAtOrigin.getColor());
 		assertEquals(HantoPieceType.BUTTERFLY, pieceAtOrigin.getType());
+		
+		CommonHantoGame game = (CommonHantoGame) runner.getGame();
+		HantoCoordinate[] adj = game.getState().getAdjacent(makeCoordinate(0, 0));
+		
+		HantoPiece otherPiece = null;
+		for(HantoCoordinate coord : adj)
+		{
+			HantoPiece[] piecesAt  = game.getState().getPieces(coord);
+			if(piecesAt.length > 0)
+			{
+				otherPiece = piecesAt[0];
+				break;
+			}
+		}
+		
+		assertNotEquals(null, otherPiece);
+		assertEquals(HantoPlayerColor.RED, otherPiece.getColor());
+		assertEquals(HantoPieceType.BUTTERFLY, otherPiece.getType());
 	}
 
 	

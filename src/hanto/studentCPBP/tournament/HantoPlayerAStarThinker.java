@@ -96,6 +96,11 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 				return 0;
 			}
 		}
+		
+		private boolean isRoot()
+		{
+			return parent == null;
+		}
 	}
 	
 	private class AStarThread extends Thread
@@ -133,7 +138,7 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 				
 				for(HantoMoveRecord move : moves)
 				{
-					IHantoGameState cpy = state.copy();
+					IHantoGameState cpy = state.copy();					
 					game.setState(cpy);
 					
 					try
@@ -193,14 +198,27 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 			}
 		}
 		
+		PathNode selection;
 		if(bestClosed != null && bestClosed.calculatedScore() < front.calculatedScore())
 		{
-			return bestClosed.moveToThisState;
+			selection = bestClosed;
 		}
 		else
 		{
-			return front.moveToThisState;
+			selection = front;
 		}
+		
+		if(selection.isRoot())
+		{
+			return new HantoMoveRecord(null, null, null);
+		}
+		
+		while(!selection.parent.isRoot())
+		{
+			selection = selection.parent;
+		}
+		
+		return selection.moveToThisState;
 	}
 
 }
