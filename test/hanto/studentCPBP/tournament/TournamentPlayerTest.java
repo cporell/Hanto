@@ -1,11 +1,14 @@
 package hanto.studentCPBP.tournament;
 
+import static hanto.common.HantoPlayerColor.BLUE;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import hanto.common.HantoCoordinate;
+import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
@@ -53,12 +56,33 @@ public class TournamentPlayerTest
 
 	}
 
-	@Before
-	public void setUp() throws Exception 
+	private static HantoGameFactory factory;
+	private HantoGame game;
+	
+	/**
+	 * Initialize a HantoGameFactory
+	 */
+	@BeforeClass
+	public static void initializeClass()
 	{
+		factory = HantoGameFactory.getInstance();
+	}
+	
+	/**
+	 * 
+	 */
+	@Before
+	public void setup()
+	{
+		// By default, blue moves first.
+		game = factory.makeHantoGame(HantoGameID.EPSILON_HANTO, BLUE);
+		
 	}
 
-	@Test
+	/**
+	 * Simple test to make sure the tourney runner works
+	 */
+	@Test //1
 	public void test() 
 	{
 		TournamentRunner runner = new TournamentRunner(HantoGameID.ALPHA_HANTO, HantoPlayerColor.BLUE);
@@ -89,6 +113,16 @@ public class TournamentPlayerTest
 		assertNotEquals(null, otherPiece);
 		assertEquals(HantoPlayerColor.RED, otherPiece.getColor());
 		assertEquals(HantoPieceType.BUTTERFLY, otherPiece.getType());
+	}
+	
+	/**
+	 * Test to make sure the bot places a butterfly by the 4th move
+	 */
+	@Test //2
+	public void TestPlayerPlacesButterflyByFourthMove()
+	{
+		TournamentRunner runner = new TournamentRunner(HantoGameID.EPSILON_HANTO, HantoPlayerColor.BLUE);
+		
 	}
 
 	

@@ -88,4 +88,9 @@ public class TournamentRunner
 	{
 		return game;
 	}
+	
+	public void setGame(HantoGame game)
+	{
+		this.game = game;
+	}
 }
