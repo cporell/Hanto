@@ -208,7 +208,7 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 			startLocation = new HantoCoordinateImpl(0, 0);
 		}
 		
-		HashSet<HantoCoordinate> blackList = new HashSet<>();
+		Set<HantoCoordinate> blackList = new HashSet<>();
 		List<HantoCoordinate> edge = new ArrayList<>();
 		edge.add(startLocation);
 		

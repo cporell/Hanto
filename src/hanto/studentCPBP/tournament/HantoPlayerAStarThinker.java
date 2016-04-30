@@ -1,9 +1,16 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package hanto.studentCPBP.tournament;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
-
-import javax.xml.transform.OutputKeys;
 
 import hanto.common.HantoException;
 import hanto.common.HantoPlayerColor;
@@ -13,6 +20,12 @@ import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoRuleSet;
 import hanto.tournament.HantoMoveRecord;
 
+/**
+ * HantoPlayerAStarThinker uses A* search to find the most optimal move for a round of Hanto.
+ * @author bpeake
+ * @author cgporell
+ *
+ */
 public class HantoPlayerAStarThinker implements IHantoPlayerThinker 
 {
 	private class PathNodeSort implements Comparator<PathNode>
@@ -39,10 +52,18 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 		private PathNode parent;
 		private HantoPlayerColor ourColor;
 		
-		public PathNode(IHantoGameState state, HantoMoveRecord move, MoveResult result, HantoPlayerColor ourColor, PathNode parent)
+		/**
+		 * Builds a Path Node.
+		 * @param state Current game state
+		 * @param move Current move in the game
+		 * @param result Move result of that move
+		 * @param ourColor Player color
+		 * @param parent Parent node in the A* tree
+		 */
+		PathNode(IHantoGameState state, HantoMoveRecord move, MoveResult result, HantoPlayerColor ourColor, PathNode parent)
 		{
 			this.state = state;
-			this.moveToThisState = move;
+			moveToThisState = move;
 			this.result = result;
 			this.ourColor = ourColor;
 			this.parent = parent;
@@ -82,7 +103,11 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 		private CommonHantoGame game;
 		private PriorityQueue<PathNode> edge = new PriorityQueue<>(new PathNodeSort());
 		
-		public AStarThread(CommonHantoGame game)
+		/**
+		 * Builds an AStarThread
+		 * @param game The game we are using
+		 */
+		AStarThread(CommonHantoGame game)
 		{
 			this.game = game;
 		}
