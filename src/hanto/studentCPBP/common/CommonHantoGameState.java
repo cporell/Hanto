@@ -289,7 +289,9 @@ public class CommonHantoGameState implements IHantoGameState
 	{
 		Set<CommonHantoPiece> piecesInHand = playerHands.get(piece.getColor());
 		if(piecesInHand == null)
+		{
 			return true;
+		}
 		
 		return !piecesInHand.contains(piece);
 	}

@@ -1,15 +1,30 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package hanto.studentCPBP.epsilon;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.IHantoGameState;
-import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.movers.JumpMover;
 
+/**
+ * JumpMoverValidator for Epsilon Hanto.
+ * Checks the legality of Jump moves
+ * @author cgporell
+ * @author bpeake
+ */
 public class EpsilonHantoJumpMoverValidator extends EpsilonCommonMovementMoverValidator {
 
 	/**
@@ -36,7 +51,7 @@ public class EpsilonHantoJumpMoverValidator extends EpsilonCommonMovementMoverVa
 	private void checkNotMovingAdjacent(IHantoGameState state) throws HantoException
 	{
 		HantoCoordinate[] adjacents = state.getAdjacent(getMover().getOriginLocation());	
-		HashSet<HantoCoordinate> adj = new HashSet<HantoCoordinate>(Arrays.asList(adjacents));
+		Set<HantoCoordinate> adj = new HashSet<HantoCoordinate>(Arrays.asList(adjacents));
 		if(adj.contains(getMover().getTargetLocation()))
 		{
 			throw new HantoException("You cannot Jump to an adjacent space.");

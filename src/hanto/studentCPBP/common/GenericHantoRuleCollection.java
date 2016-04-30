@@ -12,6 +12,7 @@ package hanto.studentCPBP.common;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import hanto.common.HantoCoordinate;
@@ -20,6 +21,13 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.tournament.HantoMoveRecord;
 
+/**
+ * Superclass for rule collections. Rulesets for different versions of Hanto can
+ * extend this for common functionality.
+ * @author cgporell
+ * @author bpeake
+ *
+ */
 public abstract class GenericHantoRuleCollection implements IHantoRuleSet 
 {
 	private HantoPlayerColor startingPlayerColor;
@@ -56,24 +64,56 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 		boolean isValidSearchLocation(IHantoGameState state, HantoCoordinate location);
 	}
 	
+	/**
+	 * Start Condition interface.
+	 * Rules that are checked at the start of a turn implement this.
+	 * @author cgporell
+	 * @author bpeake
+	 *
+	 */
 	public interface IStartCondition
 	{
+		/**
+		 * Checks the state of the board at the start of a turn
+		 * @param state The current board state
+		 * @throws HantoException If any illegal state is found
+		 */
 		void check(IHantoGameState state) throws HantoException;
 	}
 	
+	/**
+	 * End Condition interface.
+	 * Rules that are checked at the end of a turn implement this.
+	 * @author cgporell
+	 * @author bpeake
+	 *
+	 */
 	public interface IEndCondition
 	{
+		/**
+		 * Checks the state of the board at the end of a turn.
+		 * Specifically looks for end conditions.
+		 * @param state The current state of the board
+		 * @return The result of the move that was last made.
+		 */
 		MoveResult checkForResult(IHantoGameState state);
 	}
 	
-	private ArrayList<IRule> rules = new ArrayList<>();
-	private ArrayList<IStartCondition> startConditions = new ArrayList<>();
-	private ArrayList<IEndCondition> endConditions = new ArrayList<>();
+	private List<IRule> rules = new ArrayList<>();
+	private List<IStartCondition> startConditions = new ArrayList<>();
+	private List<IEndCondition> endConditions = new ArrayList<>();
 	
+	/**
+	 * Builds a Generic Hanto Rule Collection.
+	 * Superclass (generic) version of this constructor is only concerned with 
+	 * the starting player. Subclasses handle adding individual rules.
+	 * @param startingPlayer The starting player
+	 */
 	public GenericHantoRuleCollection(HantoPlayerColor startingPlayer)
 	{
 		startingPlayerColor = startingPlayer;
 	}
+	
 	/**
 	 * Add a rule to this rule collection
 	 * @param rule The rule we are adding
@@ -168,7 +208,7 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 			startLocation = new HantoCoordinateImpl(0, 0);
 		}
 		
-		ArrayList<HantoCoordinate> edge = new ArrayList<>();
+		List<HantoCoordinate> edge = new ArrayList<>();
 		edge.add(startLocation);
 		
 		while(edge.size() > 0)
@@ -227,7 +267,7 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 		return arr;
 	}
 	
-	private void findPlacementMoves(CommonHantoPiece piece, HantoCoordinate[] spaces, IHantoGameState state, ArrayList<HantoMoveRecord> foundMoves)
+	private void findPlacementMoves(CommonHantoPiece piece, HantoCoordinate[] spaces, IHantoGameState state, List<HantoMoveRecord> foundMoves)
 	{
 		for(HantoCoordinate coord : spaces)
 		{
@@ -240,7 +280,7 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 			}
 		}
 	}
-	private void findWalkMoves(CommonHantoPiece piece, HantoCoordinate[] spaces, IHantoGameState state, ArrayList<HantoMoveRecord> foundMoves)
+	private void findWalkMoves(CommonHantoPiece piece, HantoCoordinate[] spaces, IHantoGameState state, List<HantoMoveRecord> foundMoves)
 	{
 		for(HantoCoordinate coord : spaces)
 		{

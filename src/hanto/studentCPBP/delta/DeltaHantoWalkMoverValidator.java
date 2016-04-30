@@ -24,7 +24,7 @@ import hanto.studentCPBP.common.movers.WalkMover;
  */
 public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValidator 
 {
-	private int stepsLeft, maxSteps;;
+	private int stepsLeft, maxSteps;
 	
 	/**
 	 * Creates a validator for walking pieces.
@@ -35,7 +35,7 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 	public DeltaHantoWalkMoverValidator(WalkMover mover, DeltaHantoRuleSet rules, int maxSteps) 
 	{
 		super(mover, rules);
-		this.stepsLeft = maxSteps;
+		stepsLeft = maxSteps;
 		this.maxSteps = maxSteps;
 	}
 	

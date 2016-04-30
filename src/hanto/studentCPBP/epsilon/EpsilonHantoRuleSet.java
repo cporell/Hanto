@@ -9,10 +9,7 @@
  *******************************************************************************/
 package hanto.studentCPBP.epsilon;
 
-import hanto.common.HantoGameID;
-import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentCPBP.common.DefaultHantoMoverValidator;
 import hanto.studentCPBP.common.GenericHantoRuleCollection;
 import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMover;
@@ -27,9 +24,14 @@ import hanto.studentCPBP.common.rules.RuleButterflyPlacedAfterRound;
 import hanto.studentCPBP.common.rules.RuleLimitPiecesPerSpot;
 import hanto.studentCPBP.common.rules.RuleMustBeContinousBoard;
 import hanto.studentCPBP.common.rules.RuleMustStartAtOrigin;
-import hanto.studentCPBP.common.rules.RuleValidPieceTypes;
 import hanto.studentCPBP.common.rules.StartConditionCantPlaceAfterGameIsOver;
 
+/**
+ * Collection of rules for Epsilon Hanto
+ * @author cgporell
+ * @author bpeake
+ *
+ */
 public class EpsilonHantoRuleSet extends GenericHantoRuleCollection 
 {
 	private EndConditionStaticWinner winnerTrigger;
@@ -63,7 +65,7 @@ public class EpsilonHantoRuleSet extends GenericHantoRuleCollection
 			case BUTTERFLY:
 				return new EpsilonHantoWalkMoverValidator((WalkMover) mover, this, 1);
 			case CRAB:
-				return new EpsilonHantoWalkMoverValidator((WalkMover) mover, this, 3);
+				return new EpsilonHantoWalkMoverValidator((WalkMover) mover, this, 1);
 			}
 		}
 		else if(mover instanceof FlyMover)

@@ -69,6 +69,7 @@ public interface IHantoRuleSet
 
 	/**
 	 * Called when no input is given to the game.
+	 * @param state The current state of the game
 	 */
 	void onNoInput(IHantoGameState state);
 	

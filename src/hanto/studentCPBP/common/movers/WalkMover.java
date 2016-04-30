@@ -14,6 +14,7 @@ package hanto.studentCPBP.common.movers;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import hanto.common.HantoCoordinate;
@@ -34,7 +35,7 @@ public class WalkMover implements IHantoMover
 	private HantoCoordinate to;
 	private HantoCoordinate from;
 	
-	private ArrayList<HantoCoordinate> travledTo = new ArrayList<>();
+	private List<HantoCoordinate> travledTo = new ArrayList<>();
 	
 	private Set<HantoCoordinate> blacklist = new HashSet<>();
 	
@@ -58,8 +59,8 @@ public class WalkMover implements IHantoMover
 	/**
 	 * Builds a WalkMover for the given piece and location
 	 * @param piece The piece we are placing
+	 * @param from Where the piece is moving from
 	 * @param to The location we are placing at
-	 * @param to 
 	 */
 	public WalkMover(CommonHantoPiece piece, HantoCoordinate from, HantoCoordinate to) 
 	{
@@ -119,7 +120,9 @@ public class WalkMover implements IHantoMover
 	public boolean handleInvalidIteration(IHantoGameState state) 
 	{
 		if(doNotHandleError)
+		{
 			return false;
+		}
 		
 		blacklist.add(state.getPieceLocation(piece));
 		

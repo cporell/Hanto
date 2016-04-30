@@ -10,12 +10,10 @@
 
 package hanto.studentCPBP.delta;
 
-import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentCPBP.common.DefaultHantoMoverValidator;
 import hanto.studentCPBP.common.GenericHantoRuleCollection;
-import hanto.studentCPBP.common.HantoHandFactory;
 import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;

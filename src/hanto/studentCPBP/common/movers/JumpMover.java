@@ -31,6 +31,7 @@ public class JumpMover implements IHantoMover
 	/**
 	 * Builds a JumpMover for the given piece and location
 	 * @param piece The piece we are placing
+	 * @param from Where the piece is moving from
 	 * @param to The location we are placing at
 	 */
 	public JumpMover(CommonHantoPiece piece, HantoCoordinate from, HantoCoordinate to)

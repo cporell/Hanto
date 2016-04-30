@@ -17,15 +17,10 @@ import static hanto.common.HantoPieceType.SPARROW;
 import static hanto.common.HantoPlayerColor.BLUE;
 import static hanto.common.HantoPlayerColor.RED;
 
-import java.util.Hashtable;
-import java.util.Map;
-
 import hanto.common.*;
 import hanto.studentCPBP.common.CommonHantoGame;
 import hanto.studentCPBP.common.CommonHantoGameState;
 import hanto.studentCPBP.common.CommonHantoPiece;
-import hanto.studentCPBP.common.HantoCoordinateImpl;
-import hanto.studentCPBP.common.HantoPieceImpl;
 import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoPieceFactory;
 import hanto.studentCPBP.common.IHantoRuleSet;

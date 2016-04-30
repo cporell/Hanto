@@ -1,20 +1,20 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package hanto.studentCPBP.beta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-
-import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPlayerColor;
-import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.GenericHantoRuleCollection;
-import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
-import hanto.studentCPBP.common.IHantoPieceMoveGenerator;
-import hanto.studentCPBP.common.ZeroPieceMoveGenerator;
 import hanto.studentCPBP.common.movers.PlaceMover;
 import hanto.studentCPBP.common.rules.EndConditionGetWinner;
 import hanto.studentCPBP.common.rules.EndConditionPlayNRounds;
@@ -23,8 +23,13 @@ import hanto.studentCPBP.common.rules.RuleLimitPiecesPerSpot;
 import hanto.studentCPBP.common.rules.RuleMustBeContinousBoard;
 import hanto.studentCPBP.common.rules.RuleMustStartAtOrigin;
 import hanto.studentCPBP.common.rules.StartConditionCantPlaceAfterGameIsOver;
-import hanto.tournament.HantoMoveRecord;
 
+/**
+ * Ruleset for Beta Hanto
+ * @author cgporell
+ * @author bpeake
+ *
+ */
 public class BetaHantoRuleSet extends GenericHantoRuleCollection
 {
 	private class BetaPlacementMoverValidator implements IHantoMoverValidator

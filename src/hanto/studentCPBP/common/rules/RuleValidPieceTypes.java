@@ -1,6 +1,16 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package hanto.studentCPBP.common.rules;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -9,10 +19,20 @@ import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.GenericHantoRuleCollection;
 import hanto.studentCPBP.common.IHantoGameState;
 
+/**
+ * Rule that governs the valid piece types for a particular game of Hanto.
+ * @author cgporell
+ * @author bpeake
+ *
+ */
 public class RuleValidPieceTypes implements GenericHantoRuleCollection.IRule
 {
-	private HashSet<HantoPieceType> allowedTypes = new HashSet<>();
+	private Set<HantoPieceType> allowedTypes = new HashSet<>();
 	
+	/**
+	 * Constructor for RuleValidPieceTypes
+	 * @param allowedTypes The piece types that are valid for this version of Hanto
+	 */
 	public RuleValidPieceTypes(HantoPieceType... allowedTypes)
 	{
 		for(HantoPieceType type : allowedTypes)

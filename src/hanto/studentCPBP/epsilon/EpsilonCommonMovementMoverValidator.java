@@ -49,7 +49,7 @@ public abstract class EpsilonCommonMovementMoverValidator implements IHantoMover
 	/**
 	 * Check that we are not attempting to move a piece to the same spot it started from
 	 * (i.e. moving in place)
-	 * @param board The current game state
+	 * @param state The current game state
 	 * @throws HantoException If we are attempting to move in place
 	 */
 	protected void checkNotMovingToSameSpace(IHantoGameState state) throws HantoException
@@ -62,6 +62,7 @@ public abstract class EpsilonCommonMovementMoverValidator implements IHantoMover
 
 	/**
 	 * Check that we are only moving pieces of our own color
+	 * @param state The current game state
 	 * @throws HantoException If we attempt to move an opponent's piece
 	 */
 	protected void checkIsMovingOurPiece(IHantoGameState state) throws HantoException 
@@ -74,7 +75,7 @@ public abstract class EpsilonCommonMovementMoverValidator implements IHantoMover
 	
 	/**
 	 * Check that we are not attempting to move a piece if our Butterfly is not on the board
-	 * @param board The current game state
+	 * @param state The current game state
 	 * @throws HantoException If we attempt to move a piece before placing the Butterfly
 	 */
 	protected void checkNotMovingBeforeButterflyPlaced(IHantoGameState state) throws HantoException 
