@@ -53,7 +53,7 @@ public class HantoPlayer implements HantoGamePlayer
 			return new HantoMoveRecord(null, null, null);
 		}
 		
-		if(!applyMove(opponentsMove))
+		if(opponentsMove != null && !applyMove(opponentsMove))
 		{
 			return new HantoMoveRecord(null, null, null);
 		}

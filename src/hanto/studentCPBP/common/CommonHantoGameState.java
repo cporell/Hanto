@@ -116,12 +116,14 @@ public class CommonHantoGameState implements IHantoGameState
 	@Override
 	public void movePiece(CommonHantoPiece piece, HantoCoordinate to)
 	{
-		Set<CommonHantoPiece> fromPieces = boardLookup.get(pieceLookup.get(piece));
+		HantoCoordinate location = pieceLookup.get(piece);
+		Set<CommonHantoPiece> fromPieces = boardLookup.get(location);
 		fromPieces.remove(piece);
+		pieceLookup.remove(piece);
 		
 		if(fromPieces.size() == 0)
 		{
-			boardLookup.remove(pieceLookup.get(piece));
+			boardLookup.remove(location);
 		}
 		
 		if(to != null)

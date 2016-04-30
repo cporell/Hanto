@@ -38,13 +38,23 @@ public class RuleMustStartAtOrigin implements GenericHantoRuleCollection.IRule
 	@Override
 	public boolean isValidMoveLocation(IHantoGameState state, HantoCoordinate location) 
 	{
-		return state.getPieces().length == 0 && (location.getX() == 0 && location.getY() == 0);
+		if(state.getPieces().length == 0)
+		{
+			return  (location.getX() == 0 && location.getY() == 0);
+		}
+		
+		return true;
 	}
 
 	@Override
 	public boolean isValidSearchLocation(IHantoGameState state, HantoCoordinate location) 
 	{
-		return state.getPieces().length == 0 && (location.getX() == 0 && location.getY() == 0);
+		if(state.getPieces().length == 0)
+		{
+			return (location.getX() == 0 && location.getY() == 0);
+		}
+		
+		return true;
 	}
 
 }

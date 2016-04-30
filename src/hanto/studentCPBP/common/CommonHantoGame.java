@@ -134,7 +134,10 @@ public abstract class CommonHantoGame implements HantoGame
 		}
 		while(shouldContinue);
 		
-		return rules.endTurn(state);
+		MoveResult result = rules.endTurn(state);
+		state.endMove();
+		
+		return result;
 	}
 
 	@Override

@@ -160,7 +160,7 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 		
 		try 
 		{
-			Thread.sleep(700);
+			thread.join(700);
 			
 			thread.interrupt();
 			thread.join();

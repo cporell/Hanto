@@ -180,8 +180,6 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 			}
 		}
 		
-		state.endMove();
-		
 		return result;
 	}
 
@@ -196,12 +194,13 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 	{
 		Set<HantoCoordinate> allValidSpaces = new HashSet<>();
 		
+		CommonHantoPiece[] allPiecesOnBoard = state.getPieces();
 		CommonHantoPiece[] piecesOnBoard = state.getPieces(player);
 		CommonHantoPiece[] piecesInHand = state.getPiecesInHand(player);
 		HantoCoordinate startLocation;
-		if(piecesOnBoard.length > 0)
+		if(allPiecesOnBoard.length > 0)
 		{
-			startLocation = state.getPieceLocation(piecesOnBoard[0]);
+			startLocation = state.getPieceLocation(allPiecesOnBoard[0]);
 		}
 		else
 		{
@@ -234,7 +233,6 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 				if(!rule.isValidMoveLocation(state, next))
 				{
 					isKeep = false;
-					break;
 				}
 			}
 			

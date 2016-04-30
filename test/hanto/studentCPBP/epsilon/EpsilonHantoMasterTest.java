@@ -207,8 +207,7 @@ public class EpsilonHantoMasterTest
 	 * Tests that resigning when there is a valid move throws a prematureResignationException
 	 * @throws HantoException
 	 */
-	@Test //8
-	//(expected = HantoPrematureResignationException.class)
+	@Test(expected = HantoPrematureResignationException.class)
 	public void TestCannotResignIfValidMovesExist() throws HantoException
 	{
 		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
