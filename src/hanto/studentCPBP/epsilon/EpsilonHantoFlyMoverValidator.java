@@ -65,4 +65,9 @@ public class EpsilonHantoFlyMoverValidator extends EpsilonCommonMovementMoverVal
 	public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
 	{
 	}
+
+	@Override
+	public void preIteration(IHantoGameState state) 
+	{
+	}
 }

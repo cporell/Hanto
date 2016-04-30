@@ -26,6 +26,8 @@ public class EpsilonHantoWalkMoverValidator extends EpsilonCommonMovementMoverVa
 {
 	private int stepsLeft;
 	
+	private HantoCoordinate itrStart;
+	
 	/**
 	 * Creates a validator for walking pieces.
 	 * @param mover The given WalkMover
@@ -59,8 +61,8 @@ public class EpsilonHantoWalkMoverValidator extends EpsilonCommonMovementMoverVa
 
 	private void checkNotMovingThroughPieces(IHantoGameState state) throws HantoException
 	{
-		HantoCoordinate from = state.getPieceLocation(getMover().getPiece());
-		HantoCoordinate to = getMover().getTargetLocation();
+		HantoCoordinate from = itrStart;
+		HantoCoordinate to = state.getPieceLocation(getMover().getPiece());
 		
 		HantoCoordinate[] adjFrom = state.getAdjacent(from);
 		HantoCoordinate[] adjTo = state.getAdjacent(to);
@@ -95,5 +97,12 @@ public class EpsilonHantoWalkMoverValidator extends EpsilonCommonMovementMoverVa
 	@Override
 	public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
 	{
+		throw new HantoException("Cannot walk to location.");
+	}
+
+	@Override
+	public void preIteration(IHantoGameState state) 
+	{
+		itrStart = state.getPieceLocation(getMover().getPiece());
 	}
 }

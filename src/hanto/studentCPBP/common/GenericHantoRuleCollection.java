@@ -208,12 +208,17 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 			startLocation = new HantoCoordinateImpl(0, 0);
 		}
 		
+		HashSet<HantoCoordinate> blackList = new HashSet<>();
 		List<HantoCoordinate> edge = new ArrayList<>();
 		edge.add(startLocation);
 		
 		while(edge.size() > 0)
 		{
 			HantoCoordinate next = edge.remove(0);
+			if(blackList.contains(next))
+			{
+				continue;
+			}
 			
 			boolean isBlackList = false;
 			boolean isKeep = true;
@@ -222,6 +227,7 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 				if(!rule.isValidSearchLocation(state, next))
 				{
 					isBlackList = true;
+					isKeep = false;
 					break;
 				}
 				
@@ -234,6 +240,7 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 			
 			if(isBlackList)
 			{
+				blackList.add(next);
 				continue;
 			}
 			
@@ -244,6 +251,8 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 			
 			HantoCoordinate[] adj = state.getAdjacent(next);
 			edge.addAll(Arrays.asList(adj));
+			
+			blackList.add(next);
 		}
 		
 		HantoCoordinate[] spaces = new HantoCoordinate[allValidSpaces.size()];
@@ -308,6 +317,7 @@ public abstract class GenericHantoRuleCollection implements IHantoRuleSet
 				
 				try
 				{
+					validator.preIteration(state);
 					shouldContinue = mover.iterateMove(state);
 					validator.checkIteration(state);
 					check(state);

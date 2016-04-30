@@ -81,4 +81,9 @@ public class GammaHantoPlaceMoverValidator implements IHantoMoverValidator
 	public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
 	{
 	}
+
+	@Override
+	public void preIteration(IHantoGameState state) 
+	{
+	}
 }

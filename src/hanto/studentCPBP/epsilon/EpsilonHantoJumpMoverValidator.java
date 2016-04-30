@@ -102,4 +102,9 @@ public class EpsilonHantoJumpMoverValidator extends EpsilonCommonMovementMoverVa
 	{
 	}
 
+	@Override
+	public void preIteration(IHantoGameState state) 
+	{
+	}
+
 }

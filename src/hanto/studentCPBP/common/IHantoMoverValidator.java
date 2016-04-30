@@ -22,6 +22,12 @@ import hanto.common.HantoException;
 public interface IHantoMoverValidator
 {
 	/**
+	 * Called before the mover operates for this iteration.
+	 * @param state The state of the game.
+	 */
+	void preIteration(IHantoGameState state);
+	
+	/**
 	 * Runs a series of validity tests on a move, throws Exception if any fail.
 	 * @param state The current game state
 	 * @throws HantoException Whenever there is an illegal move.

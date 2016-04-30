@@ -26,6 +26,8 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 {
 	private int stepsLeft, maxSteps;
 	
+	private HantoCoordinate itrStart;
+	
 	/**
 	 * Creates a validator for walking pieces.
 	 * @param mover The given WalkMover
@@ -60,8 +62,8 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 
 	private void checkNotMovingThroughPieces(IHantoGameState state) throws HantoException
 	{
-		HantoCoordinate from = state.getPieceLocation(getMover().getPiece());
-		HantoCoordinate to = getMover().getTargetLocation();
+		HantoCoordinate from = itrStart;
+		HantoCoordinate to = state.getPieceLocation(getMover().getPiece());
 		
 		HantoCoordinate[] adjFrom = state.getAdjacent(from);
 		HantoCoordinate[] adjTo = state.getAdjacent(to);
@@ -97,5 +99,11 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 	public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
 	{
 		stepsLeft = maxSteps;
+	}
+
+	@Override
+	public void preIteration(IHantoGameState state) 
+	{
+		itrStart = state.getPieceLocation(getMover().getPiece());
 	}
 }

@@ -36,6 +36,8 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 	private WalkMover mover;
 	private IHantoRuleSet rules;
 	
+	private HantoCoordinate itrStart;
+	
 	/**
 	 * Creates a validator for walking pieces.
 	 * @param mover The given WalkMover
@@ -58,8 +60,8 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 	}
 
 	private void checkNotMovingThroughPieces(IHantoGameState state) throws HantoException {
-		HantoCoordinate from = state.getPieceLocation(mover.getPiece());
-		HantoCoordinate to = mover.getTargetLocation();
+		HantoCoordinate from = itrStart;
+		HantoCoordinate to = state.getPieceLocation(mover.getPiece());
 		
 		HantoCoordinate[] adjFrom = state.getAdjacent(from);
 		HantoCoordinate[] adjTo = state.getAdjacent(to);
@@ -109,7 +111,7 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 	}
 
 	private void checkNotMovingMoreThanOneSpace(IHantoGameState state) throws HantoException {
-		Set<HantoCoordinate> adjacent = new HashSet<>(Arrays.asList(state.getAdjacent(state.getPieceLocation(mover.getPiece()))));
+		Set<HantoCoordinate> adjacent = new HashSet<>(Arrays.asList(state.getAdjacent(mover.getOriginLocation())));
 		if(!adjacent.contains(new HantoCoordinateImpl(mover.getTargetLocation())))
 		{
 			throw new HantoException("Cannot walk more than one space.");
@@ -118,7 +120,7 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 
 	private void checkNotMovingToSameSpace(IHantoGameState state) throws HantoException
 	{
-		if(mover.getTargetLocation().equals(state.getPieceLocation(mover.getPiece())))
+		if(mover.getTargetLocation().equals(itrStart))
 		{
 			throw new HantoException("Cannot move to the same location.");
 		}
@@ -135,6 +137,12 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 	public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
 	{
 		throw new HantoException("Cannot walk to location.");
+	}
+
+	@Override
+	public void preIteration(IHantoGameState state) 
+	{
+		itrStart = state.getPieceLocation(mover.getPiece());
 	}
 
 }

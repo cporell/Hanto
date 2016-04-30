@@ -42,6 +42,11 @@ public class AlphaHantoRuleSet extends GenericHantoRuleCollection
 		public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
 		{
 		}
+
+		@Override
+		public void preIteration(IHantoGameState state) 
+		{
+		}
 		
 	}
 	
@@ -55,6 +60,11 @@ public class AlphaHantoRuleSet extends GenericHantoRuleCollection
 
 		@Override
 		public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
+		{
+		}
+
+		@Override
+		public void preIteration(IHantoGameState state) 
 		{
 		}
 		
