@@ -14,10 +14,10 @@ package hanto.studentCPBP.gamma;
 
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentCPBP.common.HantoButterflyPiece;
 import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.IHantoPieceFactory;
-import hanto.studentCPBP.common.PlaceholderPiece;
+import hanto.studentCPBP.common.pieces.HantoButterflyPiece;
+import hanto.studentCPBP.common.pieces.PlaceholderPiece;
 
 /**
  * Piece factory for Gamma Hanto

@@ -27,4 +27,11 @@ public interface IHantoMoverValidator
 	 * @throws HantoException Whenever there is an illegal move.
 	 */
 	void checkIteration(IHantoGameState state) throws HantoException;
+	
+	/**
+	 * Called when a mover resets after an invalid move.
+	 * @param state The reset state of the game.
+	 * @throws HantoException On an invalid reset.
+	 */
+	void onInvalidMoveHandled(IHantoGameState state) throws HantoException;
 }

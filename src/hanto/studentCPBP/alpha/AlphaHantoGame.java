@@ -14,6 +14,7 @@ package hanto.studentCPBP.alpha;
 
 import hanto.common.*;
 import hanto.studentCPBP.common.*;
+import hanto.studentCPBP.common.pieces.PlaceholderPiece;
 
 import static hanto.common.MoveResult.*;
 import static hanto.common.HantoPieceType.*;

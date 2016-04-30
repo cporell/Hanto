@@ -1,6 +1,9 @@
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.common.rules;
 
 import hanto.common.MoveResult;
+import hanto.studentCPBP.common.GenericHantoRuleCollection;
+import hanto.studentCPBP.common.IHantoGameState;
+import hanto.studentCPBP.common.GenericHantoRuleCollection.IEndCondition;
 
 public class EndConditionPlayNRounds implements GenericHantoRuleCollection.IEndCondition
 {

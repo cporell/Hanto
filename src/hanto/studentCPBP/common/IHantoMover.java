@@ -41,4 +41,11 @@ public interface IHantoMover
 	 * @throws HantoException Whenever an illegal move is made
 	 */
 	boolean iterateMove(IHantoGameState state) throws HantoException;
+	
+	/**
+	 * Called when an error happens during an iteration.
+	 * @param state The game state during the invalid move.
+	 * @return True if the invalid move was handled.
+	 */
+	boolean handleInvalidIteration(IHantoGameState state);
 }

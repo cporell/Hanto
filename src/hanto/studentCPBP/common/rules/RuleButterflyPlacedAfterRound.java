@@ -1,8 +1,11 @@
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.common.rules;
 
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.studentCPBP.common.GenericHantoRuleCollection;
+import hanto.studentCPBP.common.IHantoGameState;
+import hanto.studentCPBP.common.GenericHantoRuleCollection.IRule;
 
 public class RuleButterflyPlacedAfterRound implements GenericHantoRuleCollection.IRule
 {

@@ -29,7 +29,7 @@ import hanto.studentCPBP.common.HantoPieceImpl;
 import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoPieceFactory;
 import hanto.studentCPBP.common.IHantoRuleSet;
-import hanto.studentCPBP.common.PlaceholderPiece;
+import hanto.studentCPBP.common.pieces.PlaceholderPiece;
 
 /**
  * Beta version of Hanto

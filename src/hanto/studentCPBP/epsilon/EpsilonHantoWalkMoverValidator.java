@@ -15,7 +15,7 @@ import java.util.Set;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.studentCPBP.common.IHantoGameState;
-import hanto.studentCPBP.common.WalkMover;
+import hanto.studentCPBP.common.movers.WalkMover;
 
 /**
  * EpsilonHantoWalkMoverValidator validates Walking behavior for any number of steps
@@ -90,5 +90,10 @@ public class EpsilonHantoWalkMoverValidator extends EpsilonCommonMovementMoverVa
 		{
 			throw new HantoException("Cannot move piece through other pieces");
 		}
+	}
+
+	@Override
+	public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
+	{
 	}
 }

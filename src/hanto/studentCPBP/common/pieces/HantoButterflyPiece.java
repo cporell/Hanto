@@ -10,11 +10,15 @@
  * Copyright ©2016 Gary F. Pollice
  *******************************************************************************/
 
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.common.pieces;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.studentCPBP.common.CommonHantoPiece;
+import hanto.studentCPBP.common.IHantoMover;
+import hanto.studentCPBP.common.movers.PlaceMover;
+import hanto.studentCPBP.common.movers.WalkMover;
 
 /**
  * Implementation of Butterfly piece for Gamma Hanto

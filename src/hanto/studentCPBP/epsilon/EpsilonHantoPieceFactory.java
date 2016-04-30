@@ -12,13 +12,13 @@ package hanto.studentCPBP.epsilon;
 
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentCPBP.common.HantoButterflyPiece;
 import hanto.studentCPBP.common.CommonHantoPiece;
-import hanto.studentCPBP.common.HantoCrabPiece;
-import hanto.studentCPBP.common.HantoHorsePiece;
-import hanto.studentCPBP.common.HantoSparrowPiece;
 import hanto.studentCPBP.common.IHantoPieceFactory;
-import hanto.studentCPBP.common.PlaceholderPiece;
+import hanto.studentCPBP.common.pieces.HantoButterflyPiece;
+import hanto.studentCPBP.common.pieces.HantoCrabPiece;
+import hanto.studentCPBP.common.pieces.HantoHorsePiece;
+import hanto.studentCPBP.common.pieces.HantoSparrowPiece;
+import hanto.studentCPBP.common.pieces.PlaceholderPiece;
 
 /**
  * Piece Factory for Delta Hanto

@@ -24,7 +24,7 @@ import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMoverValidator;
 import hanto.studentCPBP.common.IHantoRuleSet;
-import hanto.studentCPBP.common.WalkMover;
+import hanto.studentCPBP.common.movers.WalkMover;
 
 /**
  * Move validator for the "walk" behavior.
@@ -129,6 +129,12 @@ public class GammaHantoWalkMoverValidator implements IHantoMoverValidator
 		{
 			throw new HantoException("Cannot move piece that is not your color.");
 		}
+	}
+
+	@Override
+	public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
+	{
+		throw new HantoException("Cannot walk to location.");
 	}
 
 }

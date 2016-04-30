@@ -15,7 +15,7 @@ import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMoverValidator;
-import hanto.studentCPBP.common.PlaceMover;
+import hanto.studentCPBP.common.movers.PlaceMover;
 
 /**
  * Place Mover Validator for Epsilon Hanto
@@ -73,5 +73,10 @@ public class EpsilonHantoPlaceMoverValidator implements IHantoMoverValidator {
 				throw new HantoException("You cannot place next to an opponents piece.");
 			}
 		}
+	}
+
+	@Override
+	public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
+	{
 	}
 }

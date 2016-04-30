@@ -11,8 +11,8 @@ package hanto.studentCPBP.epsilon;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
-import hanto.studentCPBP.common.FlyMover;
 import hanto.studentCPBP.common.IHantoGameState;
+import hanto.studentCPBP.common.movers.FlyMover;
 
 /**
  * EpsilonHantoFlyMoverValidator checks legality of Fly moves
@@ -59,5 +59,10 @@ public class EpsilonHantoFlyMoverValidator extends EpsilonCommonMovementMoverVal
 		{
 			throw new HantoException("Flew too many spaces");
 		}	
+	}
+
+	@Override
+	public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
+	{
 	}
 }

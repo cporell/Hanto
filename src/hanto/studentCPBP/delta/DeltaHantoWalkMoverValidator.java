@@ -15,7 +15,7 @@ import java.util.Set;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.studentCPBP.common.IHantoGameState;
-import hanto.studentCPBP.common.WalkMover;
+import hanto.studentCPBP.common.movers.WalkMover;
 
 /**
  * DeltaHantoWalkMoverValidator validates Walking behavior for any number of steps
@@ -24,7 +24,7 @@ import hanto.studentCPBP.common.WalkMover;
  */
 public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValidator 
 {
-	private int stepsLeft;
+	private int stepsLeft, maxSteps;;
 	
 	/**
 	 * Creates a validator for walking pieces.
@@ -35,7 +35,8 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 	public DeltaHantoWalkMoverValidator(WalkMover mover, DeltaHantoRuleSet rules, int maxSteps) 
 	{
 		super(mover, rules);
-		stepsLeft = maxSteps;
+		this.stepsLeft = maxSteps;
+		this.maxSteps = maxSteps;
 	}
 	
 	@Override
@@ -90,5 +91,11 @@ public class DeltaHantoWalkMoverValidator extends DeltaCommonMovementMoverValida
 		{
 			throw new HantoException("Cannot move piece through other pieces");
 		}
+	}
+
+	@Override
+	public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
+	{
+		stepsLeft = maxSteps;
 	}
 }

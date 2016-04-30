@@ -17,8 +17,8 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.IHantoMover;
-import hanto.studentCPBP.common.PlaceMover;
-import hanto.studentCPBP.common.WalkMover;
+import hanto.studentCPBP.common.movers.PlaceMover;
+import hanto.studentCPBP.common.movers.WalkMover;
 
 /**
  * Implementation of Sparrow piece for Gamma Hanto

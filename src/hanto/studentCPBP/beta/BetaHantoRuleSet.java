@@ -2,18 +2,18 @@ package hanto.studentCPBP.beta;
 
 import hanto.common.HantoException;
 import hanto.common.HantoPlayerColor;
-import hanto.studentCPBP.common.EndConditionGetWinner;
-import hanto.studentCPBP.common.EndConditionPlayNRounds;
 import hanto.studentCPBP.common.GenericHantoRuleCollection;
 import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
-import hanto.studentCPBP.common.PlaceMover;
-import hanto.studentCPBP.common.RuleButterflyPlacedAfterRound;
-import hanto.studentCPBP.common.RuleLimitPiecesPerSpot;
-import hanto.studentCPBP.common.RuleMustBeContinousBoard;
-import hanto.studentCPBP.common.RuleMustStartAtOrigin;
-import hanto.studentCPBP.common.StartConditionCantPlaceAfterGameIsOver;
+import hanto.studentCPBP.common.movers.PlaceMover;
+import hanto.studentCPBP.common.rules.EndConditionGetWinner;
+import hanto.studentCPBP.common.rules.EndConditionPlayNRounds;
+import hanto.studentCPBP.common.rules.RuleButterflyPlacedAfterRound;
+import hanto.studentCPBP.common.rules.RuleLimitPiecesPerSpot;
+import hanto.studentCPBP.common.rules.RuleMustBeContinousBoard;
+import hanto.studentCPBP.common.rules.RuleMustStartAtOrigin;
+import hanto.studentCPBP.common.rules.StartConditionCantPlaceAfterGameIsOver;
 
 public class BetaHantoRuleSet extends GenericHantoRuleCollection
 {
@@ -24,6 +24,11 @@ public class BetaHantoRuleSet extends GenericHantoRuleCollection
 		{
 			
 		}
+
+		@Override
+		public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
+		{
+		}
 		
 	}
 	
@@ -33,6 +38,11 @@ public class BetaHantoRuleSet extends GenericHantoRuleCollection
 		public void checkIteration(IHantoGameState state) throws HantoException 
 		{
 			throw new HantoException("Invalid movement input.");
+		}
+
+		@Override
+		public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
+		{
 		}
 		
 	}

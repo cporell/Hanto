@@ -13,26 +13,40 @@ import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.studentCPBP.common.DefaultHantoMoverValidator;
-import hanto.studentCPBP.common.EndConditionGetWinner;
-import hanto.studentCPBP.common.EndConditionStaticWinner;
-import hanto.studentCPBP.common.FlyMover;
 import hanto.studentCPBP.common.GenericHantoRuleCollection;
 import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
-import hanto.studentCPBP.common.JumpMover;
-import hanto.studentCPBP.common.PlaceMover;
-import hanto.studentCPBP.common.WalkMover;
+import hanto.studentCPBP.common.movers.FlyMover;
+import hanto.studentCPBP.common.movers.JumpMover;
+import hanto.studentCPBP.common.movers.PlaceMover;
+import hanto.studentCPBP.common.movers.WalkMover;
+import hanto.studentCPBP.common.rules.EndConditionGetWinner;
+import hanto.studentCPBP.common.rules.EndConditionStaticWinner;
+import hanto.studentCPBP.common.rules.RuleButterflyPlacedAfterRound;
+import hanto.studentCPBP.common.rules.RuleLimitPiecesPerSpot;
+import hanto.studentCPBP.common.rules.RuleMustBeContinousBoard;
+import hanto.studentCPBP.common.rules.RuleMustStartAtOrigin;
+import hanto.studentCPBP.common.rules.RuleValidPieceTypes;
+import hanto.studentCPBP.common.rules.StartConditionCantPlaceAfterGameIsOver;
 
 public class EpsilonHantoRuleSet extends GenericHantoRuleCollection 
 {
 	private EndConditionStaticWinner winnerTrigger;
 	
-	
-	
-	public EpsilonHantoRuleSet(HantoPlayerColor startingPlayer) {
+	public EpsilonHantoRuleSet(HantoPlayerColor startingPlayer)
+	{
 		super(startingPlayer);
-		// TODO Auto-generated constructor stub
+		
+		addStartCondition(new StartConditionCantPlaceAfterGameIsOver());
+		
+		addRule(new RuleButterflyPlacedAfterRound(this, 4));
+		addRule(new RuleMustBeContinousBoard());
+		addRule(new RuleLimitPiecesPerSpot(1));
+		addRule(new RuleMustStartAtOrigin());
+		
+		addEndCondition(winnerTrigger = new EndConditionStaticWinner());
+		addEndCondition(new EndConditionGetWinner());
 	}
 
 	@Override
@@ -65,9 +79,10 @@ public class EpsilonHantoRuleSet extends GenericHantoRuleCollection
 	}
 
 	@Override
-	public void onNoInput(IHantoGameState state) {
-		// TODO Auto-generated method stub
-		
+	public void onNoInput(IHantoGameState state) 
+	{
+		winnerTrigger.setWinner(getCurrentPlayer(state) == HantoPlayerColor.BLUE ? 
+				HantoPlayerColor.RED : HantoPlayerColor.BLUE);
 	}
 
 }

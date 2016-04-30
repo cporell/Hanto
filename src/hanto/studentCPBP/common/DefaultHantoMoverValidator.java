@@ -24,4 +24,9 @@ public class DefaultHantoMoverValidator implements IHantoMoverValidator
 	public void checkIteration(IHantoGameState state) throws HantoException 
 	{
 	}
+
+	@Override
+	public void onInvalidMoveHandled(IHantoGameState state) throws HantoException 
+	{
+	}
 }

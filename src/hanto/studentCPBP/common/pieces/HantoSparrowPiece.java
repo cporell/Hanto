@@ -10,24 +10,31 @@
  * Copyright ©2016 Gary F. Pollice
  *******************************************************************************/
 
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.common.pieces;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.studentCPBP.common.CommonHantoPiece;
+import hanto.studentCPBP.common.IHantoMover;
+import hanto.studentCPBP.common.movers.FlyMover;
+import hanto.studentCPBP.common.movers.PlaceMover;
 
 /**
- * Placeholer piece is used for pieces that aren't valid in the current version of Hanto.
- * EG: If we tried making a Horse in GammaHanto, it would be created as a Placeholder piece.
+ * Implementation of Sparrow piece for Gamma Hanto
  * @author Benny Peake bpeake
  * @author Connor Porell cgporell
  */
-public class PlaceholderPiece extends CommonHantoPiece
+public class HantoSparrowPiece extends CommonHantoPiece
 {
 
-	public PlaceholderPiece(HantoPlayerColor color, HantoPieceType type)
+	/**
+	 * Builds a Sparrow piece
+	 * @param color Owner of this piece
+	 */
+	public HantoSparrowPiece(HantoPlayerColor color)
 	{
-		super(color, type);
+		super(color, HantoPieceType.SPARROW);
 	}
 
 	@Override
@@ -37,9 +44,9 @@ public class PlaceholderPiece extends CommonHantoPiece
 	}
 
 	@Override
-	public IHantoMover createWalkMover(HantoCoordinate to) 
+	public IHantoMover createWalkMover(HantoCoordinate to)
 	{
-		return null;
+		return new FlyMover(this, to);
 	}
 
 }

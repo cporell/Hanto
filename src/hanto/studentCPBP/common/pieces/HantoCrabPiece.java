@@ -6,31 +6,33 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Copyright ©2016 Gary F. Pollice
  *******************************************************************************/
 
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.common.pieces;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.studentCPBP.common.CommonHantoPiece;
+import hanto.studentCPBP.common.IHantoMover;
+import hanto.studentCPBP.common.movers.PlaceMover;
+import hanto.studentCPBP.common.movers.WalkMover;
 
 /**
- * Implementation of Sparrow piece for Gamma Hanto
- * @author Benny Peake bpeake
- * @author Connor Porell cgporell
+ * Crab piece for Hanto
+ * @author cgporell
+ * @author bpeake
+ *
  */
-public class HantoSparrowPiece extends CommonHantoPiece
-{
+public class HantoCrabPiece extends CommonHantoPiece {
 
 	/**
 	 * Builds a Sparrow piece
 	 * @param color Owner of this piece
 	 */
-	public HantoSparrowPiece(HantoPlayerColor color)
+	public HantoCrabPiece(HantoPlayerColor color)
 	{
-		super(color, HantoPieceType.SPARROW);
+		super(color, HantoPieceType.CRAB);
 	}
 
 	@Override
@@ -42,7 +44,7 @@ public class HantoSparrowPiece extends CommonHantoPiece
 	@Override
 	public IHantoMover createWalkMover(HantoCoordinate to)
 	{
-		return new FlyMover(this, to);
+		return new WalkMover(this, to);
 	}
 
 }

@@ -98,8 +98,7 @@ public class EpsilonHantoMasterTest
 	 * Tests that a Sparrow can only move up to 4 spaces away
 	 * @throws HantoException
 	 */
-	@Test //1
-	//(expected = HantoException.class)
+	@Test(expected = HantoException.class) //1
 	public void TestSparrowCanOnlyMoveUpToFourSpaces() throws HantoException
 	{
 		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0,0));

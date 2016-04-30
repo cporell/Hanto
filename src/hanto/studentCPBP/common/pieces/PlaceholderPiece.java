@@ -6,29 +6,31 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Copyright ©2016 Gary F. Pollice
  *******************************************************************************/
 
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.common.pieces;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.studentCPBP.common.CommonHantoPiece;
+import hanto.studentCPBP.common.IHantoMover;
+import hanto.studentCPBP.common.movers.PlaceMover;
 
 /**
- * Crab piece for Hanto
- * @author cgporell
- * @author bpeake
- *
+ * Placeholer piece is used for pieces that aren't valid in the current version of Hanto.
+ * EG: If we tried making a Horse in GammaHanto, it would be created as a Placeholder piece.
+ * @author Benny Peake bpeake
+ * @author Connor Porell cgporell
  */
-public class HantoCrabPiece extends CommonHantoPiece {
+public class PlaceholderPiece extends CommonHantoPiece
+{
 
-	/**
-	 * Builds a Sparrow piece
-	 * @param color Owner of this piece
-	 */
-	public HantoCrabPiece(HantoPlayerColor color)
+	public PlaceholderPiece(HantoPlayerColor color, HantoPieceType type)
 	{
-		super(color, HantoPieceType.CRAB);
+		super(color, type);
 	}
 
 	@Override
@@ -38,9 +40,9 @@ public class HantoCrabPiece extends CommonHantoPiece {
 	}
 
 	@Override
-	public IHantoMover createWalkMover(HantoCoordinate to)
+	public IHantoMover createWalkMover(HantoCoordinate to) 
 	{
-		return new WalkMover(this, to);
+		return null;
 	}
 
 }

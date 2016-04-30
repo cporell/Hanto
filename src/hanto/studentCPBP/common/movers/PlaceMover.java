@@ -10,10 +10,14 @@
  * Copyright ©2016 Gary F. Pollice
  *******************************************************************************/
 
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.common.movers;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoPiece;
+import hanto.studentCPBP.common.CommonHantoPiece;
+import hanto.studentCPBP.common.HantoCoordinateImpl;
+import hanto.studentCPBP.common.IHantoGameState;
+import hanto.studentCPBP.common.IHantoMover;
 
 /**
  * Mover for piece placement.
@@ -65,6 +69,12 @@ public class PlaceMover implements IHantoMover
 			}
 		}
 		
+		return false;
+	}
+
+	@Override
+	public boolean handleInvalidIteration(IHantoGameState state) 
+	{
 		return false;
 	}
 

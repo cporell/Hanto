@@ -8,11 +8,15 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.common.pieces;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.studentCPBP.common.CommonHantoPiece;
+import hanto.studentCPBP.common.IHantoMover;
+import hanto.studentCPBP.common.movers.JumpMover;
+import hanto.studentCPBP.common.movers.PlaceMover;
 
 /**
  * Class for Hanto Horse Pieces
@@ -31,12 +35,14 @@ public class HantoHorsePiece extends CommonHantoPiece {
 	}
 
 	@Override
-	public IHantoMover createPlaceMover(HantoCoordinate at) {
+	public IHantoMover createPlaceMover(HantoCoordinate at) 
+	{
 		return new PlaceMover(this, at);
 	}
 
 	@Override
-	public IHantoMover createWalkMover(HantoCoordinate to) {
+	public IHantoMover createWalkMover(HantoCoordinate to) 
+	{
 		return new JumpMover(this, to);
 	}
 

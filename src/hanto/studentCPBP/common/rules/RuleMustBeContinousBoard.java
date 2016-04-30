@@ -1,10 +1,13 @@
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.common.rules;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
+import hanto.studentCPBP.common.GenericHantoRuleCollection;
+import hanto.studentCPBP.common.IHantoGameState;
+import hanto.studentCPBP.common.GenericHantoRuleCollection.IRule;
 
 public class RuleMustBeContinousBoard implements GenericHantoRuleCollection.IRule
 {

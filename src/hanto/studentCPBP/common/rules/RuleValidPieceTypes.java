@@ -1,9 +1,13 @@
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.common.rules;
 
 import java.util.HashSet;
 
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
+import hanto.studentCPBP.common.CommonHantoPiece;
+import hanto.studentCPBP.common.GenericHantoRuleCollection;
+import hanto.studentCPBP.common.IHantoGameState;
+import hanto.studentCPBP.common.GenericHantoRuleCollection.IRule;
 
 public class RuleValidPieceTypes implements GenericHantoRuleCollection.IRule
 {

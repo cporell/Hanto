@@ -10,10 +10,16 @@
  * Copyright ©2016 Gary F. Pollice
  *******************************************************************************/
 
-package hanto.studentCPBP.common;
+package hanto.studentCPBP.common.movers;
+
+import java.util.ArrayList;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
+import hanto.studentCPBP.common.CommonHantoPiece;
+import hanto.studentCPBP.common.HantoCoordinateImpl;
+import hanto.studentCPBP.common.IHantoGameState;
+import hanto.studentCPBP.common.IHantoMover;
 
 /**
  * Mover for the "walk" behavior.
@@ -24,6 +30,8 @@ public class WalkMover implements IHantoMover
 {
 	private CommonHantoPiece piece;
 	private HantoCoordinate to;
+	
+	private ArrayList<HantoCoordinateImpl> travledTo = new ArrayList<>();
 	
 	public HantoCoordinate getTargetLocation()
 	{
@@ -59,6 +67,12 @@ public class WalkMover implements IHantoMover
 		state.movePiece(piece, target);
 		
 		return !(target.getX() == to.getX() && target.getY() == to.getY());
+	}
+
+	@Override
+	public boolean handleInvalidIteration(IHantoGameState state) 
+	{
+		return false;
 	}
 
 }
