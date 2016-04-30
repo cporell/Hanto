@@ -70,4 +70,10 @@ public class JumpMover implements IHantoMover
 		return false;
 	}
 
+	@Override
+	public void reset(IHantoGameState state) 
+	{
+		state.movePiece(piece, from);
+	}
+
 }

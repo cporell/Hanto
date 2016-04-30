@@ -47,4 +47,42 @@ public class RuleMustBeContinousBoard implements GenericHantoRuleCollection.IRul
 			}
 		}
 	}
+
+	@Override
+	public boolean isValidMoveLocation(IHantoGameState state, HantoCoordinate location) 
+	{
+		if(state.getPieces().length == 0)
+			return true;
+		
+		if(state.getPieces(location).length > 0)
+			return true;
+		
+		HantoCoordinate[] adj = state.getAdjacent(location);
+		for(HantoCoordinate coord : adj)
+		{
+			if(state.getPieces(coord).length > 0)
+				return true;
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean isValidSearchLocation(IHantoGameState state, HantoCoordinate location) 
+	{
+		if(state.getPieces().length == 0)
+			return true;
+		
+		if(state.getPieces(location).length > 0)
+			return true;
+		
+		HantoCoordinate[] adj = state.getAdjacent(location);
+		for(HantoCoordinate coord : adj)
+		{
+			if(state.getPieces(coord).length > 0)
+				return true;
+		}
+		
+		return false;
+	}
 }

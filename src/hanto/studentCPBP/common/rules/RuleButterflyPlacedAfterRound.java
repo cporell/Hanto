@@ -1,5 +1,6 @@
 package hanto.studentCPBP.common.rules;
 
+import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
@@ -38,5 +39,17 @@ public class RuleButterflyPlacedAfterRound implements GenericHantoRuleCollection
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean isValidMoveLocation(IHantoGameState state, HantoCoordinate location) 
+	{
+		return true;
+	}
+
+	@Override
+	public boolean isValidSearchLocation(IHantoGameState state, HantoCoordinate location) 
+	{
+		return true;
 	}
 }

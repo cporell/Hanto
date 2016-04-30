@@ -43,6 +43,12 @@ public interface IHantoMover
 	boolean iterateMove(IHantoGameState state) throws HantoException;
 	
 	/**
+	 * Resets the game state to before this move took place.
+	 * @param state The game state to unwind on.
+	 */
+	void reset(IHantoGameState state);
+	
+	/**
 	 * Called when an error happens during an iteration.
 	 * @param state The game state during the invalid move.
 	 * @return True if the invalid move was handled.

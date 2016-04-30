@@ -37,6 +37,12 @@ public interface IHantoGameState
 	void placePiece(CommonHantoPiece piece, HantoCoordinate to);
 	
 	/**
+	 * Picks up a piece and puts it back in the players hand.
+	 * @param piece The piece to pickup.
+	 */
+	void pickupPiece(CommonHantoPiece piece);
+	
+	/**
 	 * Moves a piece on the board
 	 * @param piece The piece to move
 	 * @param to The location to send the piece to.

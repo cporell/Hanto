@@ -70,4 +70,9 @@ public class FlyMover implements IHantoMover
 		return false;
 	}
 
+	@Override
+	public void reset(IHantoGameState state) 
+	{
+		state.movePiece(piece, from);
+	}
 }

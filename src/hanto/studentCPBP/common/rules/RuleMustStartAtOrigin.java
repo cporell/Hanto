@@ -1,5 +1,6 @@
 package hanto.studentCPBP.common.rules;
 
+import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.studentCPBP.common.GenericHantoRuleCollection;
 import hanto.studentCPBP.common.HantoCoordinateImpl;
@@ -17,6 +18,18 @@ public class RuleMustStartAtOrigin implements GenericHantoRuleCollection.IRule
 		{
 			throw new HantoException("Must start at origin.");
 		}
+	}
+
+	@Override
+	public boolean isValidMoveLocation(IHantoGameState state, HantoCoordinate location) 
+	{
+		return state.getPieces().length == 0 && (location.getX() == 0 && location.getY() == 0);
+	}
+
+	@Override
+	public boolean isValidSearchLocation(IHantoGameState state, HantoCoordinate location) 
+	{
+		return state.getPieces().length == 0 && (location.getX() == 0 && location.getY() == 0);
 	}
 
 }

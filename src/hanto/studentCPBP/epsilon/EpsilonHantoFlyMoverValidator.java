@@ -50,11 +50,11 @@ public class EpsilonHantoFlyMoverValidator extends EpsilonCommonMovementMoverVal
 		HantoCoordinate from = getMover().getOriginLocation();
 		HantoCoordinate to = getMover().getTargetLocation();
 		
-		int deltaX = to.getX() - from.getX();
-		int deltaY = to.getY() - from.getY();
-		int delta = deltaY - deltaX;
+		int deltaX = Math.abs(to.getX() - from.getX());
+		int deltaY = Math.abs(to.getY() - from.getY());
+		int delta = Math.abs(deltaY - deltaX);
 		
-		int dist = Math.abs(Math.max(deltaX, Math.max(deltaY, delta)));
+		int dist = Math.max(deltaX, Math.max(deltaY, delta));
 		if(dist > maxDist)
 		{
 			throw new HantoException("Flew too many spaces");

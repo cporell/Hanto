@@ -84,4 +84,10 @@ public class PlaceMover implements IHantoMover
 		return null;
 	}
 
+	@Override
+	public void reset(IHantoGameState state) 
+	{
+		state.pickupPiece(piece);
+	}
+
 }

@@ -15,6 +15,7 @@ package hanto.studentCPBP.common;
 import hanto.common.HantoException;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.tournament.HantoMoveRecord;
 
 /**
  * Ruleset for a Hanto game. Allows us to customize the rules for each version of Hanto.
@@ -70,4 +71,12 @@ public interface IHantoRuleSet
 	 * Called when no input is given to the game.
 	 */
 	void onNoInput(IHantoGameState state);
+	
+	/**
+	 * Gets all possible moves in the game for a player.
+	 * @param player The player to get all moves for.
+	 * @param state the state of the game.
+	 * @return An array of all possible moves by a player.
+	 */
+	HantoMoveRecord[] getAllValidMoves(HantoPlayerColor player, IHantoGameState state);
 }

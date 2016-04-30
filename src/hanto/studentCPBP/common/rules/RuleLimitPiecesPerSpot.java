@@ -27,4 +27,16 @@ public class RuleLimitPiecesPerSpot implements GenericHantoRuleCollection.IRule
 		}
 	}
 
+	@Override
+	public boolean isValidMoveLocation(IHantoGameState state, HantoCoordinate location) 
+	{
+		return state.getPieces(location).length < max;
+	}
+
+	@Override
+	public boolean isValidSearchLocation(IHantoGameState state, HantoCoordinate location) 
+	{
+		return true;
+	}
+
 }

@@ -124,7 +124,14 @@ public class CommonHantoGameState implements IHantoGameState
 			boardLookup.remove(pieceLookup.get(piece));
 		}
 		
-		placePiece(piece, to);
+		if(to != null)
+		{
+			placePiece(piece, to);
+		}
+		else
+		{
+			addPiece(piece);
+		}
 	}
 
 	private HantoCoordinateImpl convertToLocalCoordImpl(HantoCoordinate coord)
@@ -291,5 +298,11 @@ public class CommonHantoGameState implements IHantoGameState
 	public boolean isPieceOnBoard(CommonHantoPiece piece) 
 	{
 		return pieceLookup.containsKey(piece);
+	}
+
+	@Override
+	public void pickupPiece(CommonHantoPiece piece) 
+	{
+		movePiece(piece, null);
 	}
 }

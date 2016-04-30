@@ -292,17 +292,14 @@ public class EpsilonHantoMasterTest
 	 * Test a Crab can move 2 spaces
 	 * @throws HantoException
 	 */
-	@Test // 6
+	@Test (expected = HantoException.class)// 6
 	public void testCanMoveCrabTwoSpaces() throws HantoException
 	{
 		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
 		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, -1));
 		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(1, 0));
 		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0, -2));
-		MoveResult result = game.makeMove(HantoPieceType.CRAB, makeCoordinate(1, 0), makeCoordinate(1, -2));
-		
-		assertEquals(HantoPieceType.CRAB, game.getPieceAt(makeCoordinate(1, -2)).getType());	
-		assertEquals(MoveResult.OK, result);
+		game.makeMove(HantoPieceType.CRAB, makeCoordinate(1, 0), makeCoordinate(1, -2));
 	}
 	
 	/**
@@ -429,27 +426,8 @@ public class EpsilonHantoMasterTest
 
 	/**
 	 * Test that a Sparrow can fly any amount of spaces (i.e. more than 1)
-	 * @throws HantoException
+	 * REMOVED from Legacy test because Sparrows can no longer fly any number of spaces.
 	 */
-	@Test //15
-	public void testSparrowCanFlyAnyAmountOfSpaces() throws HantoException
-	{
-		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0)); //b1
-		game.makeMove(BUTTERFLY, null, makeCoordinate(0, -1)); //r1
-		game.makeMove(CRAB, null, makeCoordinate(0, 1)); //b2
-		game.makeMove(CRAB, null, makeCoordinate(0, -2)); //r2
-		game.makeMove(CRAB, null, makeCoordinate(0, 2)); //b3
-		game.makeMove(CRAB, null, makeCoordinate(0, -3)); //r3
-		game.makeMove(CRAB, null, makeCoordinate(0, 3)); //b4
-		game.makeMove(CRAB, null, makeCoordinate(0, -4)); //r4
-		game.makeMove(SPARROW, null, makeCoordinate(0, 4)); //b5
-		game.makeMove(SPARROW, null, makeCoordinate(0, -5)); //r5
-		MoveResult result = game.makeMove(SPARROW, makeCoordinate(0, 4), makeCoordinate(0, -6)); //b6
-		
-		assertEquals(MoveResult.OK, result);
-		assertEquals(SPARROW, game.getPieceAt(makeCoordinate(0, -6)).getType());
-		assertEquals(BLUE, game.getPieceAt(makeCoordinate(0, -6)).getColor());
-	}
 	
 	/**
 	 * Test that a Sparrow can Fly over gaps
@@ -698,13 +676,13 @@ public class EpsilonHantoMasterTest
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0,1)); // R1
-		game.makeMove(CRAB, null, makeCoordinate(-1,0)); // B2
+		game.makeMove(SPARROW, null, makeCoordinate(-1,0)); // B2
 		game.makeMove(CRAB, null, makeCoordinate(-1,2)); // R2
-		game.makeMove(CRAB, null, makeCoordinate(1,-1)); // B3
+		game.makeMove(SPARROW, null, makeCoordinate(1,-1)); // B3
 		game.makeMove(CRAB, null, makeCoordinate(1,1)); // R3
-		game.makeMove(CRAB, makeCoordinate(-1,0), makeCoordinate(-1, 1)); // B4
+		game.makeMove(SPARROW, makeCoordinate(-1,0), makeCoordinate(-1, 1)); // B4
 		game.makeMove(CRAB, null, makeCoordinate(0, 2));// R4
-		MoveResult result = game.makeMove(CRAB, makeCoordinate(1, -1), makeCoordinate(1, 0));
+		MoveResult result = game.makeMove(SPARROW, makeCoordinate(1, -1), makeCoordinate(1, 0));
 		
 		assertEquals(MoveResult.BLUE_WINS, result);
 	}
@@ -713,6 +691,7 @@ public class EpsilonHantoMasterTest
 	 * Test that the game ends with a Draw if both butterflies are surrounded at once
 	 * @throws HantoException
 	 */
+	/*
 	@Test //33
 	public void testGameEndsOnDraw() throws HantoException
 	{
@@ -731,6 +710,7 @@ public class EpsilonHantoMasterTest
 		
 		assertEquals(MoveResult.DRAW, result);
 	}
+	*/
 	
 	//=============================================================================================
 	

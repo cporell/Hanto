@@ -70,13 +70,7 @@ public class WalkMover implements IHantoMover
 	
 	@Override
 	public boolean iterateMove(IHantoGameState state) throws HantoException 
-	{
-		//TODO: Remove
-		if(from == null)
-		{
-			from = state.getPieceLocation(piece);
-		}
-		
+	{		
 		travledTo.add(state.getPieceLocation(piece));
 		
 		HantoCoordinate[] adj = state.getAdjacent(state.getPieceLocation(piece));
@@ -90,11 +84,11 @@ public class WalkMover implements IHantoMover
 				continue;
 			}
 			
-			int deltaX = to.getX() - coord.getX();
-			int deltaY = to.getY() - coord.getY();
-			int delta = deltaY - deltaX;
+			int deltaX = Math.abs(to.getX() - coord.getX());
+			int deltaY = Math.abs(to.getY() - coord.getY());
+			int delta = Math.abs(deltaY - deltaX);
 			
-			int dist = Math.abs(Math.max(deltaX, Math.max(deltaY, delta)));
+			int dist = Math.max(deltaX, Math.max(deltaY, delta));
 			
 			if(dist < closestDist)
 			{
@@ -134,6 +128,12 @@ public class WalkMover implements IHantoMover
 		state.movePiece(piece, from);
 		
 		return true;
+	}
+
+	@Override
+	public void reset(IHantoGameState state) 
+	{
+		state.movePiece(piece, from);
 	}
 
 }

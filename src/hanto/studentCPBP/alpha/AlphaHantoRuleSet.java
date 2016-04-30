@@ -1,17 +1,27 @@
 package hanto.studentCPBP.alpha;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+
+import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPlayerColor;
+import hanto.studentCPBP.common.CommonHantoPiece;
 import hanto.studentCPBP.common.GenericHantoRuleCollection;
+import hanto.studentCPBP.common.HantoCoordinateImpl;
 import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
+import hanto.studentCPBP.common.IHantoPieceMoveGenerator;
+import hanto.studentCPBP.common.ZeroPieceMoveGenerator;
 import hanto.studentCPBP.common.movers.PlaceMover;
 import hanto.studentCPBP.common.rules.EndConditionPlayNRounds;
 import hanto.studentCPBP.common.rules.RuleLimitPiecesPerSpot;
 import hanto.studentCPBP.common.rules.RuleMustBeContinousBoard;
 import hanto.studentCPBP.common.rules.RuleMustStartAtOrigin;
 import hanto.studentCPBP.common.rules.StartConditionCantPlaceAfterGameIsOver;
+import hanto.tournament.HantoMoveRecord;
 
 public class AlphaHantoRuleSet extends GenericHantoRuleCollection
 {
