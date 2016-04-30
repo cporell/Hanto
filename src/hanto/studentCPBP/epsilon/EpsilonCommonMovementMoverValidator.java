@@ -10,7 +10,8 @@
 package hanto.studentCPBP.epsilon;
 
 import hanto.common.HantoException;
-import hanto.studentCPBP.common.IHantoBoard;
+import hanto.common.HantoPieceType;
+import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
 
@@ -51,9 +52,9 @@ public abstract class EpsilonCommonMovementMoverValidator implements IHantoMover
 	 * @param board The current game state
 	 * @throws HantoException If we are attempting to move in place
 	 */
-	protected void checkNotMovingToSameSpace(IHantoBoard board) throws HantoException
+	protected void checkNotMovingToSameSpace(IHantoGameState state) throws HantoException
 	{
-		if(getMover().getTargetLocation().equals(board.getPieceLocation(getMover().getPiece())))
+		if(getMover().getTargetLocation().equals(state.getPieceLocation(getMover().getPiece())))
 		{
 			throw new HantoException("Cannot move to the same location.");
 		}
@@ -63,9 +64,9 @@ public abstract class EpsilonCommonMovementMoverValidator implements IHantoMover
 	 * Check that we are only moving pieces of our own color
 	 * @throws HantoException If we attempt to move an opponent's piece
 	 */
-	protected void checkIsMovingOurPiece() throws HantoException 
+	protected void checkIsMovingOurPiece(IHantoGameState state) throws HantoException 
 	{
-		if(getRules().getCurrentPlayer().getPlayerColor() != getMover().getPiece().getColor())
+		if(getRules().getCurrentPlayer(state) != getMover().getPiece().getColor())
 		{
 			throw new HantoException("Cannot move piece that is not your color.");
 		}
@@ -76,9 +77,9 @@ public abstract class EpsilonCommonMovementMoverValidator implements IHantoMover
 	 * @param board The current game state
 	 * @throws HantoException If we attempt to move a piece before placing the Butterfly
 	 */
-	protected void checkNotMovingBeforeButterflyPlaced(IHantoBoard board) throws HantoException 
+	protected void checkNotMovingBeforeButterflyPlaced(IHantoGameState state) throws HantoException 
 	{
-		if(!getRules().getCurrentPlayer().getButterflyPlaced())
+		if(state.getPieces(getRules().getCurrentPlayer(state), HantoPieceType.BUTTERFLY).length == 0)
 		{
 			throw new HantoException("Cannot move piece before placing your butterfly");
 		}

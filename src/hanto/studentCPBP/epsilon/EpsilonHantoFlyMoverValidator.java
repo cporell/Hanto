@@ -12,7 +12,7 @@ package hanto.studentCPBP.epsilon;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.studentCPBP.common.FlyMover;
-import hanto.studentCPBP.common.IHantoBoard;
+import hanto.studentCPBP.common.IHantoGameState;
 
 /**
  * EpsilonHantoFlyMoverValidator checks legality of Fly moves
@@ -37,22 +37,27 @@ public class EpsilonHantoFlyMoverValidator extends EpsilonCommonMovementMoverVal
 	}
 
 	@Override
-	public void checkIteration(IHantoBoard board) throws HantoException 
+	public void checkIteration(IHantoGameState state) throws HantoException 
 	{
-		checkNotMovingTooFar(board);
-		checkNotMovingToSameSpace(board);
-		checkIsMovingOurPiece();
-		checkNotMovingBeforeButterflyPlaced(board);
+		checkNotMovingTooFar(state);
+		checkNotMovingToSameSpace(state);
+		checkIsMovingOurPiece(state);
+		checkNotMovingBeforeButterflyPlaced(state);
 	}
 
-	private void checkNotMovingTooFar(IHantoBoard board) throws HantoException
+	private void checkNotMovingTooFar(IHantoGameState state) throws HantoException
 	{
-		HantoCoordinate from = board.getPieceLocation(getMover().getPiece());
+		HantoCoordinate from = state.getPieceLocation(getMover().getPiece());
 		HantoCoordinate to = getMover().getTargetLocation();
 		
 		int deltaX = to.getX() - from.getX();
 		int deltaY = to.getY() - from.getY();
 		int delta = deltaY - deltaX;
 		
+		int dist = Math.abs(Math.max(deltaX, Math.max(deltaY, delta)));
+		if(dist > maxDist)
+		{
+			throw new HantoException("Flew too many spaces");
+		}	
 	}
 }

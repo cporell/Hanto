@@ -10,10 +10,11 @@
 
 package hanto.studentCPBP.epsilon;
 
+import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentCPBP.common.CommonHantoBoard;
 import hanto.studentCPBP.common.CommonHantoGame;
-import hanto.studentCPBP.common.IHantoBoard;
+import hanto.studentCPBP.common.CommonHantoGameState;
+import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoPieceFactory;
 import hanto.studentCPBP.common.IHantoRuleSet;
 
@@ -28,12 +29,6 @@ public class EpsilonHantoGame extends CommonHantoGame {
 	public EpsilonHantoGame(HantoPlayerColor startColor)
 	{
 		super(startColor);
-	}
-
-	@Override
-	protected IHantoBoard CreateBoard() 
-	{
-		return new CommonHantoBoard();
 	}
 
 	@Override
@@ -52,6 +47,42 @@ public class EpsilonHantoGame extends CommonHantoGame {
 	public String getPrintableBoard() 
 	{
 		return null;
+	}
+
+	@Override
+	protected IHantoGameState CreateGameState(IHantoPieceFactory pieceFactory) 
+	{
+		CommonHantoGameState state = new CommonHantoGameState();
+		
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.BUTTERFLY, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.HORSE, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.HORSE, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.HORSE, HantoPlayerColor.BLUE));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.HORSE, HantoPlayerColor.BLUE));
+		
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.BUTTERFLY, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.SPARROW, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.CRAB, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.HORSE, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.HORSE, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.HORSE, HantoPlayerColor.RED));
+		state.addPiece(pieceFactory.createPiece(HantoPieceType.HORSE, HantoPlayerColor.RED));
+		
+		return state;
 	}
 
 }

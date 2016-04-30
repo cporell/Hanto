@@ -395,11 +395,11 @@ public class EpsilonHantoMasterTest
 		game.makeMove(CRAB, null, makeCoordinate(0, 4)); //r4
 		game.makeMove(SPARROW, null, makeCoordinate(-4, 0)); //b5
 		game.makeMove(SPARROW, null, makeCoordinate(0, 5)); //r5
-		MoveResult result = game.makeMove(SPARROW, makeCoordinate(-4, 0), makeCoordinate(0, 6)); //b6
+		MoveResult result = game.makeMove(SPARROW, makeCoordinate(-4, 0), makeCoordinate(-3, 1)); //b6
 		
 		assertEquals(MoveResult.OK, result);
-		assertEquals(SPARROW, game.getPieceAt(makeCoordinate(0, 6)).getType());
-		assertEquals(BLUE, game.getPieceAt(makeCoordinate(0, 6)).getColor());
+		assertEquals(SPARROW, game.getPieceAt(makeCoordinate(-3, 1)).getType());
+		assertEquals(BLUE, game.getPieceAt(makeCoordinate(-3, 1)).getColor());
 	}
 	
 	//=================================LEGACY TESTS==============================================

@@ -20,6 +20,9 @@ import hanto.studentCPBP.common.GenericHantoRuleCollection;
 import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMover;
 import hanto.studentCPBP.common.IHantoMoverValidator;
+import hanto.studentCPBP.common.JumpMover;
+import hanto.studentCPBP.common.PlaceMover;
+import hanto.studentCPBP.common.WalkMover;
 
 public class EpsilonHantoRuleSet extends GenericHantoRuleCollection 
 {
@@ -51,7 +54,7 @@ public class EpsilonHantoRuleSet extends GenericHantoRuleCollection
 		}
 		else if(mover instanceof FlyMover)
 		{
-			return new EpsilonHantoFlyMoverValidator((FlyMover) mover, this, 5);
+			return new EpsilonHantoFlyMoverValidator((FlyMover) mover, this, 4);
 		}
 		else if(mover instanceof JumpMover)
 		{

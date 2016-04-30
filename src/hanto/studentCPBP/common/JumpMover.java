@@ -47,7 +47,7 @@ public class JumpMover implements IHantoMover
 	}
 
 	@Override
-	public boolean iterateMove(IHantoBoard board) throws HantoException 
+	public boolean iterateMove(IHantoGameState board) throws HantoException 
 	{
 		board.movePiece(piece, to);
 		return false;
