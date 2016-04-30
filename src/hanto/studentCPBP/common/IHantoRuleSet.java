@@ -14,6 +14,7 @@ package hanto.studentCPBP.common;
 
 import hanto.common.HantoException;
 import hanto.common.HantoPlayerColor;
+import hanto.common.HantoPrematureResignationException;
 import hanto.common.MoveResult;
 import hanto.tournament.HantoMoveRecord;
 
@@ -70,8 +71,9 @@ public interface IHantoRuleSet
 	/**
 	 * Called when no input is given to the game.
 	 * @param state The current state of the game
+	 * @throws HantoPrematureResignationException
 	 */
-	void onNoInput(IHantoGameState state);
+	void onNoInput(IHantoGameState state) throws HantoPrematureResignationException;
 	
 	/**
 	 * Gets all possible moves in the game for a player.

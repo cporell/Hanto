@@ -10,6 +10,7 @@
 package hanto.studentCPBP.epsilon;
 
 import hanto.common.HantoPlayerColor;
+import hanto.common.HantoPrematureResignationException;
 import hanto.studentCPBP.common.GenericHantoRuleCollection;
 import hanto.studentCPBP.common.IHantoGameState;
 import hanto.studentCPBP.common.IHantoMover;
@@ -81,10 +82,17 @@ public class EpsilonHantoRuleSet extends GenericHantoRuleCollection
 	}
 
 	@Override
-	public void onNoInput(IHantoGameState state) 
+	public void onNoInput(IHantoGameState state) throws HantoPrematureResignationException 
 	{
-		winnerTrigger.setWinner(getCurrentPlayer(state) == HantoPlayerColor.BLUE ? 
-				HantoPlayerColor.RED : HantoPlayerColor.BLUE);
+		if(getAllValidMoves(getCurrentPlayer(state), state).length == 0)
+		{
+			winnerTrigger.setWinner(getCurrentPlayer(state) == HantoPlayerColor.BLUE ? 
+					HantoPlayerColor.RED : HantoPlayerColor.BLUE);
+		}
+		else
+		{
+			throw new HantoPrematureResignationException();
+		}
 	}
 
 }

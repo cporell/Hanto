@@ -148,6 +148,21 @@ public abstract class CommonHantoGame implements HantoGame
 			return null;
 		}
 	}
+	
+	public IHantoRuleSet getRules()
+	{
+		return rules;
+	}
+	
+	public IHantoGameState getState()
+	{
+		return state;
+	}
+	
+	public void setState(IHantoGameState newState)
+	{
+		state = newState;
+	}
 
 	@Override
 	public abstract String getPrintableBoard();

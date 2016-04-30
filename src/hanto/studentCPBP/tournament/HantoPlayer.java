@@ -11,6 +11,8 @@
 package hanto.studentCPBP.tournament;
 
 import hanto.common.*;
+import hanto.studentCPBP.HantoGameFactory;
+import hanto.studentCPBP.common.CommonHantoGame;
 import hanto.tournament.*;
 
 /**
@@ -19,7 +21,10 @@ import hanto.tournament.*;
  */
 public class HantoPlayer implements HantoGamePlayer
 {
-
+	private CommonHantoGame ourGame;
+	private IHantoPlayerThinker thinker;
+	
+	
 	/*
 	 * @see hanto.tournament.HantoGamePlayer#startGame(hanto.common.HantoGameID, hanto.common.HantoPlayerColor, boolean)
 	 */
@@ -27,7 +32,14 @@ public class HantoPlayer implements HantoGamePlayer
 	public void startGame(HantoGameID version, HantoPlayerColor myColor,
 			boolean doIMoveFirst)
 	{
-		System.out.println("startGame");
+		HantoPlayerColor otherColor = myColor == HantoPlayerColor.RED ? HantoPlayerColor.BLUE : HantoPlayerColor.RED;
+		HantoGame game = HantoGameFactory.getInstance().makeHantoGame(version, doIMoveFirst ? myColor : otherColor);
+		
+		if(game != null && game instanceof CommonHantoGame)
+		{
+			ourGame = (CommonHantoGame)game;
+			thinker = new HantoPlayerAStarThinker();
+		}
 	}
 
 	/*
@@ -36,7 +48,38 @@ public class HantoPlayer implements HantoGamePlayer
 	@Override
 	public HantoMoveRecord makeMove(HantoMoveRecord opponentsMove)
 	{
-		return new HantoMoveRecord(null, null, null);
+		if(ourGame == null)
+		{
+			return new HantoMoveRecord(null, null, null);
+		}
+		
+		if(!applyMove(opponentsMove))
+		{
+			return new HantoMoveRecord(null, null, null);
+		}
+		
+		HantoMoveRecord move = thinker.selectMove(ourGame);
+		
+		if(move == null || !applyMove(move))
+		{
+			return new HantoMoveRecord(null, null, null);
+		}
+		
+		return move;
+	}
+
+	private boolean applyMove(HantoMoveRecord move) 
+	{
+		try 
+		{
+			ourGame.makeMove(move.getPiece(), move.getFrom(), move.getTo());
+		} 
+		catch (HantoException e) 
+		{
+			return false;
+		}
+		
+		return true;
 	}
 
 }
