@@ -110,10 +110,11 @@ public abstract class CommonHantoGame implements HantoGame
 		boolean shouldContinue;
 		do
 		{
-			shouldContinue = mover.iterateMove(state);
+			shouldContinue = false;
 			
 			try
 			{
+				shouldContinue = mover.iterateMove(state);
 				validator.checkIteration(state);
 				rules.check(state);
 			}
@@ -122,6 +123,7 @@ public abstract class CommonHantoGame implements HantoGame
 				if(mover.handleInvalidIteration(state))
 				{
 					validator.onInvalidMoveHandled(state);
+					shouldContinue = true;
 				}
 				else
 				{

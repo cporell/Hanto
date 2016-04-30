@@ -13,6 +13,8 @@
 package hanto.studentCPBP.common.movers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -32,7 +34,11 @@ public class WalkMover implements IHantoMover
 	private HantoCoordinate to;
 	private HantoCoordinate from;
 	
-	private ArrayList<HantoCoordinateImpl> travledTo = new ArrayList<>();
+	private ArrayList<HantoCoordinate> travledTo = new ArrayList<>();
+	
+	private Set<HantoCoordinate> blacklist = new HashSet<>();
+	
+	private boolean doNotHandleError;
 	
 	public HantoCoordinate getTargetLocation()
 	{
@@ -65,22 +71,69 @@ public class WalkMover implements IHantoMover
 	@Override
 	public boolean iterateMove(IHantoGameState state) throws HantoException 
 	{
-		HantoCoordinate current = state.getPieceLocation(piece);
-		int offsetX = to.getX() - current.getX();
-		int offsetY = to.getY() - current.getY();
-		int dirX = (int) Math.signum(offsetX);
-		int dirY = (int) Math.signum(offsetY);
+		//TODO: Remove
+		if(from == null)
+		{
+			from = state.getPieceLocation(piece);
+		}
 		
-		HantoCoordinateImpl target = new HantoCoordinateImpl(current.getX() + dirX, current.getY() + dirY);
-		state.movePiece(piece, target);
+		travledTo.add(state.getPieceLocation(piece));
 		
-		return !(target.getX() == to.getX() && target.getY() == to.getY());
+		HantoCoordinate[] adj = state.getAdjacent(state.getPieceLocation(piece));
+		
+		HantoCoordinate closest = null;
+		int closestDist = Integer.MAX_VALUE;
+		for(HantoCoordinate coord : adj)
+		{
+			if(blacklist.contains(coord) || travledTo.contains(coord))
+			{
+				continue;
+			}
+			
+			int deltaX = to.getX() - coord.getX();
+			int deltaY = to.getY() - coord.getY();
+			int delta = deltaY - deltaX;
+			
+			int dist = Math.abs(Math.max(deltaX, Math.max(deltaY, delta)));
+			
+			if(dist < closestDist)
+			{
+				closestDist = dist;
+				closest = coord;
+			}
+		}
+		
+		if(closest == null)
+		{
+			if(travledTo.size() <= 1)
+			{
+				doNotHandleError = true;
+				throw new HantoException("No valid paths for walk.");
+			}
+			else
+			{
+				throw new HantoException("Bad path.");
+			}
+		}
+		
+		state.movePiece(piece, closest);
+		
+		return !(closest.getX() == to.getX() && closest.getY() == to.getY());
 	}
 
 	@Override
 	public boolean handleInvalidIteration(IHantoGameState state) 
 	{
-		return false;
+		if(doNotHandleError)
+			return false;
+		
+		blacklist.add(state.getPieceLocation(piece));
+		
+		travledTo.clear();
+		
+		state.movePiece(piece, from);
+		
+		return true;
 	}
 
 }
