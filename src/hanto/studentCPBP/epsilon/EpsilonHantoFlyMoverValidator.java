@@ -47,7 +47,7 @@ public class EpsilonHantoFlyMoverValidator extends EpsilonCommonMovementMoverVal
 
 	private void checkNotMovingTooFar(IHantoGameState state) throws HantoException
 	{
-		HantoCoordinate from = state.getPieceLocation(getMover().getPiece());
+		HantoCoordinate from = getMover().getOriginLocation();
 		HantoCoordinate to = getMover().getTargetLocation();
 		
 		int deltaX = to.getX() - from.getX();

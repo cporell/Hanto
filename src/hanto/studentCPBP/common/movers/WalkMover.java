@@ -30,6 +30,7 @@ public class WalkMover implements IHantoMover
 {
 	private CommonHantoPiece piece;
 	private HantoCoordinate to;
+	private HantoCoordinate from;
 	
 	private ArrayList<HantoCoordinateImpl> travledTo = new ArrayList<>();
 	
@@ -43,15 +44,22 @@ public class WalkMover implements IHantoMover
 		return piece;
 	}
 	
+	public HantoCoordinate getOriginLocation()
+	{
+		return new HantoCoordinateImpl(from);
+	}
+	
 	/**
 	 * Builds a WalkMover for the given piece and location
 	 * @param piece The piece we are placing
 	 * @param to The location we are placing at
+	 * @param to 
 	 */
-	public WalkMover(CommonHantoPiece piece, HantoCoordinate to) 
+	public WalkMover(CommonHantoPiece piece, HantoCoordinate from, HantoCoordinate to) 
 	{
 		this.piece = piece;
 		this.to = to; 
+		this.from = from;
 	}
 	
 	@Override

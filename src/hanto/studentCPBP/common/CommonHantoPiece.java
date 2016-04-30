@@ -66,7 +66,8 @@ public abstract class CommonHantoPiece implements HantoPiece
 	/**
 	 * Create a WalkMover, giving it the coordinate we are moving to
 	 * @param to Where the piece is attempting to move to
+	 * @param to2 
 	 * @return A WalkMover for the desired location
 	 */
-	public abstract IHantoMover createWalkMover(HantoCoordinate to);
+	public abstract IHantoMover createWalkMover(HantoCoordinate from, HantoCoordinate to);
 }

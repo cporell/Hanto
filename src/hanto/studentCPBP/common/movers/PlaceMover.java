@@ -78,4 +78,10 @@ public class PlaceMover implements IHantoMover
 		return false;
 	}
 
+	@Override
+	public HantoCoordinate getOriginLocation() 
+	{
+		return null;
+	}
+
 }

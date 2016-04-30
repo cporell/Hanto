@@ -102,7 +102,7 @@ public abstract class CommonHantoGame implements HantoGame
 				throw new HantoException("The piece does not exist.");
 			}
 			
-			mover = selectedPiece.createWalkMover(to);
+			mover = selectedPiece.createWalkMover(from, to);
 		}
 		
 		IHantoMoverValidator validator = rules.createMoverValidator(mover);

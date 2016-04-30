@@ -124,6 +124,80 @@ public class EpsilonHantoMasterTest
 		MoveResult mr = game.makeMove(HantoPieceType.HORSE, makeCoordinate(-1,0), makeCoordinate(3,0));
 		assertEquals(MoveResult.OK, mr);
 	}
+	
+	/**
+	 * Tests that a player can move a Horse along the y-axis
+	 * @throws HantoException
+	 */
+	@Test //3
+	public void TestPlayerCanMoveHorseAlongYAxis() throws HantoException
+	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 1));
+		game.makeMove(HantoPieceType.HORSE, null, makeCoordinate(0,-1));
+		game.makeMove(HantoPieceType.HORSE, null, makeCoordinate(0,2));
+		MoveResult mr = game.makeMove(HantoPieceType.HORSE, makeCoordinate(0,-1), makeCoordinate(0,3));
+		assertEquals(MoveResult.OK, mr);		
+	}
+	
+	/**
+	 * Tests that a horse can only move in a straight line
+	 * @throws HantoException
+	 */
+	@Test (expected = HantoException.class)//4
+	public void TestHorseCanOnlyMoveInStraightLine() throws HantoException
+	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0,0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0,1));
+		game.makeMove(HantoPieceType.HORSE, null, makeCoordinate(-1,0));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0,2));
+		game.makeMove(HantoPieceType.HORSE, makeCoordinate(-1,0), makeCoordinate(0,3));	
+	}
+	
+	/**
+	 * Test that a horse can only move over occupied hexes
+	 * @throws HantoException
+	 */
+	@Test(expected = HantoException.class) //5
+	public void TestHorseCanOnlyJumpOverOccupied() throws HantoException
+	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0,0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(1,0));
+		game.makeMove(HantoPieceType.HORSE, null, makeCoordinate(-1,0));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(1,1));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(0,-1));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(2,1));
+		game.makeMove(HantoPieceType.HORSE, makeCoordinate(-1,0), makeCoordinate(3,0));		
+	}
+	
+	/**
+	 * Test that a horse can move along the diagonals
+	 * @throws HantoException
+	 */
+	@Test // 6
+	public void TestHorseCanJumpAlongDiagonal() throws HantoException
+	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(-1,1));
+		game.makeMove(HantoPieceType.HORSE, null, makeCoordinate(1,-1));
+		game.makeMove(HantoPieceType.HORSE, null, makeCoordinate(-2,2));
+		MoveResult mr = game.makeMove(HantoPieceType.HORSE, makeCoordinate(1,-1), makeCoordinate(-3,3));
+		assertEquals(MoveResult.OK, mr);		
+	}
+	
+	/**
+	 * Test that a Horse cannot move 1 space (i.e. moving without jumping other pieces)
+	 * @throws HantoException
+	 */
+	@Test (expected = HantoException.class)//7
+	public void TestHorseCannotMoveAdjacent() throws HantoException
+	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(1,0));
+		game.makeMove(HantoPieceType.HORSE, null, makeCoordinate(0,-1));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(1,1));
+		game.makeMove(HantoPieceType.HORSE, makeCoordinate(0,-1), makeCoordinate(1,-1));
+	}
 
 	//===============LEGACY TESTS================================================
 	/**

@@ -54,7 +54,7 @@ public abstract class EpsilonCommonMovementMoverValidator implements IHantoMover
 	 */
 	protected void checkNotMovingToSameSpace(IHantoGameState state) throws HantoException
 	{
-		if(getMover().getTargetLocation().equals(state.getPieceLocation(getMover().getPiece())))
+		if(getMover().getTargetLocation().equals(getMover().getOriginLocation()))
 		{
 			throw new HantoException("Cannot move to the same location.");
 		}

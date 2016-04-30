@@ -41,9 +41,9 @@ public class HantoHorsePiece extends CommonHantoPiece {
 	}
 
 	@Override
-	public IHantoMover createWalkMover(HantoCoordinate to) 
+	public IHantoMover createWalkMover(HantoCoordinate from, HantoCoordinate to) 
 	{
-		return new JumpMover(this, to);
+		return new JumpMover(this, from, to);
 	}
 
 }

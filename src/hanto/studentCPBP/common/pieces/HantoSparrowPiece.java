@@ -44,9 +44,9 @@ public class HantoSparrowPiece extends CommonHantoPiece
 	}
 
 	@Override
-	public IHantoMover createWalkMover(HantoCoordinate to)
+	public IHantoMover createWalkMover(HantoCoordinate from, HantoCoordinate to)
 	{
-		return new FlyMover(this, to);
+		return new FlyMover(this, from, to);
 	}
 
 }

@@ -26,10 +26,16 @@ public class FlyMover implements IHantoMover
 {
 	private CommonHantoPiece piece;
 	private HantoCoordinate to;
+	private HantoCoordinate from;
 	
 	public HantoCoordinate getTargetLocation()
 	{
 		return new HantoCoordinateImpl(to);
+	}
+	
+	public HantoCoordinate getOriginLocation()
+	{
+		return new HantoCoordinateImpl(from);
 	}
 	
 	public CommonHantoPiece getPiece()
@@ -41,11 +47,13 @@ public class FlyMover implements IHantoMover
 	 * Builds a WalkMover for the given piece and location
 	 * @param piece The piece we are placing
 	 * @param to The location we are placing at
+	 * @param to2 
 	 */
-	public FlyMover(CommonHantoPiece piece, HantoCoordinate to) 
+	public FlyMover(CommonHantoPiece piece, HantoCoordinate from, HantoCoordinate to) 
 	{
 		this.piece = piece;
 		this.to = to; 
+		this.from = from;
 	}
 	
 	@Override

@@ -26,16 +26,18 @@ public class JumpMover implements IHantoMover
 {
 	private CommonHantoPiece piece;
 	private HantoCoordinate to;
+	private HantoCoordinate from;
 	
 	/**
 	 * Builds a JumpMover for the given piece and location
 	 * @param piece The piece we are placing
 	 * @param to The location we are placing at
 	 */
-	public JumpMover(CommonHantoPiece piece, HantoCoordinate to)
+	public JumpMover(CommonHantoPiece piece, HantoCoordinate from, HantoCoordinate to)
 	{
 		this.piece = piece;
 		this.to = to;
+		this.from = from;
 	}
 	
 	@Override
@@ -44,6 +46,11 @@ public class JumpMover implements IHantoMover
 		return new HantoCoordinateImpl(to);
 	}
 
+	public HantoCoordinate getOriginLocation()
+	{
+		return new HantoCoordinateImpl(from);
+	}
+	
 	@Override
 	public CommonHantoPiece getPiece() 
 	{

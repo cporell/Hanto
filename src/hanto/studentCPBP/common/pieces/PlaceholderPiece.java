@@ -40,7 +40,7 @@ public class PlaceholderPiece extends CommonHantoPiece
 	}
 
 	@Override
-	public IHantoMover createWalkMover(HantoCoordinate to) 
+	public IHantoMover createWalkMover(HantoCoordinate from, HantoCoordinate to) 
 	{
 		return null;
 	}

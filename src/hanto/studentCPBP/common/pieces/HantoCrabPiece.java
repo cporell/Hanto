@@ -42,9 +42,9 @@ public class HantoCrabPiece extends CommonHantoPiece {
 	}
 
 	@Override
-	public IHantoMover createWalkMover(HantoCoordinate to)
+	public IHantoMover createWalkMover(HantoCoordinate from, HantoCoordinate to)
 	{
-		return new WalkMover(this, to);
+		return new WalkMover(this, from, to);
 	}
 
 }

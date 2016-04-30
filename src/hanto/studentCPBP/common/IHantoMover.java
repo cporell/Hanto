@@ -48,4 +48,10 @@ public interface IHantoMover
 	 * @return True if the invalid move was handled.
 	 */
 	boolean handleInvalidIteration(IHantoGameState state);
+
+	/**
+	 * Grab the origin location.
+	 * @return The origin location, aka the "from" in a move.
+	 */
+	HantoCoordinate getOriginLocation();
 }
