@@ -119,7 +119,7 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 		
 		@Override
 		public void run() 
-		{
+		{			
 			IHantoGameState originalState = game.getState();
 			
 			IHantoGameState rootState = game.getState().copy();
@@ -128,6 +128,8 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 			
 			PathNode rootNode = new PathNode(rootState, null, MoveResult.OK, ourColor, null);
 			edge.add(rootNode);
+			
+			int i = 0;
 			
 			while(!Thread.interrupted() && edge.size() > 0 && !edge.peek().isClosedNode())
 			{
@@ -149,6 +151,7 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 					} 
 					catch (HantoException e)
 					{
+						i++;
 					}
 				}
 			}
@@ -163,6 +166,8 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 		AStarThread thread = new AStarThread(game);
 		thread.start();
 		
+		int i = 0;
+		
 		try 
 		{
 			thread.join(700);
@@ -172,6 +177,7 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 		} 
 		catch (InterruptedException e) 
 		{
+			i++;
 		}
 		
 		PriorityQueue<PathNode> edge = thread.edge;
@@ -190,7 +196,10 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 		}
 		else
 		{
-			while((bestClosed = edge.poll()).isClosedNode()){}
+			while((bestClosed = edge.poll()).isClosedNode())
+			{
+				i++;
+			}
 			
 			if(!bestClosed.isClosedNode())
 			{

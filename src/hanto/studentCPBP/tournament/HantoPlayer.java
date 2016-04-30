@@ -24,6 +24,20 @@ public class HantoPlayer implements HantoGamePlayer
 	private CommonHantoGame ourGame;
 	private IHantoPlayerThinker thinker;
 	
+	/**
+	 * HantoPlayer constructor takes in a game state.
+	 * Allows us to initialize a bot part of the way through a game.
+	 * @param game The game state
+	 */
+	public HantoPlayer(CommonHantoGame game)
+	{
+		ourGame = game;
+	}
+	
+	/**
+	 * Empty constructor for the HantoPlayer.
+	 */
+	public HantoPlayer(){}
 	
 	/*
 	 * @see hanto.tournament.HantoGamePlayer#startGame(hanto.common.HantoGameID, hanto.common.HantoPlayerColor, boolean)
@@ -80,6 +94,24 @@ public class HantoPlayer implements HantoGamePlayer
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Sets the game of this bot.
+	 * @param game The game state
+	 */
+	public void setGame(CommonHantoGame game)
+	{
+		ourGame = game;
+	}
+	
+	/**
+	 * Gets the game of this bot
+	 * @return the game state
+	 */
+	public CommonHantoGame getGame()
+	{
+		return ourGame;
 	}
 
 }

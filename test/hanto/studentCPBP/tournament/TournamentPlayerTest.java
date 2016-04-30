@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.studentCPBP.tournament;
 
 import static hanto.common.HantoPlayerColor.BLUE;
@@ -8,14 +18,23 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import hanto.common.HantoCoordinate;
+import hanto.common.HantoException;
 import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentCPBP.HantoGameFactory;
 import hanto.studentCPBP.common.CommonHantoGame;
+import hanto.studentCPBP.common.CommonHantoPiece;
 
+/**
+ * Tournament Player test runs tests on the Hanto Bot
+ * @author bpeake
+ * @author cgporell
+ *
+ */
 public class TournamentPlayerTest 
 {
 	/**
@@ -117,12 +136,27 @@ public class TournamentPlayerTest
 	
 	/**
 	 * Test to make sure the bot places a butterfly by the 4th move
+	 * @throws HantoException 
 	 */
 	@Test //2
-	public void TestPlayerPlacesButterflyByFourthMove()
+	public void TestPlayerPlacesButterflyByFourthMove() throws HantoException
 	{
-		TournamentRunner runner = new TournamentRunner(HantoGameID.EPSILON_HANTO, HantoPlayerColor.BLUE);
+		game.makeMove(HantoPieceType.SPARROW, null, makeCoordinate(0,0)); 
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(1,0));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(-1,0)); 
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(2,0));
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(-2,0)); 
+		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(3,0));
 		
+		TournamentRunner runner = new TournamentRunner(game, HantoGameID.EPSILON_HANTO, BLUE);
+		
+		MoveResult mr = runner.step();
+		
+		CommonHantoGame boardState = (CommonHantoGame) runner.getGame();
+		CommonHantoPiece[] BlueButterflies = boardState.getState().getPieces(BLUE, HantoPieceType.BUTTERFLY);
+		assertEquals(1, BlueButterflies.length);
+		
+		assertEquals(MoveResult.OK, mr);		
 	}
 
 	
