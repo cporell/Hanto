@@ -68,6 +68,13 @@ public class HantoHandFactory
 			player.addPieceToHand(HantoPieceType.SPARROW, 4);
 			player.addPieceToHand(HantoPieceType.CRAB, 4);
 			break;
+		case EPSILON_HANTO:
+			player = new DeltaHantoHand(color);
+			player.addPieceToHand(HantoPieceType.BUTTERFLY, 1);
+			player.addPieceToHand(HantoPieceType.SPARROW, 2);
+			player.addPieceToHand(HantoPieceType.CRAB, 6);
+			player.addPieceToHand(HantoPieceType.HORSE, 4);
+			break;
 		}
 		return player;
 	}
