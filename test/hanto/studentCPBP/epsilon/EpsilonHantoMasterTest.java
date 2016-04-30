@@ -98,7 +98,8 @@ public class EpsilonHantoMasterTest
 	 * Tests that a Sparrow can only move up to 4 spaces away
 	 * @throws HantoException
 	 */
-	@Test(expected = HantoException.class) //1
+	@Test //1
+	(expected = HantoException.class) 
 	public void TestSparrowCanOnlyMoveUpToFourSpaces() throws HantoException
 	{
 		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0,0));
@@ -144,7 +145,8 @@ public class EpsilonHantoMasterTest
 	 * Tests that a horse can only move in a straight line
 	 * @throws HantoException
 	 */
-	@Test (expected = HantoException.class)//4
+	@Test //4
+	(expected = HantoException.class)
 	public void TestHorseCanOnlyMoveInStraightLine() throws HantoException
 	{
 		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0,0));
@@ -158,7 +160,8 @@ public class EpsilonHantoMasterTest
 	 * Test that a horse can only move over occupied hexes
 	 * @throws HantoException
 	 */
-	@Test(expected = HantoException.class) //5
+	@Test //5
+	(expected = HantoException.class)
 	public void TestHorseCanOnlyJumpOverOccupied() throws HantoException
 	{
 		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0,0));
@@ -189,7 +192,8 @@ public class EpsilonHantoMasterTest
 	 * Test that a Horse cannot move 1 space (i.e. moving without jumping other pieces)
 	 * @throws HantoException
 	 */
-	@Test (expected = HantoException.class)//7
+	@Test //7
+	(expected = HantoException.class)
 	public void TestHorseCannotMoveAdjacent() throws HantoException
 	{
 		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
@@ -199,6 +203,19 @@ public class EpsilonHantoMasterTest
 		game.makeMove(HantoPieceType.HORSE, makeCoordinate(0,-1), makeCoordinate(1,-1));
 	}
 
+	/**
+	 * Tests that resigning when there is a valid move throws a prematureResignationException
+	 * @throws HantoException
+	 */
+	@Test //8
+	//(expected = HantoPrematureResignationException.class)
+	public void TestCannotResignIfValidMovesExist() throws HantoException
+	{
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, -1));
+		game.makeMove(null, null, null);
+	}
+	
 	//===============LEGACY TESTS================================================
 	/**
 	 *  Tests that a player cannot place more than 4 sparrows
@@ -327,36 +344,10 @@ public class EpsilonHantoMasterTest
 	{
 		game.makeMove(HantoPieceType.CRANE, null, makeCoordinate(0, 0));
 	}
-	
+
 	/**
-	 * Test that Blue can resign successfully
-	 * @throws HantoException
+	 * REMOVED RESIGNATION TESTS because of different resignation rules for Epsilon
 	 */
-	@Test //9
-	public void testBlueCanResign() throws HantoException
-	{
-		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
-		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, -1));
-		MoveResult result = game.makeMove(null, null, null);
-		
-		assertEquals(MoveResult.RED_WINS, result);
-	}
-	
-	/**
-	 * Test that Red can resign successfully
-	 * @throws HantoException
-	 */
-	@Test //10
-	public void testRedCanResign() throws HantoException
-	{
-		game = factory.makeHantoGame(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED);
-		
-		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
-		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, -1));
-		MoveResult result = game.makeMove(null, null, null);
-		
-		assertEquals(MoveResult.BLUE_WINS, result);
-	}
 	
 	/**
 	 * Test that Sparrows can Fly over pieces
