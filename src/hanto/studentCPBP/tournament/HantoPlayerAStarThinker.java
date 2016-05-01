@@ -34,12 +34,20 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 		@Override
 		public int compare(PathNode o1, PathNode o2) 
 		{
-			if(o1.isClosedNode() != o2.isClosedNode())
+			float o1Score = o1.calculatedScore();
+			float o2Score = o2.calculatedScore();
+			
+			if(o1.isClosedNode())
 			{
-				return o1.isClosedNode() ? 1 : -1;
+				o1Score += (Float.MAX_VALUE / 2.0);
 			}
 			
-			return o1.calculatedScore() > o2.calculatedScore() ? 1 : -1;
+			if(o2.isClosedNode())
+			{
+				o2Score += (Float.MAX_VALUE / 2.0);
+			}
+			
+			return Float.compare(o1Score, o2Score);
 		}
 		
 	}
@@ -188,7 +196,7 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 		}
 		
 		PathNode front = edge.poll();
-		PathNode bestClosed;
+		PathNode bestClosed = null;
 		
 		if(front.isClosedNode())
 		{
@@ -196,12 +204,12 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 		}
 		else
 		{
-			while((bestClosed = edge.poll()).isClosedNode())
+			while(edge.size() > 0 && !(bestClosed = edge.poll()).isClosedNode())
 			{
 				i++;
 			}
 			
-			if(!bestClosed.isClosedNode())
+			if(bestClosed != null && !bestClosed.isClosedNode())
 			{
 				bestClosed = null;
 			}
@@ -215,11 +223,6 @@ public class HantoPlayerAStarThinker implements IHantoPlayerThinker
 		else
 		{
 			selection = front;
-		}
-		
-		if(selection.isRoot())
-		{
-			return new HantoMoveRecord(null, null, null);
 		}
 		
 		while(!selection.parent.isRoot())

@@ -13,6 +13,7 @@ package hanto.studentCPBP.tournament;
 import hanto.common.*;
 import hanto.studentCPBP.HantoGameFactory;
 import hanto.studentCPBP.common.CommonHantoGame;
+import hanto.studentCPBP.common.IHantoGameState;
 import hanto.tournament.*;
 
 /**
@@ -23,16 +24,6 @@ public class HantoPlayer implements HantoGamePlayer
 {
 	private CommonHantoGame ourGame;
 	private IHantoPlayerThinker thinker;
-	
-	/**
-	 * HantoPlayer constructor takes in a game state.
-	 * Allows us to initialize a bot part of the way through a game.
-	 * @param game The game state
-	 */
-	public HantoPlayer(CommonHantoGame game)
-	{
-		ourGame = game;
-	}
 	
 	/**
 	 * Empty constructor for the HantoPlayer.
@@ -48,6 +39,8 @@ public class HantoPlayer implements HantoGamePlayer
 	{
 		HantoPlayerColor otherColor = myColor == HantoPlayerColor.RED ? HantoPlayerColor.BLUE : HantoPlayerColor.RED;
 		HantoGame game = HantoGameFactory.getInstance().makeHantoGame(version, doIMoveFirst ? myColor : otherColor);
+		
+		System.out.println(version.toString());
 		
 		if(game != null && game instanceof CommonHantoGame)
 		{
@@ -73,6 +66,12 @@ public class HantoPlayer implements HantoGamePlayer
 		}
 		
 		HantoMoveRecord move = thinker.selectMove(ourGame);
+		System.out.print("Type: ");
+		System.out.println(move.getPiece() == null ? "" : move.getPiece().toString());
+		System.out.print("To: ");
+		System.out.println(move.getTo() == null ? "" : (move.getTo().getX() + " " + move.getTo().getY()));
+		System.out.print("From: ");
+		System.out.println(move.getFrom() == null ? "" : move.getFrom().toString());
 		
 		if(move == null || !applyMove(move))
 		{
@@ -100,18 +99,8 @@ public class HantoPlayer implements HantoGamePlayer
 	 * Sets the game of this bot.
 	 * @param game The game state
 	 */
-	public void setGame(CommonHantoGame game)
+	public void setState(IHantoGameState state)
 	{
-		ourGame = game;
+		ourGame.setState(state.copy());
 	}
-	
-	/**
-	 * Gets the game of this bot
-	 * @return the game state
-	 */
-	public CommonHantoGame getGame()
-	{
-		return ourGame;
-	}
-
 }

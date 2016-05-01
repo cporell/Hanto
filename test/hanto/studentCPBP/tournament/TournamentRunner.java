@@ -58,19 +58,21 @@ public class TournamentRunner
 	 * @param gameId The version of Hanto
 	 * @param startingColor The starting player's color
 	 */
-	public TournamentRunner(HantoGame game, HantoGameID gameId, HantoPlayerColor startingColor)
+	public TournamentRunner(HantoGame game, HantoGameID gameId)
 	{
-		playerTurn = startingColor;
+		CommonHantoGame cgame = (CommonHantoGame)game;
+		
+		playerTurn = cgame.getRules().getCurrentPlayer(cgame.getState());
 		
 		blue = new HantoPlayer();
 		red = new HantoPlayer();
 		
 		this.game = game;
 		
-		blue.startGame(gameId, HantoPlayerColor.BLUE, startingColor == HantoPlayerColor.BLUE);
-		blue.getGame().setState(((CommonHantoGame) game).getState().copy());
-		red.startGame(gameId, HantoPlayerColor.RED, startingColor == HantoPlayerColor.RED);
-		red.getGame().setState(((CommonHantoGame) game).getState().copy());
+		blue.startGame(gameId, HantoPlayerColor.BLUE, true);
+		blue.setState(((CommonHantoGame)game).getState());
+		red.startGame(gameId, HantoPlayerColor.RED, false);
+		red.setState(((CommonHantoGame)game).getState());
 	}
 	
 	/**
@@ -111,6 +113,15 @@ public class TournamentRunner
 		playerTurn = playerTurn == HantoPlayerColor.BLUE ? HantoPlayerColor.RED : HantoPlayerColor.BLUE;
 		
 		return result;
+	}
+	
+	/**
+	 * Gets the last move that was made in the tournament
+	 * @return The last move that was made.
+	 */
+	public HantoMoveRecord getLastMove()
+	{
+		return lastMove;
 	}
 	
 	/**

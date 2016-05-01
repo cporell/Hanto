@@ -17,6 +17,9 @@ import static hanto.common.HantoPieceType.CRAB;
 import static hanto.common.HantoPlayerColor.*;
 import hanto.common.*;
 import hanto.studentCPBP.HantoGameFactory;
+import hanto.studentCPBP.common.CommonHantoGame;
+import hanto.studentCPBP.common.CommonHantoGameState;
+
 import static org.junit.Assert.*;
 
 import static org.junit.Assert.assertEquals;
@@ -213,6 +216,34 @@ public class EpsilonHantoMasterTest
 		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));
 		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, -1));
 		game.makeMove(null, null, null);
+	}
+	
+	/**
+	 * Test that we can resign when no valid moves are available.
+	 * @throws HantoException
+	 */
+	@Test
+	public void TestCanResign() throws HantoException
+	{
+		CommonHantoGameState testerGameState = new CommonHantoGameState();
+		EpsilonHantoPieceFactory factory = new EpsilonHantoPieceFactory();
+		
+		//Inject a testing game state into the game with less pieces to allow for a more compact test
+		testerGameState.addPiece(factory.createPiece(HantoPieceType.BUTTERFLY, BLUE));
+		testerGameState.addPiece(factory.createPiece(HantoPieceType.BUTTERFLY, RED));
+		testerGameState.addPiece(factory.createPiece(HantoPieceType.SPARROW, RED));
+		
+		CommonHantoGame cgame = (CommonHantoGame)game;
+		cgame.setState(testerGameState);
+		
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));//B1
+		game.makeMove(HantoPieceType.SPARROW, null, makeCoordinate(0, -1));//R1
+		game.makeMove(HantoPieceType.BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(-1, 0));//B
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(1, -1));//R
+		game.makeMove(HantoPieceType.BUTTERFLY, makeCoordinate(-1, 0), makeCoordinate(0, 0));//B
+		game.makeMove(HantoPieceType.BUTTERFLY, makeCoordinate(1, -1), makeCoordinate(1, 0));//R
+		
+		game.makeMove(null, null, null);//Resign
 	}
 	
 	//===============LEGACY TESTS================================================

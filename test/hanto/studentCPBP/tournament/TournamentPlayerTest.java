@@ -10,7 +10,11 @@
 
 package hanto.studentCPBP.tournament;
 
+import static hanto.common.HantoPieceType.BUTTERFLY;
+import static hanto.common.HantoPieceType.CRAB;
+import static hanto.common.HantoPieceType.SPARROW;
 import static hanto.common.HantoPlayerColor.BLUE;
+import static hanto.common.HantoPlayerColor.RED;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -27,7 +31,11 @@ import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentCPBP.HantoGameFactory;
 import hanto.studentCPBP.common.CommonHantoGame;
+import hanto.studentCPBP.common.CommonHantoGameState;
 import hanto.studentCPBP.common.CommonHantoPiece;
+import hanto.studentCPBP.common.IHantoGameState;
+import hanto.studentCPBP.epsilon.EpsilonHantoPieceFactory;
+import hanto.tournament.HantoMoveRecord;
 
 /**
  * Tournament Player test runs tests on the Hanto Bot
@@ -102,7 +110,7 @@ public class TournamentPlayerTest
 	 * Simple test to make sure the tourney runner works
 	 */
 	@Test //1
-	public void test() 
+	public void testCanPlaySimpleGame() 
 	{
 		TournamentRunner runner = new TournamentRunner(HantoGameID.ALPHA_HANTO, HantoPlayerColor.BLUE);
 		
@@ -148,7 +156,7 @@ public class TournamentPlayerTest
 		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(-2,0)); 
 		game.makeMove(HantoPieceType.CRAB, null, makeCoordinate(3,0));
 		
-		TournamentRunner runner = new TournamentRunner(game, HantoGameID.EPSILON_HANTO, BLUE);
+		TournamentRunner runner = new TournamentRunner(game, HantoGameID.EPSILON_HANTO);
 		
 		MoveResult mr = runner.step();
 		
@@ -159,6 +167,164 @@ public class TournamentPlayerTest
 		assertEquals(MoveResult.OK, mr);		
 	}
 
+	/**
+	 * Tests that the bot will resign when there are no moves.
+	 * @throws HantoException
+	 */
+	@Test
+	public void testForfitWhenNoTurns() throws HantoException
+	{
+		CommonHantoGameState testerGameState = new CommonHantoGameState();
+		EpsilonHantoPieceFactory factory = new EpsilonHantoPieceFactory();
+		
+		//Inject a testing game state into the game with less pieces to allow for a more compact test
+		testerGameState.addPiece(factory.createPiece(HantoPieceType.BUTTERFLY, BLUE));
+		testerGameState.addPiece(factory.createPiece(HantoPieceType.BUTTERFLY, RED));
+		testerGameState.addPiece(factory.createPiece(HantoPieceType.SPARROW, RED));
+		
+		CommonHantoGame cgame = (CommonHantoGame)game;
+		cgame.setState(testerGameState);
+		
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(0, 0));//B1
+		game.makeMove(HantoPieceType.SPARROW, null, makeCoordinate(0, -1));//R1
+		game.makeMove(HantoPieceType.BUTTERFLY, makeCoordinate(0, 0), makeCoordinate(-1, 0));//B
+		game.makeMove(HantoPieceType.BUTTERFLY, null, makeCoordinate(1, -1));//R
+		game.makeMove(HantoPieceType.BUTTERFLY, makeCoordinate(-1, 0), makeCoordinate(0, 0));//B
+		game.makeMove(HantoPieceType.BUTTERFLY, makeCoordinate(1, -1), makeCoordinate(1, 0));//R
+		
+		TournamentRunner runner = new TournamentRunner(game, HantoGameID.EPSILON_HANTO);
+		
+		MoveResult mr = runner.step();
+		
+		assertEquals(MoveResult.RED_WINS, mr);
+	}
+	
+	/**
+	 * Tests that there is no movement before the butterfly is placed.
+	 * @throws HantoException
+	 */
+	@Test
+	public void testNoMoveBeforeButterly() throws HantoException
+	{
+		TournamentRunner runner = new TournamentRunner(HantoGameID.EPSILON_HANTO, HantoPlayerColor.BLUE);
+		
+		for(int i = 0; i < 4; i++)
+		{
+			runner.step();
+			
+			HantoMoveRecord lastMove = runner.getLastMove();
+			
+			if(lastMove.getPiece() == HantoPieceType.BUTTERFLY)
+			{
+				break;
+			}
+			else
+			{
+				assertEquals(null, lastMove.getFrom());
+			}
+		}
+	}
+	
+	/**
+	 * Tests that the average time to compute a move is under a second.
+	 * @throws HantoException
+	 */
+	@Test
+	public void testMoveIsLessThanOneSecond() throws HantoException
+	{
+		TournamentRunner runner = new TournamentRunner(HantoGameID.EPSILON_HANTO, HantoPlayerColor.BLUE);
+		
+		long timePassedSum = 0;
+		int i = 0;
+		for(; i < 20; i++)
+		{
+			long start = System.currentTimeMillis();
+			
+			MoveResult result = runner.step();
+			
+			long end = System.currentTimeMillis();
+			
+			timePassedSum += (end - start);
+			
+			if(result != MoveResult.OK)
+				break;
+		}
+		
+		long avg = timePassedSum / (i + 1);
+		
+		assertTrue(avg < 1000);
+	}
+	
+	/**
+	 * Tests that if there is a move that can be taken that will win it will be taken.
+	 * @throws HantoException
+	 */
+	@Test
+	public void testTakeWin() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,1)); // R1
+		game.makeMove(SPARROW, null, makeCoordinate(-1,0)); // B2
+		game.makeMove(CRAB, null, makeCoordinate(-1,2)); // R2
+		game.makeMove(SPARROW, null, makeCoordinate(1,-1)); // B3
+		game.makeMove(CRAB, null, makeCoordinate(1,1)); // R3
+		game.makeMove(SPARROW, makeCoordinate(-1,0), makeCoordinate(-1, 1)); // B4
+		game.makeMove(CRAB, null, makeCoordinate(0, 2));// R4
+		
+		TournamentRunner runner = new TournamentRunner(game, HantoGameID.EPSILON_HANTO);
+		MoveResult result = runner.step();
+		
+		assertEquals(MoveResult.BLUE_WINS, result);
+	}
+	
+	/**
+	 * Tests that given the same situation with a lose nearby we prevent the a loss.
+	 * @throws HantoException
+	 */
+	@Test
+	public void testStopOtherWinning() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,0)); // B1
+		game.makeMove(BUTTERFLY, null, makeCoordinate(0,1)); // R1
+		game.makeMove(SPARROW, null, makeCoordinate(-1,0)); // B2
+		game.makeMove(CRAB, null, makeCoordinate(-1,2)); // R2
+		game.makeMove(SPARROW, null, makeCoordinate(1,-1)); // B3
+		game.makeMove(CRAB, null, makeCoordinate(1,1)); // R3
+		game.makeMove(SPARROW, makeCoordinate(-1,0), makeCoordinate(-1, 1)); // B4
+		
+		TournamentRunner runner = new TournamentRunner(game, HantoGameID.EPSILON_HANTO);
+		runner.step();
+		MoveResult result = runner.step();
+		
+		assertNotEquals(MoveResult.BLUE_WINS, result);
+	}
+	
+	@Test
+	public void testGiveUpInInvalidGame() throws HantoException
+	{
+		HantoPlayer player = new HantoPlayer();
+		player.startGame(HantoGameID.ZETA_HANTO, RED, false);
+		
+		HantoMoveRecord result = player.makeMove(null);
+		
+		assertEquals(null, result.getFrom());
+		assertEquals(null, result.getTo());
+		assertEquals(null, result.getPiece());
+	}
+	
+	@Test
+	public void testGiveUpOnInvalidEnemyMove() throws HantoException
+	{
+		HantoMoveRecord invalidMove = new HantoMoveRecord(CRAB, null, makeCoordinate(0, -1000));
+		
+		HantoPlayer player = new HantoPlayer();
+		player.startGame(HantoGameID.ALPHA_HANTO, BLUE, false);
+		HantoMoveRecord result = player.makeMove(invalidMove);
+		
+		assertEquals(null, result.getFrom());
+		assertEquals(null, result.getTo());
+		assertEquals(null, result.getPiece());
+	}
 	
 	// Helper methods
 	/**
