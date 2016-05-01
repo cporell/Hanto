@@ -50,6 +50,13 @@ public class EpsilonHantoFlyMoverValidator extends EpsilonCommonMovementMoverVal
 		HantoCoordinate from = getMover().getOriginLocation();
 		HantoCoordinate to = getMover().getTargetLocation();
 		
+		if(hexDist(to, from) > maxDist)
+		{
+			throw new HantoException("Flew too many spaces");
+		}
+		
+		/*
+		
 		int deltaX = Math.abs(to.getX() - from.getX());
 		int deltaY = Math.abs(to.getY() - from.getY());
 		int delta = Math.abs(deltaY - deltaX);
@@ -58,7 +65,41 @@ public class EpsilonHantoFlyMoverValidator extends EpsilonCommonMovementMoverVal
 		if(dist > maxDist)
 		{
 			throw new HantoException("Flew too many spaces");
-		}	
+		}
+		
+		*/     
+	}
+	
+	/**
+	 * Hex distance formula credited to: 
+	 * http://stackoverflow.com/questions/14491444/calculating-distance-on-a-hexagon-grid
+	 * @param to Dest coord
+	 * @param from Source coord
+	 * @return dist between two hexes
+	 */
+	private int hexDist(HantoCoordinate to, HantoCoordinate from)
+	{
+		if(from.getX() == to.getX())
+		{
+			return Math.abs(to.getY() - from.getY());
+		}
+		else if(from.getY() == to.getY())
+		{
+			return Math.abs(to.getX() - from.getX());
+		}
+		else
+		{
+			int dx = Math.abs(to.getX() - from.getX());
+			int dy = Math.abs(to.getY() - from.getY());
+			if(from.getY() < to.getY())
+			{
+				return dx + dy - (int)Math.ceil(dx/2);
+			}
+			else
+			{
+				return dx + dy - (int)Math.floor(dx/2);
+			}
+		}		
 	}
 
 	@Override
