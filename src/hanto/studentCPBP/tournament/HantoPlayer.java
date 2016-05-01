@@ -71,7 +71,7 @@ public class HantoPlayer implements HantoGamePlayer
 		System.out.print("To: ");
 		System.out.println(move.getTo() == null ? "" : (move.getTo().getX() + " " + move.getTo().getY()));
 		System.out.print("From: ");
-		System.out.println(move.getFrom() == null ? "" : move.getFrom().toString());
+		System.out.println(move.getFrom() == null ? "" : (move.getFrom().getX() + " " + move.getFrom().getY()));
 		
 		if(move == null || !applyMove(move))
 		{
